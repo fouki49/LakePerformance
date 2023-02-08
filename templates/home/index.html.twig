@@ -15,111 +15,31 @@
 				<p><input class="me-2 form-check-input" type="radio" id="tout">Canoe</p>
 				<p><input class="me-2 form-check-input" type="radio" id="tout">Kayak</p>
 				<p><input class="me-2 form-check-input" type="radio" id="tout">Paddle</p>
+				<hr>
+				<p><input class="me-2 form-check-input" type="radio" id="tout">Prix ⬆️</p>
+				<p><input class="me-2 form-check-input" type="radio" id="tout">Prix ⬇️</p>
 			</ul>
 		</div>
 		<div class="row col-10 ms-2 justify-content-center">
-			<div class="col-3 card mx-2 my-2 shadow p-3 mb-5 bg-body">
-				<div class="card-body">
-					<h5 class="card-title text-center">Canoe 1</h5>
-					<img class="ms-1" src="{{asset('images/canoe1.jpg')}}" alt="">
-					<hr>
-					<p class="fw-bold text-center mt-2">2459.99$</p>
-					<div class="row justify-content-center">
-						<button class="btn fw-bold" type="button" style="background-color: #ECEFF1;">
-							Add in
-							<img style="height: 25px; margin-bottom: 3px;" class="" src="{{asset('images/basket.png')}}" alt=""/>
-						</button>
+			{% for product in products %}
+				<div class="col-3 card mx-2 my-2 shadow p-3 mb-5 bg-body">
+					<div class="card-body">
+						<h5 class="card-title text-center">{{ product.nom }}</h5>
+						<img class="justify-content-center" style="height: 200px;" src="{{asset('images/' ~ product.imagePath)}}" alt="">
+						<hr>
+						<p class="fw-bold text-center mt-2">{{product.prix}}</p>
+						<div class="row justify-content-center">
+							<button class="btn fw-bold" type="button" style="background-color: #ECEFF1;">
+								Add in
+								<img style="height: 25px; margin-bottom: 3px;" class="" src="{{asset('images/basket.png')}}" alt=""/>
+							</button>
+						</div>
+						<p class="mt-2" style="color: gray;">In Stock:
+							{{product.quantiteEnStock}}</p>
 					</div>
 				</div>
-			</div>
-			<div class="col-3 card mx-2 my-2 shadow p-3 mb-5 bg-body">
-				<div class="card-body">
-					<h5 class="card-title text-center">Canoe 1</h5>
-					<img class="ms-1" src="{{asset('images/canoe1.jpg')}}" alt="">
-					<hr>
-					<p class="fw-bold text-center mt-2">2459.99$</p>
-					<div class="row justify-content-center">
-						<button class="btn fw-bold" type="button" style="background-color: #ECEFF1;">
-							Add in
-							<img style="height: 25px; margin-bottom: 3px;" class="" src="{{asset('images/basket.png')}}" alt=""/>
-						</button>
-					</div>
-				</div>
-			</div>
-			<div class="col-3 card mx-2 my-2 shadow p-3 mb-5 bg-body">
-				<div class="card-body">
-					<h5 class="card-title text-center">Canoe 1</h5>
-					<img class="ms-1" src="{{asset('images/canoe1.jpg')}}" alt="">
-					<hr>
-					<p class="fw-bold text-center mt-2">2459.99$</p>
-					<div class="row justify-content-center">
-						<button class="btn fw-bold" type="button" style="background-color: #ECEFF1;">
-							Add in
-							<img style="height: 25px; margin-bottom: 3px;" class="" src="{{asset('images/basket.png')}}" alt=""/>
-						</button>
-					</div>
-				</div>
-			</div>
-			<div class="col-3 card mx-2 my-2 shadow p-3 mb-5 bg-body">
-				<div class="card-body">
-					<h5 class="card-title text-center">Canoe 1</h5>
-					<img class="ms-1" src="{{asset('images/canoe1.jpg')}}" alt="">
-					<hr>
-					<p class="fw-bold text-center mt-2">2459.99$</p>
-					<div class="row justify-content-center">
-						<button class="btn fw-bold" type="button" style="background-color: #ECEFF1;">
-							Add in
-							<img style="height: 25px; margin-bottom: 3px;" class="" src="{{asset('images/basket.png')}}" alt=""/>
-						</button>
-					</div>
-				</div>
-			</div>
-			<div class="col-3 card mx-2 my-2 shadow p-3 mb-5 bg-body">
-				<div class="card-body">
-					<h5 class="card-title text-center">Canoe 1</h5>
-					<img class="ms-1" src="{{asset('images/canoe1.jpg')}}" alt="">
-					<hr>
-					<p class="fw-bold text-center mt-2">2459.99$</p>
-					<div class="row justify-content-center">
-						<button class="btn fw-bold" type="button" style="background-color: #ECEFF1;">
-							Add in
-							<img style="height: 25px; margin-bottom: 3px;" class="" src="{{asset('images/basket.png')}}" alt=""/>
-						</button>
-					</div>
-				</div>
-			</div>
-			<div class="col-3 card mx-2 my-2 shadow p-3 mb-5 bg-body">
-				<div class="card-body">
-					<h5 class="card-title text-center">Canoe 1</h5>
-					<img class="ms-1" src="{{asset('images/canoe1.jpg')}}" alt="">
-					<hr>
-					<p class="fw-bold text-center mt-2">2459.99$</p>
-					<div class="row justify-content-center">
-						<button class="btn fw-bold" type="button" style="background-color: #ECEFF1;">
-							Add in
-							<img style="height: 25px; margin-bottom: 3px;" class="" src="{{asset('images/basket.png')}}" alt=""/>
-						</button>
-					</div>
-				</div>
-			</div>
-			<div class="col-3 card mx-2 my-2 shadow p-3 mb-5 bg-body">
-				<div class="card-body">
-					<h5 class="card-title text-center">Canoe 1</h5>
-					<img class="ms-1" src="{{asset('images/canoe1.jpg')}}" alt="">
-					<hr>
-					<p class="fw-bold text-center mt-2">2459.99$</p>
-					<div class="row justify-content-center">
-						<button class="btn fw-bold" type="button" style="background-color: #ECEFF1;">
-							Add in
-							<img style="height: 25px; margin-bottom: 3px;" class="" src="{{asset('images/basket.png')}}" alt=""/>
-						</button>
-					</div>
-				</div>
-			</div>
-
-
+			{% endfor %}
 		</div>
-
 	</div>
 
 	{# <script href="{{asset('script/cardOver.js')}}"/> #}
