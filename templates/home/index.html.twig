@@ -5,7 +5,7 @@
 
 {% block content %}
 	{# TODO Faire en sorte que le nom change a chaque fois que je change de produit #}
-	<h1 class="mt-4">Canoe</h1>
+	<h1 class="mt-4 ">Canoe</h1>
 	<div
 		class="row ">
 		{# TODO Faire en sorte que la card ne monte pas jusqu'en haut #}
@@ -16,8 +16,10 @@
 				<p><input class="me-2 form-check-input" type="radio" id="tout">Kayak</p>
 				<p><input class="me-2 form-check-input" type="radio" id="tout">Paddle</p>
 				<hr>
-				<p><input class="me-2 form-check-input" type="radio" id="tout">Prix ⬆️</p>
-				<p><input class="me-2 form-check-input" type="radio" id="tout">Prix ⬇️</p>
+				<p><input class="me-2 form-check-input" style="margin-top:7px;" type="radio" id="tout">Prix
+					<img src="{{asset('images/arrowUp.png')}}" style="height: 25px; margin-bottom: 7px;"/></p>
+				<p><input class="me-2 form-check-input" style="margin-top:7px;" type="radio" id="tout">Prix
+					<img src="{{asset('images/arrowDown.png')}}" style="height: 25px; margin-bottom: 7px;"/></p>
 			</ul>
 		</div>
 		<div class="row col-10 ms-2 justify-content-center">
@@ -29,7 +31,7 @@
 						<hr>
 						<p class="fw-bold text-center mt-2">{{product.prix}}</p>
 						<div class="row justify-content-center">
-							<button class="btn fw-bold" type="button" style="background-color: #ECEFF1;">
+							<button class="btn btn-outline-secondary fw-bold shadow p-2" type="button">
 								Add in
 								<img style="height: 25px; margin-bottom: 3px;" class="" src="{{asset('images/basket.png')}}" alt=""/>
 							</button>
