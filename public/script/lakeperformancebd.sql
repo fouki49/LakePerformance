@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3307
--- Généré le : lun. 20 fév. 2023 à 18:29
--- Version du serveur : 10.10.2-MariaDB
--- Version de PHP : 8.2.0
+-- Host: 127.0.0.1:3307
+-- Generation Time: Feb 22, 2023 at 06:25 PM
+-- Server version: 10.10.2-MariaDB
+-- PHP Version: 8.0.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `lakeperformancebd`
+-- Database: `lakeperformancebd`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `categories`
+-- Table structure for table `categories`
 --
 
 DROP TABLE IF EXISTS `categories`;
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `categories`
+-- Dumping data for table `categories`
 --
 
 INSERT INTO `categories` (`idCategorie`, `categorie`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `categories` (`idCategorie`, `categorie`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `messenger_messages`
+-- Table structure for table `messenger_messages`
 --
 
 DROP TABLE IF EXISTS `messenger_messages`;
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `messenger_messages` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `produits`
+-- Table structure for table `produits`
 --
 
 DROP TABLE IF EXISTS `produits`;
@@ -80,10 +80,10 @@ CREATE TABLE IF NOT EXISTS `produits` (
   `description` varchar(1000) NOT NULL,
   `imagePath` varchar(100) NOT NULL,
   PRIMARY KEY (`idProduit`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `produits`
+-- Dumping data for table `produits`
 --
 
 INSERT INTO `produits` (`idProduit`, `nom`, `prix`, `quantiteEnStock`, `description`, `imagePath`) VALUES
@@ -97,8 +97,16 @@ INSERT INTO `produits` (`idProduit`, `nom`, `prix`, `quantiteEnStock`, `descript
 (8, 'Pelican Argo 100X Kayak', 424.99, 15, 'Enjoy a fun day on the water using the Pelican Argo 100X 10 ft Recreational Sit-in Kayak, which has moulded footrests and an adjustable Ergofoam™ padded backrest to help keep you comfortable as you paddle. The front storage hatch and rear tank well provide ample space for accessories, and a cockpit table has a built-in bottle holder for added convenience. The Ram-X™ material is lightweight and easy to transport just about anywhere.\r\nFeatures and Benefits', 'kayak2.jpeg'),
 (9, 'Double inflatable kayak', 2183.49, 1, 'The Seawave is a convertible 1 to 3-seater sea kayak when used without decks, designed for coastal cruising and long-distance hiking. A major advantage: its tubular floor whose thicker central flange forms a keel which limits lateral drift. For family outings and the basic open version, its length - 50cm longer than a Solar - makes it a real 3-seater adult.', 'kayak3.jpg'),
 (10, 'Fishing kayak', 616.52, 6, 'Historically, the kayak was invented for fishing and hunting by the Inuit. Quiet and ideal for observing nature, the fishing kayak allows a different approach, making previously unreachable areas accessible. Even if the fishing kayak is the founding father of the practice of kayaking, it has experienced a revival in recent years due to the appearance of new forms of boats specifically adapted to modern fishing.', 'kayak4.webp'),
-(11, 'Malibu 11.5 - Ahi Kayak', 399, 2, 'Have a blast atop our Malibu solo series! It’s all about fun and comfort—and if you like to control your own destiny, we’ve got options. These compact, stackable, easy-to-paddle, agile solo kayaks will turn heads as you master the waves with ease on our super-stable 9.5’ and 11.5’ sit-on-top hull designs. Comfort comes easy on the Malibu, thanks to a newly designed AirGo™ molded-in seat and seat pad with an adjustable AirComfort™ backrest. No matter your size enjoy comfortable leg room with calf rests and molded-on foot wells. And don’t forget your beverages! The Malibu 9.5 comes equipped with three cup holders.', 'kayak5.jpg'),
-(12, 'Inflatable kayak', 545.23, 0, 'The Hudson is for intermediate thrill seekers, whereas the Ottowa is for the pro\'s. Both are inflatable and can therefore fit easily in your car so you can travel to your destination with ease.\r\n\r\nThe deluxe waterproof sea kayak is available in two sizes; single kayak or double kayak. Both the single and tandem options are extremely durable and stable on water. Made with high-quality materials, ensuring longevity and elite performance.', 'imageNonDispo.png');
+(11, 'Malibu 11.5 - Ahi Kayak', 399.99, 2, 'Have a blast atop our Malibu solo series! It’s all about fun and comfort—and if you like to control your own destiny, we’ve got options. These compact, stackable, easy-to-paddle, agile solo kayaks will turn heads as you master the waves with ease on our super-stable 9.5’ and 11.5’ sit-on-top hull designs. Comfort comes easy on the Malibu, thanks to a newly designed AirGo™ molded-in seat and seat pad with an adjustable AirComfort™ backrest. No matter your size enjoy comfortable leg room with calf rests and molded-on foot wells. And don’t forget your beverages! The Malibu 9.5 comes equipped with three cup holders.', 'kayak5.jpg'),
+(12, 'Inflatable kayak', 545.23, 0, 'The Hudson is for intermediate thrill seekers, whereas the Ottowa is for the pro\'s. Both are inflatable and can therefore fit easily in your car so you can travel to your destination with ease.\r\n\r\nThe deluxe waterproof sea kayak is available in two sizes; single kayak or double kayak. Both the single and tandem options are extremely durable and stable on water. Made with high-quality materials, ensuring longevity and elite performance.', 'imageNonDispo.png'),
+(13, 'Rotational molded kayak', 999.99, 6, 'Canadian Coast Guard Approved, CE Certified, United States Coast Guard Approved.\r\n\r\nAbrasion Resistant, Ergonomic, Fade Resistant, UV Resistant', 'kayak6.jpg'),
+(14, 'Blue North TORRENT Kayak', 680.15, 2, 'The 10 ft long  TORRENT is a single sit inside Kayak with recessed fishing rod holders, a hatch and a back storage compartment\r\n\r\nBlue North kayaks are chosen for their rugged construction and simplistic look, which is perfect for rentals and commercial use.\r\n\r\nSingle sit inside\r\nIncludes one hatch\r\nRecessed fishing rod holders\r\nStorage compartment on the back\r\nPadded seat optional\r\nLength: 10′\r\nWidth: 2.5′\r\nWeight: 44 lbs\r\nCapacity: 286 lbs\r\nAvailable in green, blue, yellow, and red.', 'kayak7.jpg'),
+(15, 'Ottertail Paddle', 143.2, 5, 'As H&H’s longest paddle, the Ottertail is perfect for days spent traversing deep lakes. Our Ottertail design is well-balanced and very responsive thanks to the elongated spine throughout the blade. This makes it ideal for experienced stern or solo paddlers who enjoy a longer blade that pushes a lot of water. It is also a great choice for bow paddlers looking for a smooth, effortless cadence.\r\n\r\nSolid cherry wood construction with a hand rubbed oil finish.\r\n\r\nHandcrafted by Hunter & Harris in Ontario, Canada.', 'paddle1.jpg'),
+(16, 'Beavertail Canoe Paddle', 165.2, 10, 'This beautiful, dual-wood canoe paddle may look like your grandfather’s paddle, but with layered construction and a protective rock guard, the Beavertail Paddle has more than classic good looks; it craves action.', 'paddle2.jpg'),
+(17, 'NRS PTE Economy Paddle', 36.95, 20, 'Your best, most affordable choice for a recreational rafting and canoeing paddle. The 20″ x 7 3/4″ ABS blade provides ample surface area for a full-bodied, powerful stroke. The 1″ aluminum shaft provides durability and is fully sheathed in polyethylene for a comfortable grip.\r\n\r\nWeight (at 60″): 28 oz.\r\n\r\nAvailable Paddle Sizes: 48″, 54″, 57″ 60″, 66″', 'paddle3.jpg'),
+(18, 'Double Bladed Paddle', 84.99, 4, 'A double-bladed kayak paddle for your paddle board that also works as a single bladed paddle', 'paddle4.png'),
+(19, 'PAGAIE ELITE RACE ', 329.99, 2, 'The Elite Race fixed paddle from REDWOODPADDLE is rigid and dynamic with its round tube and 100% Carbon composition. This is our stiffest paddle. With its excellent performance, it is specially designed for sporty rides. You will not suffer any loss of energy, powerful and light it will be a real asset for the most competitors.\r\n\r\nFor use on sports rides, we advise you to have it cut between +20cm and +23cm in relation to your height. Blade width 17.7cm - length 45cm - area 534cm2 • Blade inclination: 10° • Rigidity index 8/10 • Weight (+/-6%): 615 g uncut.', 'paddle5.jpg'),
+(20, 'Emergency Paddle', 29.99, 30, 'Telescopic Emergency Paddle\r\nIdeal for dinghies & liferafts. The paddle blade and palm grip are made of bright orange plastic to be easily visible.\r\n\r\nAnodised 22-25mm alloy shaft\r\nOnly 53cm long when collapsed\r\n2 position - extends to either 79cm or 107cm', 'paddle6.jpg');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
