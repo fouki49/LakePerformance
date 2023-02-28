@@ -73,8 +73,10 @@
 								</span>Paddle</a>
 						</li>
 					</ul>
-					<input type="search" class="form-control" placeholder="Product search" aria-label="Search">
-					<a href="#"><img style="height: 40px; width: 40px;" class="ms-2" src="{{asset('images/search.png')}}" alt=""/></input>
+					<form method="POST" action="{{ app.request.uri }}">
+						<input name="search_field" type="search" class="form-control" placeholder="Product search" aria-label="Search">
+						<a type="submit"><img style="height: 40px; width: 40px;" class="ms-2" src="{{asset('images/search.png')}}" alt=""/>
+					</form>
 				</a>
 			</div>
 			<a href="#!" class="text-white">

@@ -39,28 +39,47 @@ class ProduitRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Produit[] Returns an array of Produit objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findWithCriteria($category, $searchField)
+    {
+        $queryBuilder = $this->createQueryBuilder('p'); //SELECT * FROM produits p
 
-//    public function findOneBySomeField($value): ?Produit
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if ($searchField != null) {
+            $queryBuilder->andWhere('p.nom LIKE :searchFilter') // WHERE p.nom LIKE %{searchField}%
+                ->orWhere('p.description LIKE :searchFilter') // OR p.description LIKE %{searchField}%
+                ->setParameter('searchFilter', '%' . $searchField . '%');
+        }
+
+        if ($category != null) {
+            $queryBuilder->andWhere('p.mainCategorie = :mainCategorie')
+                ->setParameter('mainCategorie', $category);
+        }
+
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    //    /**
+    //     * @return Produit[] Returns an array of Produit objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('p.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Produit
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

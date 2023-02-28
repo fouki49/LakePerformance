@@ -10,11 +10,15 @@
 		class="row ">
 		{# TODO Faire en sorte que la card ne monte pas jusqu'en haut #}
 		<div class="col-2 sticky-top rounded-3 shadow p-3 mb-5 bg-body" style="height: 500px; top:100px;">
-			<ul class="mt-3" style="padding-top: 50px;">
-				<p class="fst-italic"><input class="me-2 form-check-input" type="radio" id="tout">Tout</p>
-				<p><input class="me-2 form-check-input" type="radio" id="tout">Canoe</p>
-				<p><input class="me-2 form-check-input" type="radio" id="tout">Kayak</p>
-				<p><input class="me-2 form-check-input" type="radio" id="tout">Paddle</p>
+			<ul class="" style="padding-top: 50px;">
+				<li style="list-style-type:none;">
+					<a class="fw-bold" style="text-decoration: none;" href="{{ path('app_home') }}">All Products</a>
+				</li>
+				{% for category in categories %}
+					<li style="list-style-type:none; ">
+						<a style="text-decoration: none;" href="{{ path('app_home', { category: category.idCategorie}) }}" class="me-2 ">{{ category.categorie }}</a>
+					</li>
+				{% endfor %}
 				<hr>
 				<p><input class="me-2 form-check-input" style="margin-top:7px;" type="radio" id="tout">Prix
 					<img src="{{asset('images/arrowUp.png')}}" style="height: 25px; margin-bottom: 7px;"/></p>
@@ -27,7 +31,7 @@
 				<div class="col-3 card mx-2 my-2 shadow p-3 mb-5 bg-body">
 					<div class="card-body">
 						<h5 class="card-title text-center" style="height: 75px;">{{ product.nom }}</h5>
-						<img class="justify-content-center" style="height: 200px;" src="{{asset('images/' ~ product.imagePath)}}" alt="">
+						<a class="product-modal" href="{{ path('product_modal', {idProduit: product.idProduit}) }}"><img class="justify-content-center" style="height: 200px;" src="{{asset('images/' ~ product.imagePath)}}" alt=""></a>
 						<hr>
 						<p class="fw-bold text-center mt-2">{{product.prix}}</p>
 						<div class="row justify-content-center">
@@ -43,6 +47,13 @@
 			{% endfor %}
 		</div>
 	</div>
+	<div class="modal" tabindex="-1" id="product-modal">
+		<div class="modal-dialog">
+			<div id="product-modal-content" class="modal-content"></div>
+		</div>
+	</div>
+{% endblock %}
 
-	{# <script href="{{asset('script/cardOver.js')}}"/> #}
+{% block javascripts %}
+	<script src="{{ asset('scripts/modal.product.js') }}"></script>
 {% endblock %}
