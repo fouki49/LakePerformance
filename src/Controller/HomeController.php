@@ -13,17 +13,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     private $em = null;
+
     #[Route('/', name: 'app_home')]
     public function index(Request $request, ManagerRegistry $doctrine): Response
     {
         $this->em = $doctrine->getManager();
 
-        $products = $this->retrieveAllProducts();
+        // $products = $this->retrieveAllProducts();
 
         $category = $request->query->get('category'); // $_GET['category']
-        $categories = $this->retrieveAllCategories();
-        $searchField = $request->request->get('search_field');
+        //j'ai aucune idée pourquoi ca marche quand je met query au lieu de request, j'ai chercher pendant des heure la solution
+        //je le laisse comme ca pour le moment, on dirait que mon POST dans method ne fonctionne pas donc il apparait dans mon URL Solution mettre query pour l'instant...
+        $searchField = $request->query->get('search_field');
         $products = $this->retrieveProductsFromCategory($category, $searchField);
+
+        $categories = $this->retrieveAllCategories();
 
         return $this->render('home/index.html.twig', [
             'products' => $products,
@@ -42,10 +46,10 @@ class HomeController extends AbstractController
         return $this->render('home/product.modal.twig', ['produit' => $produit]);
     }
 
-    private function retrieveAllProducts()
-    {
-        return $this->em->getRepository(Produit::class)->findAll();
-    }
+    // private function retrieveAllProducts()
+    // {
+    //     return $this->em->getRepository(Produit::class)->findAll();
+    // }
 
     private function retrieveAllCategories()
     {

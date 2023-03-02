@@ -5,7 +5,7 @@
 
 {% block content %}
 	{# TODO Faire en sorte que le nom change a chaque fois que je change de produit #}
-	<h1 class="mt-4 ">Canoe</h1>
+	<h1 class="mt-4 ">Products</h1>
 	<div
 		class="row ">
 		{# TODO Faire en sorte que la card ne monte pas jusqu'en haut #}
@@ -27,24 +27,28 @@
 			</ul>
 		</div>
 		<div class="row col-10 ms-2 justify-content-center">
-			{% for product in products %}
-				<div class="col-3 card mx-2 my-2 shadow p-3 mb-5 bg-body">
-					<div class="card-body">
-						<h5 class="card-title text-center" style="height: 75px;">{{ product.nom }}</h5>
-						<a class="product-modal" href="{{ path('product_modal', {idProduit: product.idProduit}) }}"><img class="justify-content-center" style="height: 200px;" src="{{asset('images/' ~ product.imagePath)}}" alt=""></a>
-						<hr>
-						<p class="fw-bold text-center mt-2">{{product.prix}}</p>
-						<div class="row justify-content-center">
-							<button class="btn btn-outline-secondary fw-bold shadow p-2" type="button">
-								Add in
-								<img style="height: 25px; margin-bottom: 3px;" class="" src="{{asset('images/basket.png')}}" alt=""/>
-							</button>
+			{% if products|length > 0 %}
+				{% for product in products %}
+					<div class="col-3 card mx-2 my-2 shadow p-3 mb-5 bg-body">
+						<div class="card-body">
+							<h5 class="card-title text-center" style="height: 75px;">{{ product.nom }}</h5>
+							<a class="product-modal" href="{{ path('product_modal', {idProduit: product.idProduit}) }}"><img class="justify-content-center" style="height: 200px;" src="{{asset('images/' ~ product.imagePath)}}" alt=""></a>
+							<hr>
+							<p class="fw-bold text-center mt-2">{{product.prix}}</p>
+							<div class="row justify-content-center">
+								<button class="btn btn-outline-secondary fw-bold shadow p-2" type="button">
+									Add in
+									<img style="height: 25px; margin-bottom: 3px;" class="" src="{{asset('images/basket.png')}}" alt=""/>
+								</button>
+							</div>
+							<p class="mt-2" style="color: gray;">In Stock:
+								{{product.quantiteEnStock}}</p>
 						</div>
-						<p class="mt-2" style="color: gray;">In Stock:
-							{{product.quantiteEnStock}}</p>
 					</div>
-				</div>
-			{% endfor %}
+				{% endfor %}
+			{% else %}
+				<p>No products fond with the search request</p>
+			{% endif %}
 		</div>
 	</div>
 	<div class="modal" tabindex="-1" id="product-modal">

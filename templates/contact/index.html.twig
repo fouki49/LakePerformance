@@ -1,35 +1,37 @@
 {% extends 'core/base.html.twig' %}
-
 {% block content %}
-	<style>
-		.example-wrapper {
-			margin: 1em auto;
-			max-width: 800px;
-			width: 95%;
-			font: 18px / 1.5 sans-serif;
-		}
-		.example-wrapper code {
-			background: #F5F5F5;
-			padding: 2px 6px;
-		}
-	</style>
+	<h1 class="mt-4">Contact Us</h1>
+	<div class="row justify-content-center mt-4">
+		<div class="col-5 rounded-3 shadow p-3 bg-body">
+			<div class="mapouter">
+				<div class="gmap_canvas">
+					<iframe width="400" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q=455%20Rue%20Fournier,%20Saint-J%C3%A9r%C3%B4me,%20QC%20J7Z%204V2&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+					<style>
+						.mapouter {
+							position: relative;
+							text-align: center;
+						}
+					</style>
+					<style>
+						.gmap_canvas {
+							overflow: hidden;
+							background: none !important;
 
-	<div class="example-wrapper">
-		<h1>Hello
-			{{ controller_name }}! ✅</h1>
-
-		This friendly message is coming from:
-		<ul>
-			<li>Your controller at
-				<code>
-					<a href="{{ 'D:/School/Session8/lakePerformance/src/Controller/ContactController.php'|file_link(0) }}">src/Controller/ContactController.php</a>
-				</code>
-			</li>
-			<li>Your template at
-				<code>
-					<a href="{{ 'D:/School/Session8/lakePerformance/templates/contact/index.html.twig'|file_link(0) }}">templates/contact/index.html.twig</a>
-				</code>
-			</li>
-		</ul>
+						}
+					</style>
+				</div>
+			</div>
+		</div>
+		<div class="col-6 rounded-3 shadow p-3 bg-body ms-2">
+			<P>LakePerformance Compagnie offers you a wide variety of choices when it comes to fun on the water. Choose one of our best canoe or kayak and treat yourself to the paddles that come with it. You can customize your controls to feel exclusive to your way of driving on the water. Looking forward to meeting your needs!</P>
+			<p class="fst-italic">LakePerformance</p>
+			<p class="fst-italic">455 Rue Fournier, Saint-Jérôme, QC J7Z 4V2</p>
+			<p>Email :
+				<a href="#">lakePerformance@example.com</a>
+			</p>
+			<p>Telephone number :
+				<a href="#">(450) 436-1580</a>
+			</p>
+		</div>
 	</div>
 {% endblock %}

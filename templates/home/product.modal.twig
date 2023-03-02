@@ -4,7 +4,16 @@
 </div>
 <div class="modal-body">
 	<p>{{ produit.description }}</p>
-</div>
-<div class="modal-footer">
-	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-</div>
+	<div>
+		{# TODO: Make it work #}
+		<p>
+			{{ produit.mainCategorie.categorie }}
+		</p>
+		<p>
+			Price :{{ produit.prix }}
+		</p>
+	</div>
+</p>
+<p>
+	In Stock :{{ produit.quantiteEnStock }}</p></div><div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>
