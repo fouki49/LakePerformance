@@ -15,11 +15,7 @@ class Categorie
     #[ORM\Column(name: 'idCategorie')]
     private ?int $idCategorie = null;
 
-    //pour l'ordre
-    // #[ORM\Column(name: 'sortOrder')]
-    // private ?int $sortOrder = null;
-
-    #[ORM\OneToMany(targetEntity:Produit::class, mappedBy: "mainCategorie", fetch: "LAZY")]
+    #[ORM\OneToMany(targetEntity: Produit::class, mappedBy: "mainCategorie", fetch: "LAZY")]
     private $produits;
 
     #[ORM\Column(length: 25)]
@@ -33,28 +29,5 @@ class Categorie
     public function getCategorie(): ?string
     {
         return $this->categorie;
-    }
-
-    public function setCategorie(string $categorie): self
-    {
-        $this->categorie = $categorie;
-
-        return $this;
-    }
-
-    // public function getSortOrder(): ?int
-    // {
-    //     return $this->sortOrder;
-    // }
-
-    // public function setSortOrder(int $sortOrder): self
-    // {
-    //     $this->sortOrder = $sortOrder;
-
-    //     return $this;
-    // }
-
-    public function getChampions() : Collection {
-        return $this->produits;
     }
 }

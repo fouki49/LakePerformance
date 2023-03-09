@@ -40,17 +40,9 @@ class Produit
         return $this->idProduit;
     }
 
-
     public function getNom(): ?string
     {
         return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
     }
 
     public function getPrix(): ?float
@@ -58,35 +50,14 @@ class Produit
         return $this->prix;
     }
 
-    public function setPrix(float $prix): self
-    {
-        $this->prix = $prix;
-
-        return $this;
-    }
-
     public function getQuantiteEnStock(): ?int
     {
         return $this->quantiteEnStock;
     }
 
-    public function setQuantiteEnStock(?int $quantiteEnStock): self
-    {
-        $this->quantiteEnStock = $quantiteEnStock;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
     }
 
     public function getMainCategorie(): ?Categorie
@@ -97,12 +68,5 @@ class Produit
     public function getImagePath(): ?string
     {
         return $this->imagePath;
-    }
-
-    public function setImagePath(string $imagePath): self
-    {
-        $this->imagePath = $imagePath;
-
-        return $this;
     }
 }

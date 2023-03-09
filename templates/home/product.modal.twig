@@ -3,17 +3,20 @@
 	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-	<p>{{ produit.description }}</p>
+	<label class="text-center">{{ produit.description }}</lable>
 	<div>
 		{# TODO: Make it work #}
 		<p>
 			{{ produit.mainCategorie.categorie }}
 		</p>
-		<p>
-			Price :{{ produit.prix }}
+		<p class="fw-bold">
+			Price :
+			{{ produit.prix }}
+			$
 		</p>
 	</div>
 </p>
 <p>
-	In Stock :{{ produit.quantiteEnStock }}</p></div><div class="modal-footer">
+	In Stock :
+	{{ produit.quantiteEnStock }}</p></div><div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>
