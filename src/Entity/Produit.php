@@ -30,9 +30,9 @@ class Produit
     private ?string $imagePath = null;
 
 
-    #[ORM\ManyToOne(targetEntity:Categorie::class, inversedBy:"produits", cascade:["persist"])]
-    #[ORM\JoinColumn(name:'idMainCategorie', referencedColumnName:'idCategorie')]
-    private $mainCategorie;
+    #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: "produits", cascade: ["persist"])]
+    #[ORM\JoinColumn(name: 'idCategorie', referencedColumnName: 'idCategorie')]
+    private $idCategorie;
 
 
     public function getIdProduit(): ?int
@@ -60,9 +60,9 @@ class Produit
         return $this->description;
     }
 
-    public function getMainCategorie(): ?Categorie
+    public function getIdCategorie(): ?Categorie
     {
-        return $this->mainCategorie;
+        return $this->idCategorie;
     }
 
     public function getImagePath(): ?string

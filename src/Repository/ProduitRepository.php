@@ -50,8 +50,8 @@ class ProduitRepository extends ServiceEntityRepository
         }
 
         if ($category != null) {
-            $queryBuilder->andWhere('p.mainCategorie = :mainCategorie')
-                ->setParameter('mainCategorie', $category);
+            $queryBuilder->andWhere('p.idCategorie = :idCategorie')
+                ->setParameter('idCategorie', $category);
         }
 
 

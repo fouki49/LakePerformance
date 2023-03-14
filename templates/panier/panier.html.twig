@@ -1,0 +1,42 @@
+{% extends 'core/base.html.twig' %}
+
+{% block content %}
+	{# - ({{ app.session.get('achatlist').achats | length }}) #}
+	<h1 class="mt-4">Basket of:
+		{{ name }}</h1>
+	{# <h1>{{produit.nom}}</h1> #}
+	<div class="row justify-content-center mt-4">
+
+		<div class="col-lg-8 rounded-3 shadow p-3 bg-body">
+			<h3>Your command</h3><hr>
+		</div>
+
+		<div class="col-3 rounded-3 shadow p-3 bg-body ms-2">
+			<h3>Summary</h3>
+			<div class="row ms-2 mt-4">
+				<h5 class="col-7 ">subtotal</h5>
+				<label class="col-4 fw-bold text-end">0.00 $</label><hr>
+			</div>
+			<div class="row ms-2 mt-4">
+				<h5 class="col-7">TPS</h5>
+				<label class="col-4 fw-bold text-end">0.00 $</label><hr>
+			</div>
+			<div class="row ms-2 mt-4">
+				<h5 class="col-7">TVQ</h5>
+				<label class="col-4 fw-bold text-end">0.00 $</label><hr>
+			</div>
+			<div class="row ms-2 mt-4">
+				<h5 class="col-7">Shipping cost</h5>
+				<label class="col-4 fw-bold text-end">0.00 $</label><hr>
+			</div>
+			<button class="btn btn-success w-100">Order</button>
+		</div>
+
+		<div class="row justify-content-center mt-4">
+			<button type="submit" href="{{ path('app_home') }}" class="col-2 btn btn-success">Quit</button>
+			<button class="col-2 btn btn-success ms-2">Update the basket</button>
+			<button class="col-2 btn btn-success ms-2">clear the basket</button>
+		</div>
+
+	</div>
+{% endblock %}
