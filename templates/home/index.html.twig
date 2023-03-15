@@ -35,15 +35,17 @@
 								<h5 class="card-title text-center" style="height: 75px;">{{ product.nom }}</h5>
 							</a>
 							<a class="product-modal" href="{{ path('product_modal', {idProduit: product.idProduit}) }}">
-								<img class="justify-content-center" style="height: 200px;" src="{{asset('images/' ~ product.imagePath)}}" alt="">
+								<img class="img-fluid" style="height: 200px;" src="{{asset('images/' ~ product.imagePath)}}" alt="">
 							</a>
 							<hr>
 							<p class="fw-bold text-center mt-2">{{product.prix}}</p>
 							<div class="row justify-content-center">
-								<button href="{{ path('app_ajout_panier', {idProduit: product.idProduit}) }}" class="btn btn-outline-secondary fw-bold shadow p-2" type="button">
-									Add in
-									<img style="height: 25px; margin-bottom: 3px;" class="" src="{{asset('images/basket.png')}}" alt=""/>
-								</button>
+								<form method="POST" action="{{ path('app_ajout_panier', {idProduit: product.idProduit}) }}">
+									<button class="btn btn-outline-secondary fw-bold shadow p-2" type="submit">
+										Add in
+										<img style="height: 25px; margin-bottom: 3px;" class="img-fluid" src="{{asset('images/basket.png')}}" alt=""/>
+									</button>
+								</form>
 							</div>
 							<p class="mt-2" style="color: gray;">In Stock:
 								{{product.quantiteEnStock}}</p>

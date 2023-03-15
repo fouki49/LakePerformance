@@ -10,17 +10,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PanierController extends AbstractController {
+class PanierController extends AbstractController
+{
     private $em = null;
     private $achatList;
     private $produit;
 
     #[Route('/panier', name: 'app_panier')]
-    public function index(Request $request) : Response {
+    public function index(Request $request): Response
+    {
         $this->initSession($request);
         $session = $request->getSession();
 
-      
+
 
         return $this->render('panier/panier.html.twig', [
             'name' => $session->get('name'),
@@ -28,24 +30,26 @@ class PanierController extends AbstractController {
         ]);
     }
 
-    #[Route('/panier/ajout/{idProduit}', name: 'app_ajout_panier',  methods:['POST'])]
-    public function addAchat($idProduit, Request $request, ManagerRegistry $doctrine) : Response {
+    #[Route('/panier/ajout/{idProduit}', name: 'app_ajout_panier',  methods: ['POST'])]
+    public function addAchat($idProduit, Request $request, ManagerRegistry $doctrine): Response
+    {
         $this->initSession($request);
         $post = $request->request->all();
 
         $this->em = $doctrine->getManager();
 
         $produit = $this->em->getRepository(Produit::class)->find($idProduit);
-        
+        $this->achatList->ajouterAchat(1, $produit);
 
         //Validation
-        if($post){}
+        if ($post) {
+        }
 
-        return $this->redirectToRoute('app_panier', ['produit' => $produit]);
-       
+        return $this->redirectToRoute('app_panier');
     }
 
-    private function initSession(Request $request) {
+    private function initSession(Request $request)
+    {
 
         $session = $request->getSession();
         //TODO: eventuellement mettre le nom de l'utilisateur connecter
@@ -54,8 +58,6 @@ class PanierController extends AbstractController {
         $this->achatList = $session->get('achatlist', new Panier());
 
         $session->set('achatlist', $this->achatList);
-
-
     }
 
     //permet d'avoir acces a un produit

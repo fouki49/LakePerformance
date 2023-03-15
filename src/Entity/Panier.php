@@ -7,20 +7,20 @@ class Panier
 
     private $achats = [];
 
-    public function ajouterAchat($quantite, $prixAchat)
+    public function ajouterAchat($quantite, $produit)
     {
-        $achat = new Achat($quantite, $prixAchat);
+        $achat = new Achat($quantite, $produit);
         $this->achats[] = $achat;
     }
 
     public function supprimerAchat($index)
     {
-        if(array_key_exists($index, $this->achats)) {
+        if (array_key_exists($index, $this->achats)) {
             unset($this->achats[$index]);
         }
     }
 
-    public function getAchat()
+    public function getAchats()
     {
         return $this->achats;
     }

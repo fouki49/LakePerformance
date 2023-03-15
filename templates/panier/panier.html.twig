@@ -4,39 +4,77 @@
 	{# - ({{ app.session.get('achatlist').achats | length }}) #}
 	<h1 class="mt-4">Basket of:
 		{{ name }}</h1>
-	{# <h1>{{produit.nom}}</h1> #}
 	<div class="row justify-content-center mt-4">
 
-		<div class="col-lg-8 rounded-3 shadow p-3 bg-body">
+		<div class="col-8 rounded-3 shadow p-3 bg-body">
 			<h3>Your command</h3><hr>
+			{% for achat in achatlist.achats %}
+				<table class="table table-bordered">
+					<thead>
+						<tr class="bg-dark fw-bold text-white text-center">
+							<th scope="col">
+								Product
+							</th>
+							<th scope="col">
+								Name
+							</th>
+							<th scope="col">
+								Price
+							</th>
+							<th scope="col">
+								Quantity
+							</th>
+							<th scope="col">
+								Total
+							</th>
+							<th scope="col">
+								Interaction
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="text-center align-middle" style="width: 95px;">
+								<img class="img-fluid" style="height: 80px;" src="{{ asset_if('images/' ~ achat.produit.imagePath, 'images/imageNonDispo.png' )}}" alt="product">
+							</td>
+							<td class="text-center align-middle" style="">
+								<label class="fw-bold ">{{achat.produit.nom}}</label>
+							</td>
+							<td class="text-center align-middle" style="">
+								<label class="fw-bold ">{{achat.produit.prix}}
+									$</label>
+							</td>
+							<td class="text-center align-middle">
+								<input style="width: 50px;" type="number" value="{{achat.getQauntite()}}">
+							</td>
+						</tr>
+					</tbody>
+					{# {{dump(achat.getQauntite())}} #}
+				</table>
+			{% endfor %}
 		</div>
+
 
 		<div class="col-3 rounded-3 shadow p-3 bg-body ms-2">
 			<h3>Summary</h3>
 			<div class="row ms-2 mt-4">
 				<h5 class="col-7 ">subtotal</h5>
-				<label class="col-4 fw-bold text-end">0.00 $</label><hr>
-			</div>
+				<label class="col-4 fw-bold text-end">0.00 $</label><hr></div>
 			<div class="row ms-2 mt-4">
 				<h5 class="col-7">TPS</h5>
-				<label class="col-4 fw-bold text-end">0.00 $</label><hr>
-			</div>
+				<label class="col-4 fw-bold text-end">0.00 $</label><hr></div>
 			<div class="row ms-2 mt-4">
 				<h5 class="col-7">TVQ</h5>
-				<label class="col-4 fw-bold text-end">0.00 $</label><hr>
-			</div>
+				<label class="col-4 fw-bold text-end">0.00 $</label><hr></div>
 			<div class="row ms-2 mt-4">
 				<h5 class="col-7">Shipping cost</h5>
-				<label class="col-4 fw-bold text-end">0.00 $</label><hr>
-			</div>
+				<label class="col-4 fw-bold text-end">0.00 $</label><hr></div>
 			<button class="btn btn-success w-100">Order</button>
 		</div>
-
 		<div class="row justify-content-center mt-4">
 			<button type="submit" href="{{ path('app_home') }}" class="col-2 btn btn-success">Quit</button>
 			<button class="col-2 btn btn-success ms-2">Update the basket</button>
 			<button class="col-2 btn btn-success ms-2">clear the basket</button>
 		</div>
-
 	</div>
 {% endblock %}
