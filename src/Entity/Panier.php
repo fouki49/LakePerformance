@@ -4,19 +4,20 @@ namespace App\Entity;
 
 class Panier
 {
-
+    
     private $achats = [];
 
     public function ajouterAchat($quantite, $produit)
     {
         $achat = new Achat($quantite, $produit);
         $this->achats[] = $achat;
+        
     }
 
-    public function supprimerAchat($index)
+    public function supprimerAchat($idProduit)
     {
-        if (array_key_exists($index, $this->achats)) {
-            unset($this->achats[$index]);
+        if (array_key_exists($idProduit, $this->achats)) {
+            unset($this->achats[$idProduit]);
         }
     }
 

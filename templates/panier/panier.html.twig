@@ -8,31 +8,32 @@
 
 		<div class="col-8 rounded-3 shadow p-3 bg-body">
 			<h3>Your command</h3><hr>
-			{% for achat in achatlist.achats %}
-				<table class="table table-bordered">
-					<thead>
-						<tr class="bg-dark fw-bold text-white text-center">
-							<th scope="col">
-								Product
-							</th>
-							<th scope="col">
-								Name
-							</th>
-							<th scope="col">
-								Price
-							</th>
-							<th scope="col">
-								Quantity
-							</th>
-							<th scope="col">
-								Total
-							</th>
-							<th scope="col">
-								Interaction
-							</th>
-						</tr>
-					</thead>
-					<tbody>
+			<table class="table table-bordered">
+				<thead>
+					<tr class="bg-dark fw-bold text-white text-center">
+						<th scope="col">
+							Product
+						</th>
+						<th scope="col">
+							Name
+						</th>
+						<th scope="col">
+							Price
+						</th>
+						<th scope="col">
+							Quantity
+						</th>
+						<th scope="col">
+							Total
+						</th>
+						<th scope="col">
+							Interaction
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for key, achat in achatlist.achats %}
+
 						<tr>
 							<td class="text-center align-middle" style="width: 95px;">
 								<img class="img-fluid" style="height: 80px;" src="{{ asset_if('images/' ~ achat.produit.imagePath, 'images/imageNonDispo.png' )}}" alt="product">
@@ -47,11 +48,29 @@
 							<td class="text-center align-middle">
 								<input style="width: 50px;" type="number" value="{{achat.getQauntite()}}">
 							</td>
+							<td class="text-center align-middle">
+								<label class="fw-bold ">{{achat.produit.prix}}
+									$</td>
+							</td>
+							<td class="text-center align-middle">
+
+								<a class="product-modal" href="{{ path('product_modal', {idProduit: achat.produit.idProduit}) }}">
+									<span style="font-size: 1.2em; color: Mediumslateblue;">
+										<i class="fa-sharp fa-solid fa-eye"></i>
+									</span>
+								</a>
+
+								<a class="ms-3" href="{{ path('app_delete_achat', { idProduit: key }) }}">
+									<span style="font-size: 1.2em; color: Tomato;">
+										<i class="fa-sharp fa-solid fa-trash"></i>
+									</span>
+								</a>
+							</td>
 						</tr>
-					</tbody>
-					{# {{dump(achat.getQauntite())}} #}
-				</table>
-			{% endfor %}
+					{% endfor %}
+
+				</tbody>
+			</table>
 		</div>
 
 
@@ -68,13 +87,27 @@
 				<label class="col-4 fw-bold text-end">0.00 $</label><hr></div>
 			<div class="row ms-2 mt-4">
 				<h5 class="col-7">Shipping cost</h5>
-				<label class="col-4 fw-bold text-end">0.00 $</label><hr></div>
+				<label class="col-4 fw-bold text-end">{{ path() }}</label><hr></div>
 			<button class="btn btn-success w-100">Order</button>
 		</div>
-		<div class="row justify-content-center mt-4">
-			<button type="submit" href="{{ path('app_home') }}" class="col-2 btn btn-success">Quit</button>
+		<form action="{{ path('app_update_achat') }}" class="row justify-content-center mt-4" method="POST">
+			<a href="{{ path('app_home') }}" class="col-2 btn btn-success">
+				Quit<i class="ms-3 fa-solid fa-person-walking-arrow-right"></i>
+			</a>
 			<button class="col-2 btn btn-success ms-2">Update the basket</button>
-			<button class="col-2 btn btn-success ms-2">clear the basket</button>
+			<button name="action" value="empty" type="submit" class="col-2 btn btn-success ms-2">clear the basket</button>
+		</form>
+
+	</div>
+
+	{# Pour le modal #}
+	<div class="modal" tabindex="-1" id="product-modal">
+		<div class="modal-dialog">
+			<div id="product-modal-content" class="modal-content"></div>
 		</div>
 	</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('scripts/modal.product.js') }}"></script>
 {% endblock %}

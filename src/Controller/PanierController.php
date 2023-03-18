@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Constantes;
 use App\Entity\Panier;
 use App\Entity\Produit;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,17 +17,18 @@ class PanierController extends AbstractController
     private $achatList;
     private $produit;
 
+
     #[Route('/panier', name: 'app_panier')]
     public function index(Request $request): Response
     {
         $this->initSession($request);
         $session = $request->getSession();
 
-
-
         return $this->render('panier/panier.html.twig', [
             'name' => $session->get('name'),
-            'achatlist' => $this->achatList
+            'achatlist' => $this->achatList,
+            // TODO: Acceder au Constantes
+            // 'fraislivraison' => $;
         ]);
     }
 
@@ -47,6 +49,40 @@ class PanierController extends AbstractController
 
         return $this->redirectToRoute('app_panier');
     }
+
+
+    #[Route('/panier/supprimer/{idProduit}', name: 'app_delete_achat')]
+    public function deleteAchat($idProduit, Request $request): Response
+    {
+        $this->initSession($request);
+
+        $this->achatList->supprimerAchat($idProduit);
+
+        return $this->redirectToRoute('app_panier');
+    }
+
+    #[Route('/panier/update', name: 'app_update_achat', methods: ['POST'])]
+    public function updateTodo(Request $request): Response
+    {
+        // $post = $request->request->all();
+        $this->initSession($request);
+
+        $action = $request->request->get('action');
+
+        // if($action == "update") {
+        //     $this->todoList->update($post);
+        //     $this->addFlash('todo', 
+        //         new Notification('success', 'Tâches sauvegardées', NotificationColor::INFO));
+        // } else 
+        if ($action == "empty") {
+            $session = $request->getSession();
+            $session->remove('achatlist');
+        }
+
+
+        return $this->redirectToRoute('app_panier');
+    }
+
 
     private function initSession(Request $request)
     {
