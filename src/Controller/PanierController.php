@@ -16,19 +16,21 @@ class PanierController extends AbstractController
     private $em = null;
     private $achatList;
     private $produit;
-
+    private $total;
 
     #[Route('/panier', name: 'app_panier')]
     public function index(Request $request): Response
     {
         $this->initSession($request);
         $session = $request->getSession();
+        $fraisLivraison = Constantes::FRAIS_LIVRAISON;
+        $this->retrieveAllAchatListPrices();
 
         return $this->render('panier/panier.html.twig', [
             'name' => $session->get('name'),
             'achatlist' => $this->achatList,
-            // TODO: Acceder au Constantes
-            // 'fraislivraison' => $;
+            'fraislivraison' => $fraisLivraison,
+            'total' => $this->total
         ]);
     }
 
@@ -41,7 +43,7 @@ class PanierController extends AbstractController
         $this->em = $doctrine->getManager();
 
         $produit = $this->em->getRepository(Produit::class)->find($idProduit);
-        $this->achatList->ajouterAchat(1, $produit);
+        $this->achatList->ajouterAchat(1, $produit->getPrix(), $produit);
 
         //Validation
         if ($post) {
@@ -100,5 +102,17 @@ class PanierController extends AbstractController
     public function getProduit(): ?Produit
     {
         return $this->produit;
+    }
+
+    public function retrieveAllAchatListPrices()
+    {
+        foreach ($this->achatList->getAchats() as $achat) {
+            // echo "allo";
+            // var_dump($this->achatList);
+            // die();
+            $prix = $achat->getPrixAchat();
+            $this->total += $prix;
+        }
+        return $this->redirectToRoute('app_panier');
     }
 }

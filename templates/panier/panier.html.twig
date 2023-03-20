@@ -10,7 +10,7 @@
 			<h3>Your command</h3><hr>
 			<table class="table table-bordered">
 				<thead>
-					<tr class="bg-dark fw-bold text-white text-center">
+					<tr class="bg-secondary fw-bold text-white text-center">
 						<th scope="col">
 							Product
 						</th>
@@ -31,28 +31,28 @@
 						</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody class="text-center align-middle">
 					{% for key, achat in achatlist.achats %}
-
+						{# {{ dump(achatlist)}} #}
 						<tr>
-							<td class="text-center align-middle" style="width: 95px;">
+							<td class="" style="width: 95px;">
 								<img class="img-fluid" style="height: 80px;" src="{{ asset_if('images/' ~ achat.produit.imagePath, 'images/imageNonDispo.png' )}}" alt="product">
 							</td>
-							<td class="text-center align-middle" style="">
+							<td class="" style="">
 								<label class="fw-bold ">{{achat.produit.nom}}</label>
 							</td>
-							<td class="text-center align-middle" style="">
+							<td class="" style="">
 								<label class="fw-bold ">{{achat.produit.prix}}
 									$</label>
 							</td>
-							<td class="text-center align-middle">
-								<input style="width: 50px;" type="number" value="{{achat.getQauntite()}}">
+							<td class="">
+								<input class="text-center" style="width: 40px;" type="number" value="{{ achat.getQuantite() }}">
 							</td>
-							<td class="text-center align-middle">
+							<td class="">
 								<label class="fw-bold ">{{achat.produit.prix}}
 									$</td>
 							</td>
-							<td class="text-center align-middle">
+							<td class="">
 
 								<a class="product-modal" href="{{ path('product_modal', {idProduit: achat.produit.idProduit}) }}">
 									<span style="font-size: 1.2em; color: Mediumslateblue;">
@@ -77,8 +77,14 @@
 		<div class="col-3 rounded-3 shadow p-3 bg-body ms-2">
 			<h3>Summary</h3>
 			<div class="row ms-2 mt-4">
-				<h5 class="col-7 ">subtotal</h5>
-				<label class="col-4 fw-bold text-end">0.00 $</label><hr></div>
+				<h5 class="col-7 ">Subtotal</h5>
+				<label class="col-4 fw-bold text-end">
+					{% if total == 0 %}
+						0.00
+					{% endif %}
+					{{ total }}
+					$</label><hr>
+			</div>
 			<div class="row ms-2 mt-4">
 				<h5 class="col-7">TPS</h5>
 				<label class="col-4 fw-bold text-end">0.00 $</label><hr></div>
@@ -87,15 +93,26 @@
 				<label class="col-4 fw-bold text-end">0.00 $</label><hr></div>
 			<div class="row ms-2 mt-4">
 				<h5 class="col-7">Shipping cost</h5>
-				<label class="col-4 fw-bold text-end">{{ path() }}</label><hr></div>
+				<label class="col-4 fw-bold text-end">{{ fraislivraison }}
+					$</label><hr></div>
+			<div class="row ms-2 mt-4 ">
+				<h5 class="col-7 text-primary fw-bold">Totals</h5>
+				<label class="col-4 fw-bold text-end ">
+					0.00
+																																																												$</label><hr></div>
 			<button class="btn btn-success w-100">Order</button>
 		</div>
 		<form action="{{ path('app_update_achat') }}" class="row justify-content-center mt-4" method="POST">
-			<a href="{{ path('app_home') }}" class="col-2 btn btn-success">
+			<a href="{{ path('app_home') }}" class="col-2 fw-bold btn btn-secondary">
 				Quit<i class="ms-3 fa-solid fa-person-walking-arrow-right"></i>
 			</a>
-			<button class="col-2 btn btn-success ms-2">Update the basket</button>
-			<button name="action" value="empty" type="submit" class="col-2 btn btn-success ms-2">clear the basket</button>
+			<button class="col-2 fw-bold btn btn-secondary ms-2">Update the basket
+				<i class="ms-3 fa-sharp fa-solid fa-pen-to-square"></i>
+			</button>
+
+			<button name="action" value="empty" type="submit" class="col-2 fw-bold btn btn-secondary ms-2">Clear the basket
+				<i class="ms-3 fa-sharp fa-solid fa-trash"></i>
+			</button>
 		</form>
 
 	</div>

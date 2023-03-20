@@ -7,9 +7,9 @@ class Panier
     
     private $achats = [];
 
-    public function ajouterAchat($quantite, $produit)
+    public function ajouterAchat($quantite,$prixAchat, $produit)
     {
-        $achat = new Achat($quantite, $produit);
+        $achat = new Achat($quantite, $prixAchat, $produit);
         $this->achats[] = $achat;
         
     }

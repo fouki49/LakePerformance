@@ -9,18 +9,19 @@ class Achat
     private $prixAchat;
     private $produit;
 
-    public function __construct($quantite, $produit)
+    public function __construct($quantite, $prixAchat, $produit)
     {
         $this->quantite = $quantite;
+        $this->prixAchat = $prixAchat;
         $this->produit = $produit;
     }
 
-    public function getQauntite()
+    public function getQuantite()
     {
         return $this->quantite;
     }
 
-    public function getprixAchat()
+    public function getPrixAchat()
     {
         return $this->prixAchat;
     }

@@ -4,7 +4,7 @@ namespace App\Entity;
 
 class Constantes
 {
-    private $FRAIS_LIVRAISON = 7.99;
-    private $TPS;
-    private $TVQ;
+    public const FRAIS_LIVRAISON = 7.99;
+    public const TPS = 0.05;
+    public const TVQ = 0.09975;
 }
