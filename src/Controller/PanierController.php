@@ -17,6 +17,9 @@ class PanierController extends AbstractController
     private $achatList;
     private $produit;
     private $total;
+    private $tps;
+    private $tvq;
+    private $sommeTotal;
 
     #[Route('/panier', name: 'app_panier')]
     public function index(Request $request): Response
@@ -25,12 +28,18 @@ class PanierController extends AbstractController
         $session = $request->getSession();
         $fraisLivraison = Constantes::FRAIS_LIVRAISON;
         $this->retrieveAllAchatListPrices();
+        $this->calculTPS($this->total);
+        $this->calculTVQ($this->total);
+        $this->calculSommeTotal();
 
         return $this->render('panier/panier.html.twig', [
             'name' => $session->get('name'),
             'achatlist' => $this->achatList,
             'fraislivraison' => $fraisLivraison,
-            'total' => $this->total
+            'total' => $this->total,
+            'tps' => $this->tps,
+            'tvq' => $this->tvq,
+            'sommetotal' => $this->sommeTotal
         ]);
     }
 
@@ -107,12 +116,24 @@ class PanierController extends AbstractController
     public function retrieveAllAchatListPrices()
     {
         foreach ($this->achatList->getAchats() as $achat) {
-            // echo "allo";
-            // var_dump($this->achatList);
-            // die();
             $prix = $achat->getPrixAchat();
             $this->total += $prix;
         }
         return $this->redirectToRoute('app_panier');
+    }
+
+    public function calculTPS($total)
+    {
+        $this->tps = round($total * Constantes::TPS, 2);
+    }
+
+    public function calculTVQ($total)
+    {
+        $this->tvq = round($total * Constantes::TVQ, 2);
+    }
+
+    public function calculSommeTotal()
+    {
+        $this->sommeTotal = $this->total + $this->tps + $this->tvq + Constantes::FRAIS_LIVRAISON;
     }
 }

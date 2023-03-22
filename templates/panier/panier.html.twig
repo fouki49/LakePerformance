@@ -71,60 +71,77 @@
 
 				</tbody>
 			</table>
+			<form action="{{ path('app_update_achat') }}" class="row justify-content-center mt-4" method="POST">
+				<a href="{{ path('app_home') }}" class="col-3 fw-bold btn btn-secondary">
+					Quit<i class="ms-3 fa-solid fa-person-walking-arrow-right"></i>
+				</a>
+				<button class="col-3 fw-bold btn btn-secondary ms-2">Update the basket
+					<i class="ms-3 fa-sharp fa-solid fa-pen-to-square"></i>
+				</button>
+
+				<button name="action" value="empty" type="submit" class="col-3 fw-bold btn btn-secondary ms-2">Clear the basket
+					<i class="ms-3 fa-sharp fa-solid fa-trash"></i>
+				</button>
+			</form>
 		</div>
 
 
 		<div class="col-3 rounded-3 shadow p-3 bg-body ms-2">
 			<h3>Summary</h3>
 			<div class="row ms-2 mt-4">
-				<h5 class="col-7 ">Subtotal</h5>
-				<label class="col-4 fw-bold text-end">
+				<h5 class="col-6 ">Subtotal</h5>
+				<label class="col-5 fw-bold text-end">
 					{% if total == 0 %}
 						0.00
 					{% endif %}
 					{{ total }}
-					$</label><hr>
+					$
+				</label><hr>
 			</div>
 			<div class="row ms-2 mt-4">
-				<h5 class="col-7">TPS</h5>
-				<label class="col-4 fw-bold text-end">0.00 $</label><hr></div>
+				<h5 class="col-6">TPS</h5>
+				<label class="col-5 fw-bold text-end">
+					{% if total == 0 %}
+						0.00
+					{% endif %}
+					{{ tps }}
+					$
+				</label><hr></div>
 			<div class="row ms-2 mt-4">
-				<h5 class="col-7">TVQ</h5>
-				<label class="col-4 fw-bold text-end">0.00 $</label><hr></div>
+				<h5 class="col-6">TVQ</h5>
+				<label class="col-5 fw-bold text-end">
+					{% if total == 0 %}
+						0.00
+					{% endif %}
+					{{ tvq }}
+					$
+				</label><hr></div>
 			<div class="row ms-2 mt-4">
-				<h5 class="col-7">Shipping cost</h5>
-				<label class="col-4 fw-bold text-end">{{ fraislivraison }}
+				<h5 class="col-6">Shipping cost</h5>
+				<label class="col-5 fw-bold text-end">{{ fraislivraison }}
 					$</label><hr></div>
 			<div class="row ms-2 mt-4 ">
-				<h5 class="col-7 text-primary fw-bold">Totals</h5>
-				<label class="col-4 fw-bold text-end ">
-					0.00
-																																																												$</label><hr></div>
-			<button class="btn btn-success w-100">Order</button>
+				<h5 class="col-6 text-primary fw-bold">Totals</h5>
+				<label class="col-5 fw-bold text-end ">
+					{% if total == 0 %}
+						0.00
+					{% endif %}
+					{{ sommetotal }}
+					$
+				</label>
+				<button class="btn mt-4 btn-success w-100">Order</button>
+			</div>
+
+
 		</div>
-		<form action="{{ path('app_update_achat') }}" class="row justify-content-center mt-4" method="POST">
-			<a href="{{ path('app_home') }}" class="col-2 fw-bold btn btn-secondary">
-				Quit<i class="ms-3 fa-solid fa-person-walking-arrow-right"></i>
-			</a>
-			<button class="col-2 fw-bold btn btn-secondary ms-2">Update the basket
-				<i class="ms-3 fa-sharp fa-solid fa-pen-to-square"></i>
-			</button>
 
-			<button name="action" value="empty" type="submit" class="col-2 fw-bold btn btn-secondary ms-2">Clear the basket
-				<i class="ms-3 fa-sharp fa-solid fa-trash"></i>
-			</button>
-		</form>
-
-	</div>
-
-	{# Pour le modal #}
-	<div class="modal" tabindex="-1" id="product-modal">
-		<div class="modal-dialog">
-			<div id="product-modal-content" class="modal-content"></div>
+		{# Pour le modal #}
+		<div class="modal" tabindex="-1" id="product-modal">
+			<div class="modal-dialog">
+				<div id="product-modal-content" class="modal-content"></div>
+			</div>
 		</div>
-	</div>
-{% endblock %}
-
-{% block javascripts %}
-	<script src="{{ asset('scripts/modal.product.js') }}"></script>
-{% endblock %}
+	{% endblock %}
+	{% block javascripts %}
+		<script src="{{ asset('scripts/modal.product.js') }}"></script>
+	{% endblock %}
