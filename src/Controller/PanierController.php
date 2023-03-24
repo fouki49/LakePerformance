@@ -20,6 +20,7 @@ class PanierController extends AbstractController
     private $tps;
     private $tvq;
     private $sommeTotal;
+    private $ajusterPrix;
 
 
     #[Route('/panier', name: 'app_panier')]
@@ -101,7 +102,7 @@ class PanierController extends AbstractController
     }
 
     #[Route('/panier/update', name: 'app_update_achat', methods: ['POST'])]
-    public function updateTodo(Request $request): Response
+    public function updateAchatPanier(Request $request): Response
     {
         $post = $request->request->all();
         $this->initSession($request);
@@ -111,7 +112,7 @@ class PanierController extends AbstractController
         if($action == "update") {
             $this->achatList->updateAchat($post);
             // $this->addFlash('todo', 
-            //     new Notification('success', 'Tâches sauvegardées', NotificationColor::INFO));
+            // new Notification('success', 'Tâches sauvegardées', NotificationColor::INFO));
         } else if($action == "empty") {
             $session = $request->getSession();
             $session->remove('achatlist');

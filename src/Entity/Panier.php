@@ -25,13 +25,11 @@ class Panier
     {
         if(count($this->achats) > 0) {
             $achatQauntite = $newAchat["txtQuantiteAchat"];
-            $prixAchat = $newAchat["lblPrixAchat"];
     
             foreach($this->achats as $key => $achat) {
                 $newQuantite = $achatQauntite[$key];
                 //TODO : faire en sorte je pense qu'on multiplie le prix par la quantite
-                $newPrixAchat = $prixAchat[$key] * $achatQauntite[$key];
-                $achat->update($newQuantite, $newPrixAchat);
+            $achat->updateAchat($newQuantite);
             }
         }
     }

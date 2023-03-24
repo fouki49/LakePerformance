@@ -2,12 +2,12 @@
 
 {% block content %}
 	{# - ({{ app.session.get('achatlist').achats | length }}) #}
-	<h1 class="mt-4">Basket of:
-		{{ name }}</h1>
+	{# <h1 class="mt-4">Basket of:
+		{{ name }}</h1> #}
 	<div class="row justify-content-center mt-4">
 
 		<div class="col-8 rounded-3 shadow p-3 bg-body">
-			<h3>Your command</h3><hr>
+			<h3 class="fst-italic fw-bold">Your command</h3><hr>
 			<table class="table table-bordered">
 				<thead>
 					<tr class="bg-secondary fw-bold text-white text-center">
@@ -32,46 +32,47 @@
 					</tr>
 				</thead>
 				<tbody class="text-center align-middle">
-					{% for key, achat in achatlist.achats %}
-						{{ dump(achatlist.achats) }}
-						<tr>
-							<td class="" style="width: 95px;">
-								<img class="img-fluid" style="height: 80px;" src="{{ asset_if('images/' ~ achat.produit.imagePath, 'images/imageNonDispo.png' )}}" alt="product">
-							</td>
-							<td class="" style="">
-								<label class="fw-bold ">{{achat.produit.nom}}</label>
-							</td>
-							<td class="" style="">
-								<label class="fw-bold ">{{achat.produit.prix}}
-									$</label>
-							</td>
-							<td class="">
-								<input name="{{ 'txtQuantiteAchat[' ~ key ~ ']' }}" type="number" class="text-center" style="width: 40px;"  value="{{ achat.getQuantite() }}">
-							</td>
-							<td class="">
-								<label name="{{ 'lblPrixAchat[' ~ key ~ ']' }}" class="fw-bold ">{{achat.produit.prix}}
-									$</td>
-							</td>
-							<td class="">
+					<form action="{{ path('app_update_achat') }}" method="POST">
+						{% for key, achat in achatlist.achats %}
+							{# {{ dump(achatlist.achats) }} #}
+							<tr>
+								<td class="" style="width: 95px;">
+									<img class="img-fluid" style="height: 80px;" src="{{ asset_if('images/' ~ achat.produit.imagePath, 'images/imageNonDispo.png' )}}" alt="product">
+								</td>
+								<td class="" style="">
+									<label class="fw-bold ">{{achat.produit.nom}}</label>
+								</td>
+								<td class="" style="">
+									<label class="fw-bold ">{{achat.produit.prix}}
+										$</label>
+								</td>
+								<td class="">
+									<input name="{{ 'txtQuantiteAchat[' ~ key ~ ']' }}" type="number" class="text-center" style="width: 40px;" value="{{ achat.getQuantite() }}">
+								</td>
+								<td class="">
+									<label class="fw-bold " value="">{{ achat.getPrixAchat()|number_format(2, '.', ',') }}
+										$</td>
+								</td>
+								<td class="">
 
-								<a class="product-modal" href="{{ path('product_modal', {idProduit: achat.produit.idProduit}) }}">
-									<span style="font-size: 1.2em; color: Mediumslateblue;">
-										<i class="fa-sharp fa-solid fa-eye"></i>
-									</span>
-								</a>
+									<a class="product-modal" href="{{ path('product_modal', {idProduit: achat.produit.idProduit}) }}">
+										<span style="font-size: 1.2em; color: Mediumslateblue;">
+											<i class="fa-sharp fa-solid fa-eye"></i>
+										</span>
+									</a>
 
-								<a class="ms-3" href="{{ path('app_delete_achat', { idProduit: key }) }}">
-									<span style="font-size: 1.2em; color: Tomato;">
-										<i class="fa-sharp fa-solid fa-trash"></i>
-									</span>
-								</a>
-							</td>
-						</tr>
-					{% endfor %}
-
+									<a class="ms-3" href="{{ path('app_delete_achat', { idProduit: key }) }}">
+										<span style="font-size: 1.2em; color: Tomato;">
+											<i class="fa-sharp fa-solid fa-trash"></i>
+										</span>
+									</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
 				</tbody>
 			</table>
-			<form action="{{ path('app_update_achat') }}" class="row justify-content-center mt-4" method="POST">
+			<div class="row justify-content-center mt-4">
 				<a href="{{ path('app_home') }}" class="col-3 fw-bold btn btn-secondary">
 					Quit<i class="ms-3 fa-solid fa-person-walking-arrow-right"></i>
 				</a>
@@ -82,66 +83,71 @@
 				<button name="action" value="empty" type="submit" class="col-3 fw-bold btn btn-secondary ms-2">Clear the basket
 					<i class="ms-3 fa-sharp fa-solid fa-trash"></i>
 				</button>
-			</form>
-		</div>
-
-
-		<div class="col-3 rounded-3 shadow p-3 bg-body ms-2">
-			<h3>Summary</h3>
-			<div class="row ms-2 mt-4">
-				<h5 class="col-6 ">Subtotal</h5>
-				<label class="col-5 fw-bold text-end">
-					{% if total == 0 %}
-						0.00
-					{% endif %}
-					{{ total }}
-					$
-				</label><hr>
 			</div>
-			<div class="row ms-2 mt-4">
-				<h5 class="col-6">TPS</h5>
-				<label class="col-5 fw-bold text-end">
-					{% if total == 0 %}
-						0.00
-					{% endif %}
-					{{ tps }}
-					$
-				</label><hr></div>
-			<div class="row ms-2 mt-4">
-				<h5 class="col-6">TVQ</h5>
-				<label class="col-5 fw-bold text-end">
-					{% if total == 0 %}
-						0.00
-					{% endif %}
-					{{ tvq }}
-					$
-				</label><hr></div>
-			<div class="row ms-2 mt-4">
-				<h5 class="col-6">Shipping cost</h5>
-				<label class="col-5 fw-bold text-end">{{ fraislivraison }}
-					$</label><hr></div>
-			<div class="row ms-2 mt-4 ">
-				<h5 class="col-6 text-primary fw-bold">Totals</h5>
-				<label class="col-5 fw-bold text-end ">
-					{% if total == 0 %}
-						0.00
-					{% endif %}
-					{{ sommetotal }}
-					$
-				</label>
-				<button class="btn mt-4 btn-success w-100">Order</button>
-			</div>
+		</form>
+	</div>
 
 
+	<div class="col-3 rounded-3 shadow p-3 bg-body ms-2">
+		<h3 class="fst-italic fw-bold">Summary</h3><hr>
+		<div class="row ms-2 mt-4">
+			<h5 class="col-6 ">Subtotal</h5>
+			<label class="col-5 fw-bold text-end">
+				{% if total == 0 %}
+					0.00
+				{% endif %}
+				{{ total|number_format(2, '.', ',') }}
+				$
+			</label><hr>
 		</div>
-
-		{# Pour le modal #}
-		<div class="modal" tabindex="-1" id="product-modal">
-			<div class="modal-dialog">
-				<div id="product-modal-content" class="modal-content"></div>
+		<div class="row ms-2 mt-4">
+			<h5 class="col-6">TPS</h5>
+			<label class="col-5 fw-bold text-end">
+				{% if total == 0 %}
+					0.00
+				{% endif %}
+				{{ tps|number_format(2, '.', ',') }}
+				$
+			</label><hr></div>
+		<div class="row ms-2 mt-4">
+			<h5 class="col-6">TVQ</h5>
+			<label class="col-5 fw-bold text-end">
+				{% if total == 0 %}
+					0.00
+				{% endif %}
+				{{ tvq|number_format(2, '.', ',') }}
+				$
+			</label><hr></div>
+		<div class="row ms-2 mt-4">
+			<h5 class="col-6">Shipping cost</h5>
+			<label class="col-5 fw-bold text-end">{{ fraislivraison|number_format(2, '.', ',') }}
+				$</label><hr></div>
+		<div class="row ms-2 mt-4 ">
+			<h5 class="col-6 text-primary fw-bold">Totals</h5>
+			<label class="col-5 fw-bold text-end ">
+				{% if total == 0 %}
+					0.00
+				{% endif %}
+				{{ sommetotal|number_format(2, '.', ',') }}
+				$
+			</label>
+			<div class="mt-3 row justify-content-center">
+				<button class="btn mt-2 fw-bold btn-success w-75">Order
+					<i class="ms-2 fa-solid fa-sack-dollar"></i>
+				</button>
 			</div>
 		</div>
-	{% endblock %}
-	{% block javascripts %}
-		<script src="{{ asset('scripts/modal.product.js') }}"></script>
-	{% endblock %}
+
+
+	</div>
+
+	{# Pour le modal #}
+	<div class="modal" tabindex="-1" id="product-modal">
+		<div class="modal-dialog">
+			<div id="product-modal-content" class="modal-content"></div>
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	<script src="{{ asset('scripts/modal.product.js') }}"></script>
+{% endblock %}
