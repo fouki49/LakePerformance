@@ -33,7 +33,7 @@
 				</thead>
 				<tbody class="text-center align-middle">
 					{% for key, achat in achatlist.achats %}
-						{# {{ dump(achatlist)}} #}
+						{{ dump(achatlist.achats) }}
 						<tr>
 							<td class="" style="width: 95px;">
 								<img class="img-fluid" style="height: 80px;" src="{{ asset_if('images/' ~ achat.produit.imagePath, 'images/imageNonDispo.png' )}}" alt="product">
@@ -46,10 +46,10 @@
 									$</label>
 							</td>
 							<td class="">
-								<input class="text-center" style="width: 40px;" type="number" value="{{ achat.getQuantite() }}">
+								<input name="{{ 'txtQuantiteAchat[' ~ key ~ ']' }}" type="number" class="text-center" style="width: 40px;"  value="{{ achat.getQuantite() }}">
 							</td>
 							<td class="">
-								<label class="fw-bold ">{{achat.produit.prix}}
+								<label name="{{ 'lblPrixAchat[' ~ key ~ ']' }}" class="fw-bold ">{{achat.produit.prix}}
 									$</td>
 							</td>
 							<td class="">
@@ -75,7 +75,7 @@
 				<a href="{{ path('app_home') }}" class="col-3 fw-bold btn btn-secondary">
 					Quit<i class="ms-3 fa-solid fa-person-walking-arrow-right"></i>
 				</a>
-				<button class="col-3 fw-bold btn btn-secondary ms-2">Update the basket
+				<button name="action" value="update" type="submit" class="col-3 fw-bold btn btn-secondary ms-2">Update the basket
 					<i class="ms-3 fa-sharp fa-solid fa-pen-to-square"></i>
 				</button>
 

@@ -21,6 +21,12 @@ class Achat
         return $this->quantite;
     }
 
+    // public function updateAchat($quantite, $prixAchat, $produit){
+    //     $this->quantite = $quantite;
+    //     $this->prixAchat = $prixAchat;
+    //     $this->produit = $produit;
+    // }
+
     public function getPrixAchat()
     {
         return $this->prixAchat;

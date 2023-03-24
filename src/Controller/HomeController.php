@@ -34,6 +34,7 @@ class HomeController extends AbstractController
             'categories' => $categories
         ]);
     }
+    
 
     //test pour mes filtre 
     #[Route('/produits/{idProduit}', name: 'product_modal')]

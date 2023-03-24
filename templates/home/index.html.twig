@@ -38,7 +38,7 @@
 								<img class="img-fluid" style="height: 200px;" src="{{asset('images/' ~ product.imagePath)}}" alt="">
 							</a>
 							<hr>
-							<p class="fw-bold text-center mt-2">{{product.prix}}</p>
+							<p type="number" class="fw-bold text-center mt-2">{{product.prix}}</p>
 							<div class="row justify-content-center">
 								<form method="POST" action="{{ path('app_ajout_panier', {idProduit: product.idProduit}) }}">
 									<button class="btn btn-outline-secondary fw-bold shadow p-2" type="submit">

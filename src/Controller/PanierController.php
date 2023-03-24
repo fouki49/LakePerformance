@@ -21,6 +21,7 @@ class PanierController extends AbstractController
     private $tvq;
     private $sommeTotal;
 
+
     #[Route('/panier', name: 'app_panier')]
     public function index(Request $request): Response
     {
@@ -43,19 +44,46 @@ class PanierController extends AbstractController
         ]);
     }
 
-    #[Route('/panier/ajout/{idProduit}', name: 'app_ajout_panier',  methods: ['POST'])]
+    #[Route('/panier/ajout/{idProduit}', name: 'app_ajout_panier',  /*methods: ['POST']*/)]
     public function addAchat($idProduit, Request $request, ManagerRegistry $doctrine): Response
     {
         $this->initSession($request);
-        $post = $request->request->all();
+        // $post = $request->request->all();
 
         $this->em = $doctrine->getManager();
 
         $produit = $this->em->getRepository(Produit::class)->find($idProduit);
-        $this->achatList->ajouterAchat(1, $produit->getPrix(), $produit);
+        // $this->achatList->ajouterAchat(Constantes::QUANTITE, $produit->getPrix(), $produit);
 
-        //Validation
-        if ($post) {
+        if ($this->achatList->getAchats() == null) {
+            $this->achatList->ajouterAchat(Constantes::QUANTITE, $produit->getPrix(), $produit);
+        }
+
+        foreach ($this->achatList->getAchats() as $achat) {
+
+            // echo "id produit ";
+            // echo $produit->getIdProduit();
+            // echo "  id achat ";
+            // echo $achat->getProduit()->getIdProduit();
+            // die();
+
+            // echo "nom produit ";
+            // echo $produit->getNom();
+            // echo "  nom achat ";
+            // echo $achat->getProduit()->getNom();
+            // die();
+
+            if ($produit->getIdProduit() == $achat->getProduit()->getIdProduit()) {
+                //TODO: incrementation de la quantite du produit
+
+                //TODO: afficher une notification
+                break;
+            } else {
+                //TODO : ajouter le produit
+                //TODO: afficher une notification
+                $this->achatList->ajouterAchat(Constantes::QUANTITE, $produit->getPrix(), $produit);
+            }
+            return $this->redirectToRoute('app_panier');
         }
 
         return $this->redirectToRoute('app_panier');
@@ -75,17 +103,16 @@ class PanierController extends AbstractController
     #[Route('/panier/update', name: 'app_update_achat', methods: ['POST'])]
     public function updateTodo(Request $request): Response
     {
-        // $post = $request->request->all();
+        $post = $request->request->all();
         $this->initSession($request);
 
         $action = $request->request->get('action');
 
-        // if($action == "update") {
-        //     $this->todoList->update($post);
-        //     $this->addFlash('todo', 
-        //         new Notification('success', 'Tâches sauvegardées', NotificationColor::INFO));
-        // } else 
-        if ($action == "empty") {
+        if($action == "update") {
+            $this->achatList->updateAchat($post);
+            // $this->addFlash('todo', 
+            //     new Notification('success', 'Tâches sauvegardées', NotificationColor::INFO));
+        } else if($action == "empty") {
             $session = $request->getSession();
             $session->remove('achatlist');
         }
@@ -112,6 +139,16 @@ class PanierController extends AbstractController
     {
         return $this->produit;
     }
+
+    // public function retrieveAllAchatIdProduct()
+    // {
+    //     foreach ($this->achatList->getAchats() as $achat) {
+    //         $id = $achat->getProduit()->getIdProduit();
+    //         array_push($this->idProductInAchatList, $id);
+    //     }
+    //     return $this->redirectToRoute('app_panier');
+
+    // }
 
     public function retrieveAllAchatListPrices()
     {
