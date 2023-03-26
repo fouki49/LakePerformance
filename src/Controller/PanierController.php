@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Core\Notification;
+use App\Core\NotificationColor;
 
 class PanierController extends AbstractController
 {
@@ -20,7 +22,6 @@ class PanierController extends AbstractController
     private $tps;
     private $tvq;
     private $sommeTotal;
-    private $ajusterPrix;
 
 
     #[Route('/panier', name: 'app_panier')]
@@ -34,6 +35,13 @@ class PanierController extends AbstractController
         $this->calculTVQ($this->total);
         $this->calculSommeTotal();
 
+        if ($this->achatList->getAchats() == null) {
+            $this->addFlash(
+                'panier',
+                new Notification('success', 'No products in the basket', NotificationColor::WARNING)
+            );
+        }
+
         return $this->render('panier/panier.html.twig', [
             'name' => $session->get('name'),
             'achatlist' => $this->achatList,
@@ -41,9 +49,18 @@ class PanierController extends AbstractController
             'total' => $this->total,
             'tps' => $this->tps,
             'tvq' => $this->tvq,
-            'sommetotal' => $this->sommeTotal
+            'sommetotal' => $this->sommeTotal,
         ]);
     }
+
+    // #[Route('/panier/navbar', name: 'app_navbar')]
+    // public function navbarRender(Request $request): Response
+    // {
+    //     $session = $request->getSession();
+    //     return $this->render('core/navbar.html.twig', [
+    //         'achatlist' => $this->achatList,
+    //     ]);
+    // }
 
     #[Route('/panier/ajout/{idProduit}', name: 'app_ajout_panier',  /*methods: ['POST']*/)]
     public function addAchat($idProduit, Request $request, ManagerRegistry $doctrine): Response
@@ -54,10 +71,13 @@ class PanierController extends AbstractController
         $this->em = $doctrine->getManager();
 
         $produit = $this->em->getRepository(Produit::class)->find($idProduit);
-        // $this->achatList->ajouterAchat(Constantes::QUANTITE, $produit->getPrix(), $produit);
 
         if ($this->achatList->getAchats() == null) {
             $this->achatList->ajouterAchat(Constantes::QUANTITE, $produit->getPrix(), $produit);
+            $this->addFlash(
+                'achat',
+                new Notification('success', 'The product has been successfully added to the basket', NotificationColor::SUCCESS)
+            );
         }
 
         foreach ($this->achatList->getAchats() as $achat) {
@@ -80,9 +100,11 @@ class PanierController extends AbstractController
                 //TODO: afficher une notification
                 break;
             } else {
-                //TODO : ajouter le produit
-                //TODO: afficher une notification
                 $this->achatList->ajouterAchat(Constantes::QUANTITE, $produit->getPrix(), $produit);
+                $this->addFlash(
+                    'achat',
+                    new Notification('success', 'The product has been successfully added to the basket', NotificationColor::SUCCESS)
+                );
             }
             return $this->redirectToRoute('app_panier');
         }
@@ -96,8 +118,11 @@ class PanierController extends AbstractController
     {
         $this->initSession($request);
 
+        $this->addFlash(
+            'achat',
+            new Notification('success', 'This product has been removed from the cart', NotificationColor::INFO)
+        );
         $this->achatList->supprimerAchat($idProduit);
-
         return $this->redirectToRoute('app_panier');
     }
 
@@ -109,16 +134,39 @@ class PanierController extends AbstractController
 
         $action = $request->request->get('action');
 
-        if($action == "update") {
-            $this->achatList->updateAchat($post);
-            // $this->addFlash('todo', 
-            // new Notification('success', 'Tâches sauvegardées', NotificationColor::INFO));
-        } else if($action == "empty") {
+        if ($action == "update") {
+            //TODO Make it worrk
+            // $this->achatList->updateAchat($post);
+            // foreach($this->achatList->getAchats() as $achat){
+
+            //     if($achat->getQuantite() == 0){
+            //         $this->achatList->supprimerAchat($achat->getProduit()->getIdProduit());
+            //     }
+            // }
+            if ($this->achatList->getAchats() != null) {
+                $this->addFlash(
+                    'achat',
+                    new Notification('success', 'The purchases in the cart have been updated', NotificationColor::INFO)
+                );
+            } else {
+                $this->addFlash(
+                    'achat',
+                    new Notification('error', 'No modifiable product, the basket is empty', NotificationColor::DANGER)
+                );
+            }
+        } else if ($action == "empty") {
             $session = $request->getSession();
+
+            //* Valide si le panier est vide pour ne pas renvoyer la notification que le panier est vide
+            if ($this->achatList->getAchats() != null) {
+                $this->addFlash(
+                    'achat',
+                    new Notification('success', 'All products have been removed from the cart', NotificationColor::INFO)
+                );
+            }
+
             $session->remove('achatlist');
         }
-
-
         return $this->redirectToRoute('app_panier');
     }
 
@@ -140,16 +188,6 @@ class PanierController extends AbstractController
     {
         return $this->produit;
     }
-
-    // public function retrieveAllAchatIdProduct()
-    // {
-    //     foreach ($this->achatList->getAchats() as $achat) {
-    //         $id = $achat->getProduit()->getIdProduit();
-    //         array_push($this->idProductInAchatList, $id);
-    //     }
-    //     return $this->redirectToRoute('app_panier');
-
-    // }
 
     public function retrieveAllAchatListPrices()
     {
