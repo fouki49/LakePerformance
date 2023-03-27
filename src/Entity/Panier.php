@@ -4,14 +4,13 @@ namespace App\Entity;
 
 class Panier
 {
-    
+
     private $achats = [];
 
-    public function ajouterAchat($quantite,$prixAchat, $produit)
+    public function ajouterAchat($quantite, $prixAchat, $produit)
     {
         $achat = new Achat($quantite, $prixAchat, $produit);
         $this->achats[] = $achat;
-        
     }
 
     public function supprimerAchat($idProduit)
@@ -23,13 +22,12 @@ class Panier
 
     public function updateAchat($newAchat)
     {
-        if(count($this->achats) > 0) {
+        if (count($this->achats) > 0) {
             $achatQauntite = $newAchat["txtQuantiteAchat"];
-    
-            foreach($this->achats as $key => $achat) {
+
+            foreach ($this->achats as $key => $achat) {
                 $newQuantite = $achatQauntite[$key];
-                //TODO : faire en sorte je pense qu'on multiplie le prix par la quantite
-            $achat->updateAchat($newQuantite);
+                $achat->updateAchat($newQuantite);
             }
         }
     }

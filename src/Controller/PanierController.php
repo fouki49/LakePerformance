@@ -83,7 +83,7 @@ class PanierController extends AbstractController
         foreach ($this->achatList->getAchats() as $achat) {
 
             // echo "id produit ";
-            // echo $produit->getIdProduit();
+            // echo $idProduit;
             // echo "  id achat ";
             // echo $achat->getProduit()->getIdProduit();
             // die();
@@ -94,11 +94,17 @@ class PanierController extends AbstractController
             // echo $achat->getProduit()->getNom();
             // die();
 
-            if ($produit->getIdProduit() == $achat->getProduit()->getIdProduit()) {
+            // foreach ($achat as $idProdAchat) {
+            //     echo $idProdAchat->getProduit()->getIdProduit();
+            // }
+            // die();
+
+            if ($idProduit == $achat->getProduit()->getIdProduit()) {
                 //TODO: incrementation de la quantite du produit
 
                 //TODO: afficher une notification
-                break;
+
+
             } else {
                 $this->achatList->ajouterAchat(Constantes::QUANTITE, $produit->getPrix(), $produit);
                 $this->addFlash(
@@ -136,10 +142,9 @@ class PanierController extends AbstractController
 
         if ($action == "update") {
             //TODO Make it worrk
-            // $this->achatList->updateAchat($post);
-            // foreach($this->achatList->getAchats() as $achat){
-
-            //     if($achat->getQuantite() == 0){
+            $this->achatList->updateAchat($post);
+            // foreach ($this->achatList->getAchats() as $achat) {
+            //     if ($achat->getQuantite() == 0) {
             //         $this->achatList->supprimerAchat($achat->getProduit()->getIdProduit());
             //     }
             // }
