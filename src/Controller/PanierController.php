@@ -53,68 +53,28 @@ class PanierController extends AbstractController
         ]);
     }
 
-    // #[Route('/panier/navbar', name: 'app_navbar')]
-    // public function navbarRender(Request $request): Response
-    // {
-    //     $session = $request->getSession();
-    //     return $this->render('core/navbar.html.twig', [
-    //         'achatlist' => $this->achatList,
-    //     ]);
-    // }
 
     #[Route('/panier/ajout/{idProduit}', name: 'app_ajout_panier',  /*methods: ['POST']*/)]
     public function addAchat($idProduit, Request $request, ManagerRegistry $doctrine): Response
     {
         $this->initSession($request);
-        // $post = $request->request->all();
-
         $this->em = $doctrine->getManager();
-
         $produit = $this->em->getRepository(Produit::class)->find($idProduit);
+        $validation = $this->achatList->validerExistanceDansPanier($idProduit);
 
-        if ($this->achatList->getAchats() == null) {
+        if ($validation) {
+            $this->achatList->ajouterQuantitePanier($idProduit);
+            $this->addFlash(
+                'achat',
+                new Notification('success', 'This product was already in the cart, the quantity and the price have been adjusted', NotificationColor::INFO)
+            );
+        } else {
             $this->achatList->ajouterAchat(Constantes::QUANTITE, $produit->getPrix(), $produit);
             $this->addFlash(
                 'achat',
                 new Notification('success', 'The product has been successfully added to the basket', NotificationColor::SUCCESS)
             );
         }
-
-        foreach ($this->achatList->getAchats() as $achat) {
-
-            // echo "id produit ";
-            // echo $idProduit;
-            // echo "  id achat ";
-            // echo $achat->getProduit()->getIdProduit();
-            // die();
-
-            // echo "nom produit ";
-            // echo $produit->getNom();
-            // echo "  nom achat ";
-            // echo $achat->getProduit()->getNom();
-            // die();
-
-            // foreach ($achat as $idProdAchat) {
-            //     echo $idProdAchat->getProduit()->getIdProduit();
-            // }
-            // die();
-
-            if ($idProduit == $achat->getProduit()->getIdProduit()) {
-                //TODO: incrementation de la quantite du produit
-
-                //TODO: afficher une notification
-
-
-            } else {
-                $this->achatList->ajouterAchat(Constantes::QUANTITE, $produit->getPrix(), $produit);
-                $this->addFlash(
-                    'achat',
-                    new Notification('success', 'The product has been successfully added to the basket', NotificationColor::SUCCESS)
-                );
-            }
-            return $this->redirectToRoute('app_panier');
-        }
-
         return $this->redirectToRoute('app_panier');
     }
 
@@ -141,13 +101,9 @@ class PanierController extends AbstractController
         $action = $request->request->get('action');
 
         if ($action == "update") {
-            //TODO Make it worrk
+
             $this->achatList->updateAchat($post);
-            // foreach ($this->achatList->getAchats() as $achat) {
-            //     if ($achat->getQuantite() == 0) {
-            //         $this->achatList->supprimerAchat($achat->getProduit()->getIdProduit());
-            //     }
-            // }
+
             if ($this->achatList->getAchats() != null) {
                 $this->addFlash(
                     'achat',
@@ -169,7 +125,6 @@ class PanierController extends AbstractController
                     new Notification('success', 'All products have been removed from the cart', NotificationColor::INFO)
                 );
             }
-
             $session->remove('achatlist');
         }
         return $this->redirectToRoute('app_panier');

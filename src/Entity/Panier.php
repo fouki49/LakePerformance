@@ -32,6 +32,25 @@ class Panier
         }
     }
 
+    public function validerExistanceDansPanier($idProduit)
+    {
+        foreach ($this->achats as $a) {
+            if ($a->getProduit()->getIdProduit() == $idProduit) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function ajouterQuantitePanier($idProduit)
+    {
+        foreach ($this->achats as $a) {
+            if ($a->getProduit()->getIdProduit() == $idProduit) {
+                $a->getNewQuantite();
+            }
+        }
+    }
+
     public function getAchats()
     {
         return $this->achats;

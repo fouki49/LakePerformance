@@ -1,9 +1,6 @@
 {% extends 'core/base.html.twig' %}
 
 {% block content %}
-	{# - ({{ app.session.get('achatlist').achats | length }}) #}
-	{# <h1 class="mt-4">Basket of:
-								{{ name }}</h1> #}
 		<div class="row justify-content-center mt-4"> <div class="col-8 rounded-3 shadow p-3 bg-body">
 			<h3 class="fst-italic fw-bold">Your command</h3><hr>
 
@@ -38,7 +35,6 @@
 
 					<form action="{{ path('app_update_achat') }}" method="POST">
 						{% for key, achat in achatlist.achats %}
-							{# {{ dump(achatlist.achats) }} #}
 							<tr>
 								<td class="" style="width: 95px;">
 									<img class="img-fluid" style="height: 80px;" src="{{ asset_if('images/' ~ achat.produit.imagePath, 'images/imageNonDispo.png' )}}" alt="product">
@@ -51,7 +47,7 @@
 										$</label>
 								</td>
 								<td class="">
-									<input name="{{ 'txtQuantiteAchat[' ~ key ~ ']' }}" type="number" min="0" class="text-center" style="width: 40px;" value="{{ achat.getQuantite() }}">
+									<input name="{{ 'txtQuantiteAchat[' ~ key ~ ']' }}" type="number" class="text-center" style="width: 40px;" value="{{ achat.getQuantite() }}">
 								</td>
 								<td class="">
 									<label class="fw-bold " value="">{{ achat.getPrixAchat()|number_format(2, '.', ',') }}
