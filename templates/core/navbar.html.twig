@@ -8,7 +8,7 @@
 		class="container">
 		<!-- Navbar brand -->
 		<a class="navbar-brand" href="{{ path('app_home') }}"><img src="{{asset('images/lakePerformance.png')}}" alt="LakePerformance Logo" draggable="false" height="40"/></a>
-		
+
 		<!-- Toggle button -->
 		<button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<i class="fas fa-bars"></i>
@@ -40,9 +40,8 @@
 			</div>
 			<!-- Left links -->
 			<form class="d-flex align-items-center w-100 form-search">
-				<div
-					class="input-group">
-					
+				<div class="input-group">
+
 					<form class="d-flex" method="POST" action="{{ app.request.uri }}">
 						<input name="search_field" type="search" class="form-control" placeholder="Product search" aria-label="Search">
 						<button class="btn" type="submit"><img style="height: 30px; width: 30px;" class="ms-2" src="{{asset('images/search.png')}}"></button>
@@ -53,7 +52,7 @@
 			<ul class="navbar-nav ms-3">
 				<li class="nav-item">
 					<a class="nav-link d-flex align-items-center me-2" href="{{ path('route_contact') }}">
-						<i class="fas fa-bookmark pe-2"></i>
+						<i class="fas fa-bookmark pe-2 text-success"></i>
 						Contact
 					</a>
 				</li>
@@ -66,12 +65,12 @@
 			</ul>
 		</div>
 		<!-- Collapsible wrapper -->
-		<div
-			class="">
+		<div class="">
 			<a href="{{ path('app_panier') }}" style="text-decoration: none;">
 				<span class="fa-layers">
-					<i class="fa-solid fa-basket-shopping" style="font-size: 1.2em; color: Dodgerblue;"></i>
-					<span class="fa-layers-counter fa-fw fw-bold" style="color:Dodgerblue; border-radius: 25px;">{# TODO: count sur le nombre d'objet dans liste achat #}
+					<i class="fa-solid fa-basket-shopping text-success" style="font-size: 1.2em;"></i>
+					<span
+						class="fa-layers-counter fa-fw fw-bold" style="color:Dodgerblue; border-radius: 25px;">{# TODO: count sur le nombre d'objet dans liste achat #}
 					</span>
 				</span>
 			</a>

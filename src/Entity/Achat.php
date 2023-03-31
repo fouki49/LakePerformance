@@ -9,6 +9,11 @@ class Achat
     private $prixAchat;
     private $produit;
 
+    public static function query($filters = [])
+    {
+        
+    }
+
     public function __construct($quantite, $prixAchat, $produit)
     {
         $this->quantite = $quantite;
@@ -26,8 +31,9 @@ class Achat
         $this->quantite = $quantite;
     }
 
-    public function verifyIfQuantityIsEmpty($quantite){
-        if($quantite == 0){
+    public function verifyIfQuantityIsEmpty($quantite)
+    {
+        if ($quantite == 0) {
             return true;
         }
         return false;
@@ -36,7 +42,7 @@ class Achat
     public function getNewQuantite()
     {
         $this->quantite = $this->quantite + 1;
-        
+
         return $this->quantite;
     }
 

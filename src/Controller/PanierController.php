@@ -100,6 +100,7 @@ class PanierController extends AbstractController
 
         $action = $request->request->get('action');
 
+
         if ($action == "update") {
 
             $this->achatList->updateAchat($post);

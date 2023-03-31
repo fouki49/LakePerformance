@@ -20,4 +20,14 @@ main>.container {
     left: 0;
 }
 
+a.footer-link {
+    color: #35b63f !important;
+    transition: ease-in-out;
+    text-decoration: none;
+}
+
+a.footer-link:hover {
+    color: #2e9e37;
+}
+
 /* Note, couleurs du panier #35b63f */

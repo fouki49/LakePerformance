@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Core;
 
-class Notification {
+class Notification
+{
 
     private $tag;
     private $content;
@@ -14,24 +16,24 @@ class Notification {
         $this->color = $color;
     }
 
-    public function getTag() 
+    public function getTag()
     {
         return $this->tag;
     }
 
-    public function getContent() 
+    public function getContent()
     {
         return $this->content;
     }
 
-    public function getColor() 
+    public function getColor()
     {
         return $this->color;
     }
-
 }
 
-abstract class NotificationColor {
+abstract class NotificationColor
+{
     public const PRIMARY = "alert-primary";
     public const SECONDARY = "alert-secondary";
     public const SUCCESS = "alert-success";
@@ -39,5 +41,5 @@ abstract class NotificationColor {
     public const WARNING = "alert-warning";
     public const INFO = "alert-info";
     public const LIGHT = "alert-light";
-    public const DARK = "alert-dark"; 
+    public const DARK = "alert-dark";
 }

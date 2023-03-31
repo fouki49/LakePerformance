@@ -1,7 +1,8 @@
 {% extends 'core/base.html.twig' %}
 
 {% block content %}
-		<div class="row justify-content-center mt-4"> <div class="col-8 rounded-3 shadow p-3 bg-body">
+	<div class="row justify-content-center mt-3">
+		<div class="col-8 rounded-3 shadow p-3 bg-body">
 			<h3 class="fst-italic fw-bold">Your command</h3><hr>
 
 			{% for flash in app.flashes('achat') %}
@@ -34,7 +35,7 @@
 				<tbody class="text-center align-middle">
 
 					<form action="{{ path('app_update_achat') }}" method="POST">
-						{% for key, achat in achatlist.achats %}
+						{% for key, achat in achatlist.achats %}\
 							<tr>
 								<td class="" style="width: 95px;">
 									<img class="img-fluid" style="height: 80px;" src="{{ asset_if('images/' ~ achat.produit.imagePath, 'images/imageNonDispo.png' )}}" alt="product">
@@ -54,16 +55,14 @@
 										$</td>
 								</td>
 								<td class="">
-
-									<a class="product-modal" href="{{ path('product_modal', {idProduit: achat.produit.idProduit}) }}">
+									<a class="product-modal" style="text-decoration: none" href="{{ path('product_modal', {idProduit: achat.produit.idProduit}) }}">
 										<span style="font-size: 1.2em; color: Mediumslateblue;">
-											<i class="fa-sharp fa-solid fa-eye"></i>
+											<i class="fa-solid fa-eye"></i>
 										</span>
 									</a>
-
-									<a class="ms-3" href="{{ path('app_delete_achat', { idProduit: key }) }}">
+									<a class="ms-1" style="text-decoration: none" href="{{ path('app_delete_achat', { idProduit: key }) }}">
 										<span style="font-size: 1.2em; color: Tomato;">
-											<i class="fa-sharp fa-solid fa-trash"></i>
+											<i class=" fa-solid fa-trash"></i>
 										</span>
 									</a>
 								</td>
