@@ -4,70 +4,58 @@ namespace App\Entity;
 
 use App\Repository\ClientRepository;
 use Doctrine\ORM\Mapping as ORM;
-// use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-// use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
-#[ORM\Table(name:'clients')]
-class Client /*implements UserInterface, PasswordAuthenticatedUserInterface*/
+#[ORM\Table(name: 'clients')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class Client implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name:'idClient')]
+    #[ORM\Column(name: 'idClient')]
     private ?int $idClient = null;
 
-    #[ORM\Column(length: 150, unique:true)]
+    #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $firstname = null;
+    #[ORM\Column]
+    private array $roles = [];
 
-    #[ORM\Column(length: 50)]
-    private ?string $lastname = null;
-
-    #[ORM\Column(length: 150)]
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 150)]
-    private ?string $address = null;
+
+
+    #[ORM\Column(length: 50)]
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $prenom = null;
 
     #[ORM\Column(length: 150)]
-    private ?string $city = null;
+    private ?string $adresse = null;
 
-    #[ORM\Column(length: 10)]
-    private ?string $postalCode = null;
+    #[ORM\Column(length: 50)]
+    private ?string $ville = null;
 
-    #[ORM\Column(length: 4)]
+    #[ORM\Column(name: 'codePostal', length: 10)]
+    private ?string $codePostal = null;
+
+    #[ORM\Column(length: 5)]
     private ?string $province = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $phone = null;
+    private ?int $telephone = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
 
-    // //
-    // #[ORM\Column]
-    // private array $roles = [];
-
-    // #[ORM\Column(type: 'boolean')]
-    // private $isVerified = false;
-
-    // #[ORM\Column(length: 180, unique: true)]
-    // // #[Assert\Length(min:3, minMessage:"Le nom d'utilisateur doit contenir {{ limit }} caractères minimum")]
-    // // #[Assert\Length(max:20, maxMessage:"Le nom d'utilisateur doit contenir {{ limit }} caractères maximum")]
-    // private ?string $username = null;
-    // //
-
-    public function getIdClient(): ?int
-    {
-        return $this->idClient;
-    }
-
-    public function setIdClient(int $idClient): self
-    {
-        $this->idClient = $idClient;
-
-        return $this;
-    }
 
     public function getEmail(): ?string
     {
@@ -81,31 +69,39 @@ class Client /*implements UserInterface, PasswordAuthenticatedUserInterface*/
         return $this;
     }
 
-    public function getFirstname(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->firstname;
+        return (string) $this->email;
     }
 
-    public function setFirstname(string $firstname): self
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        $this->firstname = $firstname;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(string $lastname): self
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -117,38 +113,83 @@ class Client /*implements UserInterface, PasswordAuthenticatedUserInterface*/
         return $this;
     }
 
-    public function getAddress(): ?string
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
     {
-        return $this->address;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
-    public function setAddress(string $address): self
+    public function getIdClient(): ?int
     {
-        $this->address = $address;
+        return $this->idClient;
+    }
+
+    public function setIdClient(int $idClient): self
+    {
+        $this->idClient = $idClient;
 
         return $this;
     }
 
-    public function getCity(): ?string
+    public function getNom(): ?string
     {
-        return $this->city;
+        return $this->nom;
     }
 
-    public function setCity(string $city): self
+    public function setNom(string $nom): self
     {
-        $this->city = $city;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getPostalCode(): ?string
+    public function getPrenom(): ?string
     {
-        return $this->postalCode;
+        return $this->prenom;
     }
 
-    public function setPostalCode(string $postalCode): self
+    public function setPrenom(string $prenom): self
     {
-        $this->postalCode = $postalCode;
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(string $codePostal): self
+    {
+        $this->codePostal = $codePostal;
 
         return $this;
     }
@@ -165,67 +206,25 @@ class Client /*implements UserInterface, PasswordAuthenticatedUserInterface*/
         return $this;
     }
 
-    public function getPhone(): ?int
+    public function getTelephone(): ?int
     {
-        return $this->phone;
+        return $this->telephone;
     }
 
-    public function setPhone(?int $phone): self
+    public function setTelephone(?int $telephone): self
     {
-        $this->phone = $phone;
+        $this->telephone = $telephone;
 
         return $this;
     }
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
-
-    // /**
-    //  * A visual identifier that represents this user.
-    //  *
-    //  * @see UserInterface
-    //  */
-    // public function getUserIdentifier(): string
-    // {
-    //     return (string) $this->username;
-    // }
-
-    // /**
-    //  * @see UserInterface
-    //  */
-    // public function getRoles(): array
-    // {
-    //     $roles = $this->roles;
-    //     // guarantee every user at least has ROLE_USER
-    //     $roles[] = 'ROLE_USER';
-
-    //     return array_unique($roles);
-    // }
-
-    // public function setRoles(array $roles): self
-    // {
-    //     $this->roles = $roles;
-
-    //     return $this;
-    // }
-
-
-    // /**
-    //  * @see UserInterface
-    //  */
-    // public function eraseCredentials()
-    // {
-    //     // If you store any temporary, sensitive data on the user, clear it here
-    //     // $this->plainPassword = null;
-    // }
-
-    // public function isVerified(): bool
-    // {
-    //     return $this->isVerified;
-    // }
-
-    // public function setIsVerified(bool $isVerified): self
-    // {
-    //     $this->isVerified = $isVerified;
-
-    //     return $this;
-    // }
+        return $this;
+    }
 }

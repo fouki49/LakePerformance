@@ -35,7 +35,7 @@
 				<tbody class="text-center align-middle">
 
 					<form action="{{ path('app_update_achat') }}" method="POST">
-						{% for key, achat in achatlist.achats %}\
+						{% for key, achat in achatlist.achats %}
 							<tr>
 								<td class="" style="width: 95px;">
 									<img class="img-fluid" style="height: 80px;" src="{{ asset_if('images/' ~ achat.produit.imagePath, 'images/imageNonDispo.png' )}}" alt="product">

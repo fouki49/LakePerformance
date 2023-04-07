@@ -12,11 +12,11 @@
 		<div class="col-2 sticky-top rounded-3 shadow p-3 mb-5 bg-body" style="height: 500px; top:100px;">
 			<ul class="" style="padding-top: 50px;">
 				<li style="list-style-type:none;">
-					<a class="fw-bold" style="text-decoration: none;" href="{{ path('app_home') }}">All Products</a>
+					<a class="footer-link fw-bold" style="text-decoration: none;" href="{{ path('app_home') }}">All Products</a>
 				</li>
 				{% for category in categories %}
 					<li style="list-style-type:none; ">
-						<a style="text-decoration: none;" href="{{ path('app_home', { category: category.idCategorie}) }}" class="me-2 ">{{ category.categorie }}</a>
+						<a href="{{ path('app_home', { category: category.idCategorie}) }}" class="footer-link me-2 ">{{ category.categorie }}</a>
 					</li>
 				{% endfor %}
 				<hr>
@@ -27,19 +27,20 @@
 				{% for product in products %}
 					<div class="col-3 card mx-2 my-2 shadow p-3 mb-5 bg-body">
 						<div class="card-body">
-							<a class="product-modal" href="{{ path('product_modal', {idProduit: product.idProduit}) }}" style="text-decoration: none;">
+							<a class="product-modal footer-link" href="{{ path('product_modal', {idProduit: product.idProduit}) }}">
 								<h5 class="card-title text-center" style="height: 75px;">{{ product.nom }}</h5>
 							</a>
 							<a class="product-modal" href="{{ path('product_modal', {idProduit: product.idProduit}) }}">
 								<img class="img-fluid" style="height: 200px;" src="{{asset('images/' ~ product.imagePath)}}" alt="">
 							</a>
 							<hr>
-							<p type="number" class="fw-bold text-center mt-2">{{product.prix|number_format(2, '.', ',') }} $</p>
-							<div class="row justify-content-center">
+							<p type="number" class="fw-bold text-center mt-2">{{product.prix|number_format(2, '.', ',') }}
+								$</p>
+							<div class="row text-center">
 								<form method="POST" action="{{ path('app_ajout_panier', {idProduit: product.idProduit}) }}">
-									<button class="btn btn-outline-secondary fw-bold shadow p-2" type="submit">
+									<button class="btn btn-outline-secondary fw-bold shadow p-2 w-75" type="submit">
 										Add in
-										<img style="height: 25px; margin-bottom: 3px;" class="img-fluid" src="{{asset('images/basket.png')}}" alt=""/>
+										<i class="fa-solid fa-basket-shopping text-success"></i>
 									</button>
 								</form>
 							</div>
