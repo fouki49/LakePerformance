@@ -40,11 +40,8 @@ class PanierController extends AbstractController
         return $this->render('panier/panier.html.twig', [
             'name' => $session->get('name'),
             'achatlist' => $this->achatList,
-            'fraislivraison' => $fraisLivraison,
-            'total' => $this->panier->getTotal(),
-            'tps' => $this->panier->getTPS(),
-            'tvq' => $this->panier->getTVQ(),
-            'sommetotal' => $this->panier->getSommeTotal(),
+            'fraislivraison' => empty($this->achatList->getAchats()) ? '0.00' : $fraisLivraison,
+            'panier' => $this->panier,
         ]);
     }
 
@@ -64,7 +61,7 @@ class PanierController extends AbstractController
                 new Notification('success', 'This product was already in the cart, the quantity and the price have been adjusted', NotificationColor::INFO)
             );
         } else {
-            $this->achatList->ajouterAchat(Constantes::QUANTITE, $produit->getPrix(), $produit);
+            $this->achatList->ajouterAchat($produit);
             $this->addFlash(
                 'achat',
                 new Notification('success', 'The product has been successfully added to the basket', NotificationColor::SUCCESS)

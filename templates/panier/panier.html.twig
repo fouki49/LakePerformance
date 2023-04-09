@@ -95,20 +95,20 @@
 		<div class="row ms-2 mt-4">
 			<h5 class="col-6 ">Subtotal</h5>
 			<label class="col-5 fw-bold text-end">
-				{{ total|number_format(2, '.', ',') }}
+				{{ panier.getTotal()|number_format(2, '.', ',') }}
 				$
 			</label><hr>
 		</div>
 		<div class="row ms-2 mt-4">
 			<h5 class="col-6">TPS</h5>
 			<label class="col-5 fw-bold text-end">
-				{{ tps|number_format(2, '.', ',') }}
+				{{ panier.getTPS()|number_format(2, '.', ',') }}
 				$
 			</label><hr></div>
 		<div class="row ms-2 mt-4">
 			<h5 class="col-6">TVQ</h5>
 			<label class="col-5 fw-bold text-end">
-				{{ tvq|number_format(2, '.', ',') }}
+				{{ panier.getTVQ()|number_format(2, '.', ',') }}
 				$
 			</label><hr></div>
 		<div class="row ms-2 mt-4">
@@ -118,7 +118,7 @@
 		<div class="row ms-2 mt-4 ">
 			<h5 class="col-6 text-primary fw-bold">Totals</h5>
 			<label class="col-5 fw-bold text-end ">
-				{{ sommetotal|number_format(2, '.', ',') }}
+				{{ panier.getSommeTotal()|number_format(2, '.', ',') }}
 				$
 			</label>
 			<div class="mt-3 row justify-content-center">

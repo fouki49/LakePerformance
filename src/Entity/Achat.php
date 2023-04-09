@@ -6,17 +6,11 @@ class Achat
 {
 
     private $quantite;
-    private $prixAchat;
     private $produit;
 
-    public static function query($filters = [])
+    public function __construct($produit)
     {
-    }
-
-    public function __construct($quantite, $prixAchat, $produit)
-    {
-        $this->quantite = $quantite;
-        $this->prixAchat = $prixAchat;
+        $this->quantite = Constantes::QUANTITE;
         $this->produit = $produit;
     }
 
@@ -48,7 +42,7 @@ class Achat
 
     public function getPrixAchat()
     {
-        $prix = $this->prixAchat * $this->quantite;
+        $prix = $this->produit->getPrix() * $this->quantite;
         return $prix;
     }
 

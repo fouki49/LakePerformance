@@ -23,9 +23,9 @@ class Panier
         $this->calculTVQ($this->total);
         $this->calculSommeTotal();
     }
-    public function ajouterAchat($quantite, $prixAchat, $produit)
+    public function ajouterAchat($quantite, $produit)
     {
-        $achat = new Achat($quantite, $prixAchat, $produit);
+        $achat = new Achat($produit);
         $this->achats[] = $achat;
     }
 
