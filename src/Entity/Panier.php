@@ -23,7 +23,7 @@ class Panier
         $this->calculTVQ($this->total);
         $this->calculSommeTotal();
     }
-    public function ajouterAchat($quantite, $produit)
+    public function ajouterAchat($produit)
     {
         $achat = new Achat($produit);
         $this->achats[] = $achat;
