@@ -39,15 +39,15 @@
 				</ul>
 			</div>
 			<!-- Left links -->
-			<form class="d-flex align-items-center w-100 form-search">
+			<div class="w-100 form-search">
 				<div class="input-group">
-
-					<form class="d-flex" method="POST" action="{{ app.request.uri }}">
+					<form class="d-flex align-items-center w-100" method="POST" action="{{ app.request.uri }}">
+						<input name="category" type="hidden" value="{{ search_category }}">
 						<input name="search_field" type="search" class="form-control" placeholder="Product search" aria-label="Search">
 						<button class="btn" type="submit"><img style="height: 30px; width: 30px;" class="ms-2" src="{{asset('images/search.png')}}"></button>
 					</form>
 				</div>
-			</form>
+			</div>
 
 			<ul class="navbar-nav ms-3">
 				<li class="nav-item">
