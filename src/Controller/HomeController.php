@@ -20,8 +20,6 @@ class HomeController extends AbstractController
         $this->em = $doctrine->getManager();
 
         $category = $request->query->get('category'); // $_GET['category']
-        //j'ai aucune idée pourquoi ca marche quand je met query au lieu de request, j'ai chercher pendant des heure la solution
-        //je le laisse comme ca pour le moment, on dirait que mon POST dans method ne fonctionne pas donc il apparait dans mon URL Solution mettre query pour l'instant...
         $searchField = $request->get('search_field');
         $products = $this->retrieveProductsFromCategory($category, $searchField);
 
@@ -30,7 +28,7 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'products' => $products,
             'categories' => $categories,
-            'search_category' => $category
+            'search_category' => $category ?: '',
         ]);
     }
 
