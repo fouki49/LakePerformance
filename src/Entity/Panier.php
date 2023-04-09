@@ -6,7 +6,23 @@ class Panier
 {
 
     private $achats = [];
+    private $produit;
+    private $total;
+    private $tps;
+    private $tvq;
+    private $sommeTotal;
 
+    public function __construct($achatsInit = null)
+    {
+        if (empty($achatsInit)) return; // Si panier est vide bye bye.
+
+        $this->achats = $achatsInit;
+
+        $this->retrieveAllAchatListPrices();
+        $this->calculTPS($this->total);
+        $this->calculTVQ($this->total);
+        $this->calculSommeTotal();
+    }
     public function ajouterAchat($quantite, $prixAchat, $produit)
     {
         $achat = new Achat($quantite, $prixAchat, $produit);
@@ -54,5 +70,52 @@ class Panier
     public function getAchats()
     {
         return $this->achats;
+    }
+
+    public function getTVQ()
+    {
+        return $this->tvq;
+    }
+
+    public function getTPS()
+    {
+        return $this->tps;
+    }
+
+    public function getTotal()
+    {
+        return $this->total;
+    }
+
+    public function getSommeTotal()
+    {
+        return $this->sommeTotal;
+    }
+
+    //permet d'avoir acces a un produit
+    public function getProduit(): ?Produit
+    {
+        return $this->produit;
+    }
+
+    public function retrieveAllAchatListPrices()
+    {
+        foreach ($this->getAchats() as $achat)
+            $this->total += $achat->getPrixAchat();
+    }
+
+    public function calculTPS($total)
+    {
+        $this->tps = round($total * Constantes::TPS, 2);
+    }
+
+    public function calculTVQ($total)
+    {
+        $this->tvq = round($total * Constantes::TVQ, 2);
+    }
+
+    public function calculSommeTotal()
+    {
+        $this->sommeTotal = $this->total + $this->tps + $this->tvq + Constantes::FRAIS_LIVRAISON;
     }
 }

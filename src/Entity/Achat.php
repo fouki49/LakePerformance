@@ -11,7 +11,6 @@ class Achat
 
     public static function query($filters = [])
     {
-        
     }
 
     public function __construct($quantite, $prixAchat, $produit)

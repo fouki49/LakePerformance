@@ -18,10 +18,7 @@ class PanierController extends AbstractController
     private $em = null;
     private $achatList;
     private $produit;
-    private $total;
-    private $tps;
-    private $tvq;
-    private $sommeTotal;
+    private $panier;
 
 
     #[Route('/panier', name: 'app_panier')]
@@ -30,10 +27,8 @@ class PanierController extends AbstractController
         $this->initSession($request);
         $session = $request->getSession();
         $fraisLivraison = Constantes::FRAIS_LIVRAISON;
-        $this->retrieveAllAchatListPrices();
-        $this->calculTPS($this->total);
-        $this->calculTVQ($this->total);
-        $this->calculSommeTotal();
+
+        $this->panier = new Panier($this->achatList->getAchats());
 
         if ($this->achatList->getAchats() == null) {
             $this->addFlash(
@@ -46,10 +41,10 @@ class PanierController extends AbstractController
             'name' => $session->get('name'),
             'achatlist' => $this->achatList,
             'fraislivraison' => $fraisLivraison,
-            'total' => $this->total,
-            'tps' => $this->tps,
-            'tvq' => $this->tvq,
-            'sommetotal' => $this->sommeTotal,
+            'total' => $this->panier->getTotal(),
+            'tps' => $this->panier->getTPS(),
+            'tvq' => $this->panier->getTVQ(),
+            'sommetotal' => $this->panier->getSommeTotal(),
         ]);
     }
 
@@ -142,35 +137,5 @@ class PanierController extends AbstractController
         $this->achatList = $session->get('achatlist', new Panier());
 
         $session->set('achatlist', $this->achatList);
-    }
-
-    //permet d'avoir acces a un produit
-    public function getProduit(): ?Produit
-    {
-        return $this->produit;
-    }
-
-    public function retrieveAllAchatListPrices()
-    {
-        foreach ($this->achatList->getAchats() as $achat) {
-            $prix = $achat->getPrixAchat();
-            $this->total += $prix;
-        }
-        return $this->redirectToRoute('app_panier');
-    }
-
-    public function calculTPS($total)
-    {
-        $this->tps = round($total * Constantes::TPS, 2);
-    }
-
-    public function calculTVQ($total)
-    {
-        $this->tvq = round($total * Constantes::TVQ, 2);
-    }
-
-    public function calculSommeTotal()
-    {
-        $this->sommeTotal = $this->total + $this->tps + $this->tvq + Constantes::FRAIS_LIVRAISON;
     }
 }
