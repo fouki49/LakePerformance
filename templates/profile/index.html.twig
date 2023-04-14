@@ -1,0 +1,27 @@
+{% extends 'core/base.html.twig' %}
+
+{% block content %}
+	<h1 class="mt-5 fw-bold">Your profile</h1>
+	<div class="row" >
+		<div class="col-6 mt-3 my-5">
+			<h3>Informations</h3>
+			<img class="mt-3" src="https://ui-avatars.com/api/?name={{ currentUser.prenom }}+{{ currentUser.nom }}&rounded=true&background=random" alt="">
+			<span>
+				<a href="{{ path('app_logout') }}">Sign out</a>
+			</span>
+			<h5>{{ app.user.prenom }}
+				{{ app.user.nom }}</h5>
+			<div>
+                
+            </div>
+		</div>
+		<div class="col-6">
+            <h3>Prochainement</h3>
+        </div>
+	</div>
+{% endblock %}
+
+
+{% block stylesheets %}{% endblock %}
+
+{% block javascripts %}{% endblock %}

@@ -30,4 +30,15 @@ a.footer-link:hover {
     color: #2e9e37;
 }
 
+/* .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    Set the fixed height of the footer here
+    height: 60px;
+    background: #F37A1D;
+    border-top: 3px solid #F37A1D;
+} 
+*/
+
 /* Note, couleurs du panier #35b63f */
