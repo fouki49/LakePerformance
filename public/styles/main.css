@@ -30,6 +30,16 @@ a.footer-link:hover {
     color: #2e9e37;
 }
 
+a.button-link {
+    color: #b9f729 !important;
+    transition: ease-in-out;
+    text-decoration: none;
+}
+
+a.button-link:hover {
+    color: #b9f729;
+}
+
 /* .footer {
     position: absolute;
     bottom: 0;

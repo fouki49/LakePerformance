@@ -95,8 +95,6 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['class' => 'btnCreate btn-success']
 
             ]);
-        // dd($builder->get('telephone'));
-        // if ('telephone' != false) {
         $builder->get('telephone')->addModelTransformer(new CallbackTransformer(
             function ($phoneFromDatabase) {
                 $newPhone = substr_replace($phoneFromDatabase, "-", 3, 0);
@@ -106,7 +104,6 @@ class RegistrationFormType extends AbstractType
                 return str_replace("-", "", $phoneFromView);
             }
         ));
-        // }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

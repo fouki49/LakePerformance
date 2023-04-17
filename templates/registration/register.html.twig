@@ -6,7 +6,7 @@
 	<div class="row">
 		<div class="col-lg-8 mx-auto text-muted">
 			<p>If you already have a customer account, please
-				{# <a href="{{ path('app_login') }}">connectez ici</a> #}
+				<a href="{{ path('app_login') }}">Log in</a>
 			</p>
 			{% for flash in app.flashes('register')%}
 				<div class="alert my-3 {{ flash.color }}">{{ flash.content }}</div>

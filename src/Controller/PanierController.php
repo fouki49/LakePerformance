@@ -42,6 +42,7 @@ class PanierController extends AbstractController
             'achatlist' => $this->achatList,
             'fraislivraison' => empty($this->achatList->getAchats()) ? '0.00' : $fraisLivraison,
             'panier' => $this->panier,
+            'search_category' => $request->query->get('category')
         ]);
     }
 
