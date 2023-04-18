@@ -2,39 +2,68 @@
 
 namespace App\Controller;
 
-use App\Entity\Client;
 use App\Form\InformationModificationFormType;
+use App\Form\PasswordModificationFormType;
 use App\Core\Notification;
 use App\Core\NotificationColor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class ProfileController extends AbstractController
 {
+    private $oldPass;
+
     #[Route('/profile', name: 'app_profile')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, UserInterface $user, Security $security): Response
     {
-
-        $user = $this->getUser();
-        $form = $this->createForm(InformationModificationFormType::class, $user);
-        $form->handleRequest($request);
-
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $currentUser = $this->getUser();
+        //We have a user connected
+        $user = $this->getUser();
+        $InformationForm = $this->createForm(InformationModificationFormType::class, $user);
+        $InformationForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $PasswordForm = $this->createForm(PasswordModificationFormType::class, $user);
+        $PasswordForm->handleRequest($request);
+
+        if ($PasswordForm->isSubmitted() && $PasswordForm->isValid()) {
+            //valide si le oldPassword est pareil que le passord
+            if ($userPasswordHasher->isPasswordValid($user, $PasswordForm->get('oldPassword')->getData())) {
+                //hash le nouveau mot de passe
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $PasswordForm->get('newPassword')->getData()
+                    )
+                );
+                $this->addFlash(
+                    'password',
+                    new Notification('success', 'The password has been changed', NotificationColor::SUCCESS)
+                );
+                $entityManager->persist($user);
+                $entityManager->flush();
+            } 
+        }
+
+        if ($InformationForm->isSubmitted() && $InformationForm->isValid()) {
+            $this->addFlash(
+                'informations',
+                new Notification('success', 'The account informations has been changed', NotificationColor::SUCCESS)
+            );
             $entityManager->persist($user);
             $entityManager->flush();
         }
 
         return $this->render('profile/index.html.twig', [
-            'InformationModificationForm' => $form->createView(),
-            'currentUser' => $currentUser,
+            'InformationModificationForm' => $InformationForm->createView(),
+            'PasswordModificationForm' => $PasswordForm->createView(),
             'search_category' => $request->query->get('category')
         ]);
     }

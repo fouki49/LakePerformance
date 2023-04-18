@@ -1,48 +1,70 @@
 {% extends 'core/base.html.twig' %}
 {% form_theme InformationModificationForm 'bootstrap_5_layout.html.twig' %}
+{% form_theme PasswordModificationForm 'bootstrap_5_layout.html.twig' %}
+
 
 {% block content %}
 	<h1 class="mt-5 fw-bold fst-italic">Your profile</h1>
-	<div class="row ">
-		<div class="row">
-			<div class="col-lg-8 mx-auto text-muted">
-				
-				{% for flash in app.flashes('register')%}
-					<div class="alert my-3 {{ flash.color }}">{{ flash.content }}</div>
-				{% endfor %}
+	<div class="row">
+		<div class="col-lg-8 mx-auto text-muted">
 
-				{{ form_start(InformationModificationForm , {'attr': {'class': 'needs-validation-register', 'novalidate': 'novalidate' }}) }}
-				<div class="row">
-					<div class="col-6">
-						{{ form_row(InformationModificationForm.email) }}
-					</div>
-					<div class="col-6">
-						{{ form_row(InformationModificationForm.telephone, { 'attr': {'class': 'txtPhone' }}) }}
-					</div>
-					<div class="col-6">
-						{{ form_row(InformationModificationForm.nom) }}
-					</div>
-					<div class="col-6">
-						{{ form_row(InformationModificationForm.prenom) }}
-					</div>
-					<div class="col-6">
-						{{ form_row(InformationModificationForm.adresse) }}
-					</div>
-					<div class="col-6" value="">
-						{{ form_row(InformationModificationForm.ville) }}
-					</div>
-					<div class="col-3">
-						{{ form_row(InformationModificationForm.codePostal, {'attr': {'class': 'txtPostalCode'}}) }}
-					</div>
-					<div class="col-4">
-						{{ form_row(InformationModificationForm.province) }}
-					</div>
-					<div class="d-flex justify-content-center">
-						{{ form_row(InformationModificationForm.update) }}
-					</div>
+			{% for flash in app.flashes('informations')%}
+				<div class="alert my-3 {{ flash.color }}">{{ flash.content }}</div>
+			{% endfor %}
+
+			{{ form_start(InformationModificationForm , {'attr': {'class': 'needs-validation-register', 'novalidate': 'novalidate' }}) }}
+			<div class="row">
+				<div class="col-6">
+					{{ form_row(InformationModificationForm.email) }}
+				</div>
+				<div class="col-6">
+					{{ form_row(InformationModificationForm.telephone, { 'attr': {'class': 'txtPhone' }}) }}
+				</div>
+				<div class="col-6">
+					{{ form_row(InformationModificationForm.nom) }}
+				</div>
+				<div class="col-6">
+					{{ form_row(InformationModificationForm.prenom) }}
+				</div>
+				<div class="col-6">
+					{{ form_row(InformationModificationForm.adresse) }}
+				</div>
+				<div class="col-6" value="">
+					{{ form_row(InformationModificationForm.ville) }}
+				</div>
+				<div class="col-3">
+					{{ form_row(InformationModificationForm.codePostal, {'attr': {'class': 'txtPostalCode'}}) }}
+				</div>
+				<div class="col-4">
+					{{ form_row(InformationModificationForm.province) }}
+				</div>
+				<div class="d-flex justify-content-center">
+					{{ form_row(InformationModificationForm.update) }}
 				</div>
 			</div>
 			{{ form_end(InformationModificationForm) }}
+		</div>
+		<div class="col-lg-8 mx-auto text-muted mt-5">
+
+			{% for flash in app.flashes('password')%}
+				<div class="alert my-3 {{ flash.color }}">{{ flash.content }}</div>
+			{% endfor %}
+
+			{{ form_start(PasswordModificationForm, {'attr': {'class': 'needs-validation-register', 'novalidate': 'novalidate' }}) }}
+			<div class="row ">
+				<div class="col-12 mt-3">
+					{{ form_row(PasswordModificationForm.oldPassword) }}
+				</div>
+				{# <div class="row mt-3"> #}
+					<div class="col-6">
+						{{ form_row(PasswordModificationForm.newPassword.first) }}
+					</div>
+					<div class="col-6">
+						{{ form_row(PasswordModificationForm.newPassword.second) }}
+					</div>
+				{# </div> #}
+			</div>
+			{{ form_end(PasswordModificationForm) }}
 		</div>
 	</div>
 {% endblock %}
@@ -51,61 +73,6 @@
 {% block stylesheets %}{% endblock %}
 
 {% block javascripts %}
-    <script defer src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
 	<script defer src="{{ asset('scripts/register.js')}}"></script>
 {% endblock %}
-
-
-{# <div class="col-6 mt-3 my-5 card shadow">
-			<div class="">
-				<img class="mt-5" src="https://ui-avatars.com/api/?name={{ currentUser.prenom }}+{{ currentUser.nom }}&rounded=true&background=random" alt="">
-
-			</div>
-
-			<div class="row col-12">
-				<div class="col-6">
-					<h5>{{ app.user.prenom }}
-						{{ app.user.nom }}</h5>
-				</div>
-				<div class="col-6">
-					<label class="text-muted">
-						<i class="fas fa-envelope text-success"></i>
-						{{app.user.email}}</label>
-				</div>
-			</div>
-			<div>
-				<label class="text-muted ">
-					<i class="fa-solid fa-city text-success me-1"></i>
-					{{ app.user.ville }}
-				</label>
-			</div>
-			<div>
-				<label class="text-muted ">
-					<i class="fas fa-home text-success me-1"></i>
-					{{ app.user.adresse }}
-				</label>
-			</div>
-			<div>
-				<label class="text-muted">
-					<i class="fa-regular fa-flag text-success me-2"></i>
-					{{ app.user.codePostal }}, {{ app.user.province }}
-				</label>
-			</div>
-			
-			<div>
-				<label class="text-muted">
-					<i class="fa-solid fa-phone text-success me-1"></i>
-					{{ app.user.telephone }}
-				</label>
-			</div>
-			<div class="mt-5 ">
-				<span class="align-middle">
-					<a class="button-link fw-bold btn btn-secondary" href="{{ path('app_logout') }}">Sign out</a>
-				</span>
-			</div>
-			<div class="mt-5 mb-3 text-center">
-				<button class="btn btn-success fw-bold">Modification of information</button>
-				<button class="btn btn-success ms-2 fw-bold">Change Your password</button>
-			</div>
-			
-		</div> #}

@@ -15,6 +15,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class Client implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
+    private $oldPassword;
+
+    // public function __construct($oldPassword)
+    // {
+    //     $this->oldPassword = $oldPassword;
+    // }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'idClient')]
@@ -70,6 +78,11 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+
+    public function getOldPassword()
+    {
+        return $this->oldPassword;
+    }
 
     public function getEmail(): ?string
     {
