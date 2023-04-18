@@ -55,14 +55,12 @@
 				<div class="col-12 mt-3">
 					{{ form_row(PasswordModificationForm.oldPassword) }}
 				</div>
-				{# <div class="row mt-3"> #}
-					<div class="col-6">
-						{{ form_row(PasswordModificationForm.newPassword.first) }}
-					</div>
-					<div class="col-6">
-						{{ form_row(PasswordModificationForm.newPassword.second) }}
-					</div>
-				{# </div> #}
+				<div class="col-6">
+					{{ form_row(PasswordModificationForm.newPassword.first) }}
+				</div>
+				<div class="col-6">
+					{{ form_row(PasswordModificationForm.newPassword.second) }}
+				</div>
 			</div>
 			{{ form_end(PasswordModificationForm) }}
 		</div>
