@@ -71,6 +71,10 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     private $isVerified = false;
 
 
+    #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: "idCommandes", fetch: "LAZY")]
+    private $commandes;
+
+
    
 
     public function getEmail(): ?string

@@ -34,7 +34,6 @@ class Produit
     #[ORM\JoinColumn(name: 'idCategorie', referencedColumnName: 'idCategorie')]
     private $idCategorie;
 
-
     public function getIdProduit(): ?int
     {
         return $this->idProduit;
