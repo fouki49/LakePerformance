@@ -40,7 +40,6 @@ class HomeController extends AbstractController
         $this->em = $doctrine->getManager();
 
         $produit = $this->em->getRepository(Produit::class)->find($idProduit);
-
         return $this->render('home/product.modal.twig', ['produit' => $produit]);
     }
 

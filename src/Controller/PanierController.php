@@ -20,8 +20,7 @@ class PanierController extends AbstractController
     private $produit;
     private $panier;
 
-
-    #[Route('/panier', name: 'app_panier')]
+    #[Route('/panier', name: 'app_panier', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $this->initSession($request);
@@ -42,10 +41,10 @@ class PanierController extends AbstractController
             'achatlist' => $this->achatList,
             'fraislivraison' => empty($this->achatList->getAchats()) ? '0.00' : $fraisLivraison,
             'panier' => $this->panier,
-            'search_category' => $request->query->get('category')
+            'search_category' => $request->query->get('category'),
+            'is_order_mode' => $request->request->has('order')
         ]);
     }
-
 
     #[Route('/panier/ajout/{idProduit}', name: 'app_ajout_panier',  /*methods: ['POST']*/)]
     public function addAchat($idProduit, Request $request, ManagerRegistry $doctrine): Response

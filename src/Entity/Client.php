@@ -70,13 +70,6 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-
-    #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: "idCommandes", fetch: "LAZY")]
-    private $commandes;
-
-
-   
-
     public function getEmail(): ?string
     {
         return $this->email;

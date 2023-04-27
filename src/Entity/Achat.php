@@ -20,11 +20,10 @@ class Achat
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(name: 'idProduit', referencedColumnName: 'idProduit')]
     private ?Produit $produit = null;
-    
+  
 
-
-    #[ORM\ManyToOne(inversedBy: "commandes")]
-    #[ORM\JoinColumn(name: 'idCommande', referencedColumnName: 'idCommande')]
+    #[ORM\ManyToOne(inversedBy: 'achats')]
+    #[ORM\JoinColumn(name:'idCommande', referencedColumnName:'idCommande', nullable: false)]
     private ?Commande $commande = null;
 
 
@@ -76,6 +75,7 @@ class Achat
     {
         return $this->produit;
     }
+
 
     public function getCommande(): ?Commande
     {
