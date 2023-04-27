@@ -58,22 +58,14 @@ class StripeController extends AbstractController
     #[Route('/stripe-success', name: 'stripe_success')]
     public function stripeSuccess(Request $request): Response
     {
-
-        //Dans le TP 
-        //Créer un commande
-        //Transformer le panier en commande
-        //MaJ des Quantité des produits
-        //Vider le panier
-
         //Nous avons un paiement
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
 
-
         try {
 
-            //TODO: Valider que le paiement ait vraiment fonctionné chez stripe.
+           //TODO: Valider que le paiement ait vraiment fonctionné chez stripe.
             //\Stripe\Stripe::setApiKey($_ENV["STRIPE_SECRET"]);
             $stripe = new \Stripe\StripeClient($_ENV["STRIPE_SECRET"]);
 
@@ -81,20 +73,28 @@ class StripeController extends AbstractController
             $sessionStripe = $stripe->checkout->sessions->retrieve($stripeSessionId);
             $paymentIntent = $sessionStripe->payment_intent;
 
-            //paymentIntent sera à sauvegarder en BD
 
-            //var_dump($sessionStripe);
-            //die();
+            //retrouver le panier en session
+            $user = $this->getUser();
+            $panier = new Panier($request->getSession()->get('achatlist')->getAchats());
 
-            foreach ($user->getInventories() as $item) {
-                $item->addItem();
+            //Creation d'une commande
+            $commande = new Commande($user, $panier, $paymentIntent);
 
-                //Dans le TP ICI:
-                //Il faudra appeler la méthode merge de l'entité manager sur chaque achat 
+            foreach ($commande->getAchats() as $achat) {
+
+                $produit = $this->em->merge($achat->getProduit());    
+                if($produit->vendre($achat->getQuantite())) {
+                    //TODO message d'erreur
+                }
+
+                $achat->setProduit($produit);
             }
 
-            $this->em->persist($user);
+            $this->em->persist($commande);
             $this->em->flush();
+
+            // TODO : remove le panier
         } catch (\Exception $e) {
             //TODO : Redirection
         }

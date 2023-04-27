@@ -42,24 +42,29 @@ class Commande
 
     #[ORM\ManyToOne(targetEntity: Client::class, inversedBy: "commandes", cascade: ["persist"])]
     #[ORM\JoinColumn(name: 'idClient', referencedColumnName: 'idClient')]
-    private ?int $idClient = null;
+    private ?Client $client = null;
 
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Achat::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $achats;
 
-    private ArrayCollection|null $etats = null;
 
-    public function __construct()
+    public function __construct($user ,$panier ,$stripeIntent)
     {
-        $this->setDateCommande(new DateTime());
-        $this->setAchats(new ArrayCollection());
-        $this->etats = ['En préparation', 'Envoyée', 'En transit', 'Livrée'];
+        $this->client = $user;
+        $this->tauxTPS = Constantes::TPS;
+        $this->tauxTVQ = Constantes::TVQ;
+        $this->stripeIntent = $stripeIntent;
+        $this->dateCommande = new DateTime();
+        $this->achats = new ArrayCollection();
+        foreach($panier->getAchats() as $achats) {
+            $this->achats->add($achats);
+            $achats->setCommande($this);
+        }
+        $this->etat = "En Préparation";
+        $this->dateLivraison = null;
+        $this->fraisLivraison = Constantes::FRAIS_LIVRAISON;
     }
 
-    private function setAchats(ArrayCollection $newAchats)
-    {
-        $this->achats = $newAchats;
-    }
 
     public function getIdCommande(): ?int
     {
@@ -68,12 +73,12 @@ class Commande
 
     public function getIdClient(): ?int
     {
-        return $this->idClient;
+        return $this->client;
     }
 
     public function setIdClient(int $idClient): self
     {
-        $this->idClient = $idClient;
+        $this->client = $idClient;
 
         return $this;
     }
@@ -145,8 +150,6 @@ class Commande
 
     public function setEtat(string $etat): self
     {
-        if (!in_array($etat, (array) self::$etats)) return $this;
-
         $this->etat = $etat;
         return $this;
     }

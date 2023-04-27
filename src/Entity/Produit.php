@@ -30,7 +30,7 @@ class Produit
     private ?string $imagePath = null;
 
 
-    #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: "produits", cascade: ["persist"])]
+    #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: "produits", cascade: ["persist"], fetch:"EAGER")]
     #[ORM\JoinColumn(name: 'idCategorie', referencedColumnName: 'idCategorie')]
     private $idCategorie;
 
@@ -42,6 +42,10 @@ class Produit
     public function getNom(): ?string
     {
         return $this->nom;
+    }
+
+    public function vendre($quantiteAchat){
+        return $this->quantiteEnStock - $quantiteAchat;
     }
 
     public function getPrix(): ?float

@@ -76,6 +76,13 @@ class Achat
         return $this->produit;
     }
 
+    public function setProduit(?Produit $produit): self
+    {
+        $this->produit = $produit;
+
+        return $this;
+    }
+
 
     public function getCommande(): ?Commande
     {

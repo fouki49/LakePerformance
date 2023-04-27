@@ -1,7 +1,6 @@
 {% extends 'core/base.html.twig' %}
 
 {% block content %}
-	{{ dump(is_order_mode)}}
 	<div class="row">
 		<div class="col-8">
 
@@ -13,7 +12,7 @@
 					<div>{{ app.user.adresse}}</div>
 					<div>{{ app.user.ville ~ ', ' ~ app.user.codePostal }}</div>
 				</div>
-			{% else %}
+				{% else %}
 
 				{# {% do redirect('/login') %} #}
 
@@ -65,9 +64,15 @@
 										<label class="fw-bold ">{{achat.produit.prix}}
 											$</label>
 									</td>
-									<td class="">
-										<input name="{{ 'txtQuantiteAchat[' ~ key ~ ']' }}" type="number" class="text-center" style="width: 40px;" value="{{ achat.getQuantite() }}">
-									</td>
+									{% if not is_order_mode %}
+										<td class="">
+											<input name="{{ 'txtQuantiteAchat[' ~ key ~ ']' }}" type="number" class="text-center" style="width: 40px;" value="{{ achat.getQuantite() }}">
+										</td>
+									{% else %}
+										<td class="">
+											<label class="text-center" style="width: 40px;">{{ achat.getQuantite() }}</label>
+										</td>
+									{% endif %}
 									<td class="">
 										<label class="fw-bold " value="">{{ achat.getPrixAchat()|number_format(2, '.', ',') }}
 											$</td>
@@ -78,11 +83,14 @@
 												<i class="fa-solid fa-eye"></i>
 											</span>
 										</a>
-										<a class="ms-1" style="text-decoration: none" href="{{ path('app_delete_achat', { idProduit: key }) }}">
-											<span style="font-size: 1.2em; color: Tomato;">
-												<i class=" fa-solid fa-trash"></i>
-											</span>
-										</a>
+										{% if not is_order_mode %}
+											<a class="ms-1" style="text-decoration: none" href="{{ path('app_delete_achat', { idProduit: key }) }}">
+												<span style="font-size: 1.2em; color: Tomato;">
+													<i class=" fa-solid fa-trash"></i>
+												</span>
+											</a>
+										{% endif %}
+
 									</td>
 								</tr>
 							{% endfor %}
@@ -93,7 +101,7 @@
 			{% for flash in app.flashes('panier') %}
 				<div class="alert {{ flash.color }}">{{ flash.content }}</div>
 			{% endfor %}
-			{% if is_order_mode == false %}
+			{% if not is_order_mode %}
 				<div class="row justify-content-center mt-4">
 					<a href="{{ path('app_home') }}" class="col-3 fw-bold btn btn-secondary">
 						Quit<i class="ms-3 fa-solid fa-person-walking-arrow-right"></i>
