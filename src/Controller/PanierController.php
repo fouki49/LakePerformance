@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Core\Notification;
 use App\Core\NotificationColor;
+use Symfony\Flex\Response as FlexResponse;
 
 class PanierController extends AbstractController
 {
@@ -83,6 +84,10 @@ class PanierController extends AbstractController
         $this->achatList->supprimerAchat($idProduit);
         return $this->redirectToRoute('app_panier');
     }
+
+    // public function redirectToLogin() {
+    //     return $this->forward('App\Controller\ProfileController::login');
+    // }
 
     #[Route('/panier/update', name: 'app_update_achat', methods: ['POST'])]
     public function updateAchatPanier(Request $request): Response
