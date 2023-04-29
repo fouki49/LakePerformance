@@ -6,9 +6,12 @@ use App\Repository\CommandeRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\StringType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
+
+use function PHPUnit\Framework\stringContains;
 
 #[ORM\Table(name: 'commandes')]
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
@@ -22,7 +25,7 @@ class Commande
     #[ORM\Column(type: Types::DATETIME_MUTABLE, name: 'dateCommande')]
     private ?\DateTimeInterface $dateCommande = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, name: 'dateLivraison')]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, name: 'dateLivraison', nullable:true)]
     private ?\DateTimeInterface $dateLivraison = null;
 
     #[ORM\Column(name: 'tauxTPS')]
@@ -48,13 +51,14 @@ class Commande
     private Collection $achats;
 
 
-    public function __construct($user ,$panier ,$stripeIntent)
+    public function __construct($user, $panier, $stripeIntent)
     {
         $this->client = $user;
         $this->tauxTPS = Constantes::TPS;
         $this->tauxTVQ = Constantes::TVQ;
         $this->stripeIntent = $stripeIntent;
         $this->dateCommande = new DateTime();
+        $this->dateCommande->getTimezone();
         $this->achats = new ArrayCollection();
         foreach($panier->getAchats() as $achats) {
             $this->achats->add($achats);
@@ -69,6 +73,10 @@ class Commande
     public function getIdCommande(): ?int
     {
         return $this->idCommande;
+    }
+
+    public function getDateFormat() {
+        return $this->dateCommande->format('Y-m-d h:i:s');
     }
 
     public function getIdClient(): ?int
@@ -169,6 +177,24 @@ class Commande
     public function getAchats(): Collection
     {
         return $this->achats;
+    }
+
+    public function getSommeAchats()
+    {
+        $prix = 0;
+        foreach($this->achats as $achat){
+            $prix = $prix + $achat->getPrixAchat();
+        }
+        return $prix;
+    }
+
+    public function getSommeTotalAchats()
+    {
+        // $prix = 0;
+        // foreach($this->achats as $achat){
+        //     $prix = $prix + $achat->getPrixAchat();
+        // }
+        // return $prix;
     }
 
     public function addAchats(Achat $achat): self

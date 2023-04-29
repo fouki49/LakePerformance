@@ -11,9 +11,13 @@
 			{% for flash in app.flashes('informations')%}
 				<div class="alert my-3 {{ flash.color }}">{{ flash.content }}</div>
 			{% endfor %}
+			{# <div class="text-center">
+				<a class="btn btn-success mt-2 mb-4" href="{{ path('app_commande')}}">check your order</a>
+				<hr>
+			</div> #}
 
 			{{ form_start(InformationModificationForm , {'attr': {'class': 'needs-validation-register', 'novalidate': 'novalidate' }}) }}
-			<div class="row">
+			<div class="row mt-5">
 				<div class="col-6">
 					{{ form_row(InformationModificationForm.email) }}
 				</div>

@@ -28,8 +28,8 @@ class StripeController extends AbstractController
     {
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
         //Nous sommes connectés
+
         $user = $this->getUser();
         $panier = new Panier($request->getSession()->get('achatlist')->getAchats());
 
@@ -63,7 +63,7 @@ class StripeController extends AbstractController
 
         $user = $this->getUser();
 
-        try {
+        // try {
 
            //TODO: Valider que le paiement ait vraiment fonctionné chez stripe.
             //\Stripe\Stripe::setApiKey($_ENV["STRIPE_SECRET"]);
@@ -94,11 +94,12 @@ class StripeController extends AbstractController
             $this->em->persist($commande);
             $this->em->flush();
 
-            // TODO : remove le panier
-        } catch (\Exception $e) {
-            //TODO : Redirection
-        }
-
+            $request->getSession()->remove('panier');
+            
+            return $this->redirectToRoute('app_commande', ['idCommande' => $commande->getIdCommande()]);
+        // } catch (\Exception $e) {
+        //     //TODO : Redirection
+        // }
         return $this->redirectToRoute('app_profile');
     }
 

@@ -3,22 +3,23 @@
 namespace App\Entity;
 use App\Repository\AchatRepository;
 use Doctrine\ORM\Mapping as ORM;
+use PHPUnit\TextUI\XmlConfiguration\Constant;
 
 #[ORM\Entity(repositoryClass: AchatRepository::class)]
 #[ORM\Table(name: 'achats')]
 class Achat
 {
 
-    private $quantite;
     // private $produit;
 
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name:'idAchat')]
     private ?int $idAchat = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'idProduit', referencedColumnName: 'idProduit')]
+    #[ORM\JoinColumn(name: 'idProduit', referencedColumnName: 'idProduit', nullable:false)]
     private ?Produit $produit = null;
   
 
@@ -26,11 +27,18 @@ class Achat
     #[ORM\JoinColumn(name:'idCommande', referencedColumnName:'idCommande', nullable: false)]
     private ?Commande $commande = null;
 
+    #[ORM\Column]
+    private ?int $quantite = null;
+
+    #[ORM\Column]
+    private ?float $prixAchat = null;
+
 
 
     public function __construct($produit)
     {
         $this->quantite = Constantes::QUANTITE;
+        $this->prixAchat = $produit->getPrix();
         $this->produit = $produit;
     }
 
@@ -39,15 +47,7 @@ class Achat
         return $this->idAchat;
     }
 
-    public function getQuantite()
-    {
-        return $this->quantite;
-    }
-
-    public function updateAchat($quantite)
-    {
-        $this->quantite = $quantite;
-    }
+    
 
     public function verifyIfQuantityIsEmpty($quantite)
     {
@@ -71,6 +71,19 @@ class Achat
         return $prix;
     }
 
+    
+
+    public function getSommeTotalAchats()
+    {
+        foreach($this->produit as $produit){
+            $prix = $produit->getPrix() * $this->quantite;
+        }
+        $avecTPS = $prix * Constantes::TPS;
+        $avecTPSTVQ = $avecTPS * Constantes::TVQ;
+        $sommeTotal = $avecTPSTVQ + Constantes::FRAIS_LIVRAISON;
+        return $sommeTotal;
+    }
+
     public function getProduit(): ?Produit
     {
         return $this->produit;
@@ -92,6 +105,25 @@ class Achat
     public function setCommande(?Commande $commande): self
     {
         $this->commande = $commande;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(int $quantite): self
+    {
+        $this->quantite = $quantite;
+
+        return $this;
+    }
+
+    public function setPrixAchat(float $prixAchat): self
+    {
+        $this->prixAchat = $prixAchat;
 
         return $this;
     }

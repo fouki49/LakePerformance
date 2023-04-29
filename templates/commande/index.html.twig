@@ -1,0 +1,126 @@
+{% extends 'core/base.html.twig' %}
+
+{% block content %}
+	<div class="row">
+		<div class="">
+			<div class="rounded-3 shadow p-3 bg-body">
+				<div class="row">
+					<h3 class="col-6 fst-italic fw-bold">Your command(s)</h3>
+					<h3 class="col-6 fst-italic text-end">In preparation
+						<i class="ms-2 fa-sharp fa-solid fa-parachute-box"></i>
+					</h3>
+				</div>
+				<hr>
+
+
+				{% for flash in app.flashes('achat') %}
+					<div class="alert {{ flash.color }}">{{ flash.content }}</div>
+				{% endfor %}
+
+				<div class="row mb-5">
+					<div class="col-5 fs-5">
+						<div class="row text-muted">
+							<label class="col-6 fw-bold">
+								Order number
+							</label>
+							<label class="col-6 text-end">{{ commandes.idCommande }}</label>
+							<hr>
+						</div>
+						<div class="row text-muted">
+							<label class="col-6 fw-bold">
+								Number of items
+							</label>
+							<label class="col-6 text-end">{{ commandes.achats | length }}</label>
+							<hr>
+						</div>
+						<div class="row text-muted">
+							<label class="col-6 fw-bold">
+								Order date
+							</label>
+							<label class="col-6 text-end">{{ commandes.getDateFormat() }}</label>
+							<hr>
+						</div>
+						<div class="row text-muted">
+							<label class="col-6 fw-bold">
+								Order date
+							</label>
+							<label class="col-6 text-end">Coming soon...</label>
+							<hr>
+						</div>
+					</div>
+					<div
+						class="col-4 fs-5">
+						{# {% for achat in commandes.achats %} #}
+						<div class="row text-muted">
+							<label class="col-6 fw-bold">
+								Subtotal
+							</label>
+							<label class="col-6 text-end">{{ commandes.getSommeAchats()|number_format(2, '.', ',') }}
+								$</label>
+							<hr>
+						</div>
+                        <div class="row text-muted">
+							<label class="col-6 fw-bold">
+								Shipping cost
+							</label>
+							<label class="col-6 text-end">{{ commandes.fraisLivraison|number_format(2, '.', ',') }}
+								$</label>
+							<hr>
+						</div>
+					</div>
+					<div class="col-3">
+						Adresse
+					</div>
+				</div>
+
+				<table class="table table-bordered">
+					<thead>
+						<tr class="bg-secondary fw-bold text-white text-center">
+							<th scope="col">
+								Product
+							</th>
+							<th scope="col">
+								Name
+							</th>
+							<th scope="col">
+								Price
+							</th>
+							<th scope="col">
+								Quantity
+							</th>
+							<th scope="col">
+								Total
+							</th>
+						</tr>
+					</thead>
+					{# <tbody class="text-center align-middle">
+																																			                        <form action="{{ path('app_update_achat') }}" method="POST">
+																																			                            {% for key, commande in commandes %}
+																																			                                <tr>
+																																			                                    <td class="" style="width: 95px;">
+																																			                                        <img class="img-fluid" style="height: 80px;" src="{{ asset_if('images/' ~ commande.produit.imagePath, 'images/imageNonDispo.png' )}}" alt="product">
+																																			                                    </td>
+																																			                                    <td class="" style="">
+																																			                                        <label class="fw-bold ">{{commande.produit.nom}}</label>
+																																			                                    </td>
+																																			                                    <td class="" style="">
+																																			                                        <label class="fw-bold ">{{commande.produit.prix}}
+																																			                                            $</label>
+																																			                                    </td>
+																																			
+																																			                                    <td class="">
+																																			                                        <label class="text-center" style="width: 40px;">{{ commande.getQuantite() }}</label>
+																																			                                    </td>
+																																			                                    <td class="">
+																																			                                        <label class="fw-bold " value="">{{ commande.getPrixAchat()|number_format(2, '.', ',') }}
+																																			                                            $</td>
+																																			                                    </td>
+																																			                                </tr>
+																																			                            {% endfor %}
+																																			                        </form>
+																																			                    </tbody>
+																																			                </tbody> #}
+				</table>
+			</div>
+		</div>
+	{% endblock %}
