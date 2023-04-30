@@ -1,0 +1,66 @@
+{% extends 'core/base.html.twig' %}
+
+{% block content %}
+	<div class="row">
+		<div class="">
+			<div class="rounded-3 shadow p-3 bg-body" style="margin-bottom: 240px;">
+				<h3 class="col-6 fst-italic fw-bold">Your command(s)</h3>
+				<hr>
+				{% for flash in app.flashes('mycommands') %}
+					<div class="alert {{ flash.color }}">{{ flash.content }}</div>
+				{% endfor %}
+				{% if haveCommand %}
+					<table class="table table-borderedm mt-5">
+						<thead>
+							<tr class="bg-secondary fs-5 fw-bold text-white text-center">
+								<th scope="col">
+									Order number
+								</th>
+								<th scope="col">
+									Order Date(s)
+								</th>
+								<th scope="col">
+									Total
+								</th>
+								<th scope="col">
+									Status
+								</th>
+								<th scope="col">
+									Details
+								</th>
+							</tr>
+						</thead>
+						<tbody class="text-center align-middle">
+
+							{% for commande in commandes %}
+								<tr>
+									<td class="" style="">
+										<label class="fw-bold fs-5">
+											{{ commande.idCommande }}</label>
+									</td>
+									<td class="" style="">
+										<label class="fw-bold fs-5">{{commande.getDateFormat()}}</label>
+									</td>
+									<td class="" style="">
+										<label class="fw-bold fs-5">{{commande.getSommeTotalAchats()|number_format(2, '.', ',')}}
+											$</label>
+									</td>
+									<td class="">
+										<label class="fw-bold fs-5" style="">{{ commande.etat }}</label>
+									</td>
+									<td class="">
+										<a class="" style="text-decoration: none" href="{{ path('app_commande', {idCommande: commande.idCommande}) }}">
+											<span style="font-size: 1.2em; color: Mediumslateblue;">
+												<i class="fa-solid fa-eye"></i>
+											</span>
+										</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

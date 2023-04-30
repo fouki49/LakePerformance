@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Core\Notification;
 use App\Core\NotificationColor;
+use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Flex\Response as FlexResponse;
 
 class PanierController extends AbstractController
@@ -29,6 +30,14 @@ class PanierController extends AbstractController
         $fraisLivraison = Constantes::FRAIS_LIVRAISON;
 
         $this->panier = new Panier($this->achatList->getAchats());
+
+        $action = $request->request->get('order');
+
+        $user = $this->getUser();
+
+        if($action == 'order' && $user == null){
+            return $this->redirectToRoute('app_login');
+        }
 
         if ($this->achatList->getAchats() == null) {
             $this->addFlash(

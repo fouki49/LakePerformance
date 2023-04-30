@@ -46,7 +46,11 @@ class Achat
     {
         return $this->idAchat;
     }
-
+    
+    public function updateAchat($quantite)
+    {
+        $this->quantite = $quantite;
+    }
     
 
     public function verifyIfQuantityIsEmpty($quantite)

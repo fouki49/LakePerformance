@@ -50,6 +50,12 @@ class Commande
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Achat::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $achats;
 
+    private $sommeAchat;
+    private $taxesSommeAchat;
+    private $sommeTotalAchat;
+
+
+
 
     public function __construct($user, $panier, $stripeIntent)
     {
@@ -82,13 +88,6 @@ class Commande
     public function getIdClient(): ?int
     {
         return $this->client;
-    }
-
-    public function setIdClient(int $idClient): self
-    {
-        $this->client = $idClient;
-
-        return $this;
     }
 
     public function getDateCommande(): ?\DateTimeInterface
@@ -181,20 +180,26 @@ class Commande
 
     public function getSommeAchats()
     {
-        $prix = 0;
+        $this->sommeAchat = 0;
         foreach($this->achats as $achat){
-            $prix = $prix + $achat->getPrixAchat();
+            $this->sommeAchat = $this->sommeAchat + $achat->getPrixAchat();
         }
-        return $prix;
+        return $this->sommeAchat;
+    }
+
+    public function getTaxesAchats()
+    {
+        $this->taxesSommeAchat = 0;
+        $this->taxesSommeAchat = ($this->sommeAchat * Constantes::TPS) + ($this->sommeAchat * Constantes::TVQ);
+        
+        return $this->taxesSommeAchat;
     }
 
     public function getSommeTotalAchats()
     {
-        // $prix = 0;
-        // foreach($this->achats as $achat){
-        //     $prix = $prix + $achat->getPrixAchat();
-        // }
-        // return $prix;
+        $this->sommeTotalAchat = 0;
+        $this->sommeTotalAchat = $this->getSommeAchats() + $this->getTaxesAchats() + Constantes::FRAIS_LIVRAISON;
+        return $this->sommeTotalAchat;
     }
 
     public function addAchats(Achat $achat): self

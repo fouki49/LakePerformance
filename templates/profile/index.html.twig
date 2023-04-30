@@ -11,10 +11,13 @@
 			{% for flash in app.flashes('informations')%}
 				<div class="alert my-3 {{ flash.color }}">{{ flash.content }}</div>
 			{% endfor %}
-			{# <div class="text-center">
-				<a class="btn btn-success mt-2 mb-4" href="{{ path('app_commande')}}">check your order</a>
+			<div class="text-center">
+
+				<a class="btn btn-success mt-2 mb-4" href="{{ path('app_mycommands')}}">Check your command(s)
+					<i class="fa-solid ms-2 fa-bag-shopping"></i>
+				</a>
 				<hr>
-			</div> #}
+			</div>
 
 			{{ form_start(InformationModificationForm , {'attr': {'class': 'needs-validation-register', 'novalidate': 'novalidate' }}) }}
 			<div class="row mt-5">
@@ -68,6 +71,7 @@
 			</div>
 			{{ form_end(PasswordModificationForm) }}
 		</div>
+		
 	</div>
 {% endblock %}
 

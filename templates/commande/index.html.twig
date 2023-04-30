@@ -5,7 +5,7 @@
 		<div class="">
 			<div class="rounded-3 shadow p-3 bg-body">
 				<div class="row">
-					<h3 class="col-6 fst-italic fw-bold">Your command(s)</h3>
+					<h3 class="col-6 fst-italic fw-bold">Your command</h3>
 					<h3 class="col-6 fst-italic text-end">In preparation
 						<i class="ms-2 fa-sharp fa-solid fa-parachute-box"></i>
 					</h3>
@@ -18,7 +18,7 @@
 				{% endfor %}
 
 				<div class="row mb-5">
-					<div class="col-5 fs-5">
+					<div class="col-5 fs-5 ms-4">
 						<div class="row text-muted">
 							<label class="col-6 fw-bold">
 								Order number
@@ -48,9 +48,7 @@
 							<hr>
 						</div>
 					</div>
-					<div
-						class="col-4 fs-5">
-						{# {% for achat in commandes.achats %} #}
+					<div class="col-3 fs-5">
 						<div class="row text-muted">
 							<label class="col-6 fw-bold">
 								Subtotal
@@ -59,7 +57,7 @@
 								$</label>
 							<hr>
 						</div>
-                        <div class="row text-muted">
+						<div class="row text-muted">
 							<label class="col-6 fw-bold">
 								Shipping cost
 							</label>
@@ -67,15 +65,49 @@
 								$</label>
 							<hr>
 						</div>
+						<div class="row text-muted">
+							<label class="col-6 fw-bold">
+								Taxes
+							</label>
+							<label class="col-6 text-end">{{ commandes.getTaxesAchats()|number_format(2, '.', ',') }}
+								$</label>
+							<hr>
+						</div>
+						<div class="row text-muted">
+							<label class="col-6 fw-bold">
+								Totals
+							</label>
+							<label class="col-6 text-end">{{ commandes.getSommeTotalAchats()|number_format(2, '.', ',') }}
+								$</label>
+							<hr>
+						</div>
 					</div>
-					<div class="col-3">
-						Adresse
+					<div class="col-3 fs-5 rounded-3 shawdow bg-secondary text-white text-center ms-5">
+						<div class="row ">
+							<label class="fw-bold">
+								Delivery address
+							</label>
+							<hr>
+						</div>
+						<div class="row mt-2">
+							<label class="">{{ app.user.prenom }}
+								{{ app.user.nom }}
+							</label>
+						</div>
+						<div class="row ">
+							<label class="">{{ app.user.adresse }}</label>
+						</div>
+						<div class="row ">
+							<label class="">{{ app.user.ville }},
+								{{ app.user.codePostal }}
+							</label>
+						</div>
 					</div>
 				</div>
 
 				<table class="table table-bordered">
 					<thead>
-						<tr class="bg-secondary fw-bold text-white text-center">
+						<tr class="bg-secondary fs-5 fw-bold text-white text-center">
 							<th scope="col">
 								Product
 							</th>
@@ -93,34 +125,36 @@
 							</th>
 						</tr>
 					</thead>
-					{# <tbody class="text-center align-middle">
-																																			                        <form action="{{ path('app_update_achat') }}" method="POST">
-																																			                            {% for key, commande in commandes %}
-																																			                                <tr>
-																																			                                    <td class="" style="width: 95px;">
-																																			                                        <img class="img-fluid" style="height: 80px;" src="{{ asset_if('images/' ~ commande.produit.imagePath, 'images/imageNonDispo.png' )}}" alt="product">
-																																			                                    </td>
-																																			                                    <td class="" style="">
-																																			                                        <label class="fw-bold ">{{commande.produit.nom}}</label>
-																																			                                    </td>
-																																			                                    <td class="" style="">
-																																			                                        <label class="fw-bold ">{{commande.produit.prix}}
-																																			                                            $</label>
-																																			                                    </td>
-																																			
-																																			                                    <td class="">
-																																			                                        <label class="text-center" style="width: 40px;">{{ commande.getQuantite() }}</label>
-																																			                                    </td>
-																																			                                    <td class="">
-																																			                                        <label class="fw-bold " value="">{{ commande.getPrixAchat()|number_format(2, '.', ',') }}
-																																			                                            $</td>
-																																			                                    </td>
-																																			                                </tr>
-																																			                            {% endfor %}
-																																			                        </form>
-																																			                    </tbody>
-																																			                </tbody> #}
+					<tbody class="text-center align-middle">
+						{% for key, achat in commandes.achats %}
+							<tr>
+								<td class="" style="width: 95px;">
+									<img class="img-fluid" style="height: 80px;" src="{{ asset_if('images/' ~ achat.produit.imagePath, 'images/imageNonDispo.png' )}}" alt="product">
+								</td>
+								<td class="" style="">
+									<label class="fw-bold fs-5">{{achat.produit.nom}}</label>
+								</td>
+								<td class="" style="">
+									<label class="fw-bold fs-5">{{achat.produit.prix}}
+										$</label>
+								</td>
+
+								<td class="">
+									<label class="text-center fw-bold fs-5" style="width: 40px;">{{ achat.getQuantite() }}</label>
+								</td>
+								<td class="">
+									<label class="fw-bold fs-5" value="">{{ achat.getPrixAchat()|number_format(2, '.', ',') }}
+										$</label>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
 				</table>
+				<div class="text-center">
+					<a class="btn btn-success mt-2 mb-4 w-25 fw-bold" href="{{ path('app_mycommands')}}">Back
+						<i class="fa-sharp fa-solid ms-2 fa-arrow-rotate-left"></i>
+					</a>
+				</div>
 			</div>
 		</div>
 	{% endblock %}
