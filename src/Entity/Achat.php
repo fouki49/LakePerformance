@@ -4,16 +4,11 @@ namespace App\Entity;
 
 use App\Repository\AchatRepository;
 use Doctrine\ORM\Mapping as ORM;
-use PHPUnit\TextUI\XmlConfiguration\Constant;
 
 #[ORM\Entity(repositoryClass: AchatRepository::class)]
 #[ORM\Table(name: 'achats')]
 class Achat
 {
-
-    // private $produit;
-
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'idAchat')]

@@ -65,8 +65,6 @@ class StripeController extends AbstractController
 
         try {
 
-        //TODO: Valider que le paiement ait vraiment fonctionné chez stripe.
-        //\Stripe\Stripe::setApiKey($_ENV["STRIPE_SECRET"]);
         $stripe = new \Stripe\StripeClient($_ENV["STRIPE_SECRET"]);
 
         $stripeSessionId = $request->query->get('stripe_id');

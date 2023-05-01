@@ -12,14 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Core\Notification;
 use App\Core\NotificationColor;
-use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
-use Symfony\Flex\Response as FlexResponse;
 
 class PanierController extends AbstractController
 {
     private $em = null;
     private $achatList;
-    private $produit;
     private $panier;
 
     #[Route('/panier', name: 'app_panier', methods: ['GET', 'POST'])]
