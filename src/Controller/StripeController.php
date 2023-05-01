@@ -63,7 +63,7 @@ class StripeController extends AbstractController
 
         $user = $this->getUser();
 
-        // try {
+        try {
 
         //TODO: Valider que le paiement ait vraiment fonctionné chez stripe.
         //\Stripe\Stripe::setApiKey($_ENV["STRIPE_SECRET"]);
@@ -95,9 +95,9 @@ class StripeController extends AbstractController
         $request->getSession()->remove('achatlist');
 
         return $this->redirectToRoute('app_commande', ['idCommande' => $commande->getIdCommande()]);
-        // } catch (\Exception $e) {
-        //     //TODO : Redirection
-        // }
+        } catch (\Exception $e) {
+            //TODO : Redirection
+        }
         return $this->redirectToRoute('app_profile');
     }
 
