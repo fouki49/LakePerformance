@@ -81,14 +81,10 @@ class StripeController extends AbstractController
         //Creation d'une commande
         $commande = new Commande($user, $panier, $paymentIntent);
 
-        $message = "";
-
         foreach ($commande->getAchats() as $achat) {
 
             $produit = $this->em->merge($achat->getProduit());
-            if ($produit->vendre($achat->getQuantite())) {
-                // $message -= `The product <strong>[$produit->nom]</strong> is not in stock anymore`;
-            }
+            $produit->vendre($achat->getQuantite());
 
             $achat->setProduit($produit);
         }
