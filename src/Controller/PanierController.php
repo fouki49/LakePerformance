@@ -94,9 +94,6 @@ class PanierController extends AbstractController
         return $this->redirectToRoute('app_panier');
     }
 
-    // public function redirectToLogin() {
-    //     return $this->forward('App\Controller\ProfileController::login');
-    // }
 
     #[Route('/panier/update', name: 'app_update_achat', methods: ['POST'])]
     public function updateAchatPanier(Request $request): Response

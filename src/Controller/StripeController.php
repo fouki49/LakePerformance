@@ -65,38 +65,40 @@ class StripeController extends AbstractController
 
         // try {
 
-           //TODO: Valider que le paiement ait vraiment fonctionné chez stripe.
-            //\Stripe\Stripe::setApiKey($_ENV["STRIPE_SECRET"]);
-            $stripe = new \Stripe\StripeClient($_ENV["STRIPE_SECRET"]);
+        //TODO: Valider que le paiement ait vraiment fonctionné chez stripe.
+        //\Stripe\Stripe::setApiKey($_ENV["STRIPE_SECRET"]);
+        $stripe = new \Stripe\StripeClient($_ENV["STRIPE_SECRET"]);
 
-            $stripeSessionId = $request->query->get('stripe_id');
-            $sessionStripe = $stripe->checkout->sessions->retrieve($stripeSessionId);
-            $paymentIntent = $sessionStripe->payment_intent;
+        $stripeSessionId = $request->query->get('stripe_id');
+        $sessionStripe = $stripe->checkout->sessions->retrieve($stripeSessionId);
+        $paymentIntent = $sessionStripe->payment_intent;
 
 
-            //retrouver le panier en session
-            $user = $this->getUser();
-            $panier = new Panier($request->getSession()->get('achatlist')->getAchats());
+        //retrouver le panier en session
+        $user = $this->getUser();
+        $panier = new Panier($request->getSession()->get('achatlist')->getAchats());
 
-            //Creation d'une commande
-            $commande = new Commande($user, $panier, $paymentIntent);
+        //Creation d'une commande
+        $commande = new Commande($user, $panier, $paymentIntent);
 
-            foreach ($commande->getAchats() as $achat) {
+        $message = "";
 
-                $produit = $this->em->merge($achat->getProduit());    
-                if($produit->vendre($achat->getQuantite())) {
-                    //TODO message d'erreur
-                }
+        foreach ($commande->getAchats() as $achat) {
 
-                $achat->setProduit($produit);
+            $produit = $this->em->merge($achat->getProduit());
+            if ($produit->vendre($achat->getQuantite())) {
+                // $message -= `The product <strong>[$produit->nom]</strong> is not in stock anymore`;
             }
 
-            $this->em->persist($commande);
-            $this->em->flush();
+            $achat->setProduit($produit);
+        }
 
-            $request->getSession()->remove('panier');
-            
-            return $this->redirectToRoute('app_commande', ['idCommande' => $commande->getIdCommande()]);
+        $this->em->persist($commande);
+        $this->em->flush();
+
+        $request->getSession()->remove('achatlist');
+
+        return $this->redirectToRoute('app_commande', ['idCommande' => $commande->getIdCommande()]);
         // } catch (\Exception $e) {
         //     //TODO : Redirection
         // }

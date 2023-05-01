@@ -45,7 +45,7 @@ class Produit
     }
 
     public function vendre($quantiteAchat){
-        return $this->quantiteEnStock - $quantiteAchat;
+        return $this->quantiteEnStock -= $quantiteAchat;
     }
 
     public function getPrix(): ?float

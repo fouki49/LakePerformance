@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use App\Repository\AchatRepository;
 use Doctrine\ORM\Mapping as ORM;
 use PHPUnit\TextUI\XmlConfiguration\Constant;
@@ -12,19 +13,19 @@ class Achat
 
     // private $produit;
 
-    
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name:'idAchat')]
+    #[ORM\Column(name: 'idAchat')]
     private ?int $idAchat = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'idProduit', referencedColumnName: 'idProduit', nullable:false)]
+    #[ORM\ManyToOne(cascade: ["persist"])]
+    #[ORM\JoinColumn(name: 'idProduit', referencedColumnName: 'idProduit', nullable: false)]
     private ?Produit $produit = null;
-  
+
 
     #[ORM\ManyToOne(inversedBy: 'achats')]
-    #[ORM\JoinColumn(name:'idCommande', referencedColumnName:'idCommande', nullable: false)]
+    #[ORM\JoinColumn(name: 'idCommande', referencedColumnName: 'idCommande', nullable: false)]
     private ?Commande $commande = null;
 
     #[ORM\Column]
@@ -46,12 +47,12 @@ class Achat
     {
         return $this->idAchat;
     }
-    
+
     public function updateAchat($quantite)
     {
         $this->quantite = $quantite;
     }
-    
+
 
     public function verifyIfQuantityIsEmpty($quantite)
     {
@@ -75,11 +76,11 @@ class Achat
         return $prix;
     }
 
-    
+
 
     public function getSommeTotalAchats()
     {
-        foreach($this->produit as $produit){
+        foreach ($this->produit as $produit) {
             $prix = $produit->getPrix() * $this->quantite;
         }
         $avecTPS = $prix * Constantes::TPS;

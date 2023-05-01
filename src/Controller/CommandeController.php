@@ -22,23 +22,15 @@ class CommandeController extends AbstractController
     #[Route('/commande/{idCommande}', name: 'app_commande')]
     public function index($idCommande, Request $request, ManagerRegistry $doctrine): Response
     {
-        // $produit = $this->em->getRepository(Produit::class)->find('1');
-        // $this->achatCommandeList = $session->get('achatcommandelist', new Achat($produit));
-        // $session->set('achatcommandelist', $this->achatCommandeList);
-
-
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
 
         $this->em = $doctrine->getManager();
 
-        // $user = $this->getUser();
-
         $commande = $this->em->getRepository(Commande::class)->find($idCommande);
 
-
-
-        
+        if ($commande == null) {
+            return $this->redirectToRoute('app_home');
+        }
 
         return $this->render('commande/index.html.twig', [
             'search_category' => $request->query->get('category'),
@@ -47,20 +39,18 @@ class CommandeController extends AbstractController
     }
 
 
-    
-    #[Route('/mycommands', name : 'app_mycommands')]    
-    public function myCommandsView(Request $request, ManagerRegistry $doctrine) : Response 
+
+    #[Route('/mycommands', name: 'app_mycommands')]
+    public function myCommandsView(Request $request, ManagerRegistry $doctrine): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        
+
         $this->em = $doctrine->getManager();
         $user = $this->getUser();
 
-
         $commande = $this->em->getRepository(Commande::class)->findBy(['client' => $user->getIdClient()]);
 
-        // dd($commande);
-        if($commande == null){
+        if ($commande == null) {
             $this->haveCommand = false;
             $this->addFlash(
                 'mycommands',
