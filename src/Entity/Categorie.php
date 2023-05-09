@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategorieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
@@ -20,6 +22,12 @@ class Categorie
     #[ORM\Column(length: 25)]
     private ?string $categorie = null;
 
+    // public function __construct($categorie)
+    // {
+    //     $this->categorie = new ArrayCollection($categorie);
+    // }
+
+
     public function getIdCategorie(): ?int
     {
         return $this->idCategorie;
@@ -28,5 +36,12 @@ class Categorie
     public function getCategorie(): ?string
     {
         return $this->categorie;
+    }
+
+    public function setCategorie(string $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
     }
 }

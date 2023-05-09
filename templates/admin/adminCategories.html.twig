@@ -1,0 +1,37 @@
+{% extends 'core/base.html.twig' %}
+{% form_theme formCategories 'bootstrap_5_layout.html.twig' %}
+
+{% block content %}
+	<div class="col-12 rounded-3 shadow p-3">
+		<h1 class="fst-italic fw-bold">Categories</h1><hr>
+		{{ form_start(formCategories) }}
+
+		<div class="row">
+			<ul class="categories" data-index="{{ formCategories.categories|length > 0 ? formCategories.categories|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(formCategories.categories.vars.prototype)|e('html_attr') }}">
+				{% for category in formCategories.categories %}
+					<li style="list-style-type:none;" class="mt-2">
+						{{ form_row(category.categorie )}}
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="form-button col-4">
+				<button type="button" class="add_category_link btn btn-success my-2 w-100" data-collection-holder-class="categories">Add a category</button>
+			</div>
+		</div>
+
+		<div class="row justify-content-center">
+			{{ form_row(formCategories.btnSave) }}
+		</div>
+		{{ form_rest(formCategories) }}
+
+		{{ form_end(formCategories)}}
+
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script defer src="{{ asset('scripts/admin.categories.js') }}"></script>
+{% endblock %}

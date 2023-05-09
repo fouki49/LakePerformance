@@ -16,35 +16,69 @@
 
 		<!-- Collapsible wrapper -->
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<div class="ms-2 dropdown me-2">
-				<button id="dropDownLanguage" class="btn btn-light dropdown-toggle shadow-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding-bottom: 0.4rem;">Menu</button>
-				<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropDownLanguage">
-					<li>
-						<a class="dropdown-item" href="{{ path('app_home') }}">
-							<span class="fa-li pe-2">
-								<i class="fa-solid fa-house"></i>
-							</span>Home
-						</a>
-						<a class="dropdown-item" href="{{ path('route_contact') }}">
-							<span class="fa-li pe-2">
-								<i class="fas fa-bookmark pe-2"></i>
-							</span>Contact
-						</a>
-						<a class="dropdown-item" href="{{ path('app_panier') }}">
-							<span class="fa-li pe-2">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>Basket
-						</a>
-						<a class="dropdown-item" href="{{ path('app_mycommands') }}">
-							<span class="fa-li pe-2">
-								<i class="fa-solid fa-bag-shopping"></i>
-							</span>My command(s)
-						</a>
-					</li>
-				</ul>
+			<div class="me-5 row ">
+				{% if is_granted("ROLE_ADMIN") %}
+					<div class="dropdown col-7">
+						<button id="dropDownLanguage" class="btn btn-light dropdown-toggle shadow-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding-bottom: 0.4rem;">Admin</button>
+						<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropDownLanguage">
+
+							<li>
+								<a class="dropdown-item" href="{{ path('app_admin_categories') }}">
+									<span class="fa-li pe-2">
+										<i class="fa-solid fa-house"></i>
+									</span>Categories
+								</a>
+								<a class="dropdown-item" href="{{ path('app_admin_new_product') }}">
+									<span class="fa-li pe-2">
+										<i class="fas fa-bookmark pe-2"></i>
+									</span>New Product
+								</a>
+								<a class="dropdown-item" href="{{ path('app_admin_products') }}">
+									<span class="fa-li pe-2">
+										<i class="fa-solid fa-basket-shopping"></i>
+									</span>Products
+								</a>
+								<a class="dropdown-item" href="{{ path('app_admin_orders') }}">
+									<span class="fa-li pe-2">
+										<i class="fa-solid fa-bag-shopping"></i>
+									</span>Order(s)
+								</a>
+							</li>
+						</ul>
+					</div>
+				{% endif %}
+				<div class="dropdown col-3">
+					<button id="dropDownLanguage" class="btn btn-light dropdown-toggle shadow-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding-bottom: 0.4rem;">Menu</button>
+					<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropDownLanguage">
+
+						<li>
+							<a class="dropdown-item" href="{{ path('app_home') }}">
+								<span class="fa-li pe-2">
+									<i class="fa-solid fa-house"></i>
+								</span>Home
+							</a>
+							<a class="dropdown-item" href="{{ path('route_contact') }}">
+								<span class="fa-li pe-2">
+									<i class="fas fa-bookmark pe-2"></i>
+								</span>Contact
+							</a>
+							<a class="dropdown-item" href="{{ path('app_panier') }}">
+								<span class="fa-li pe-2">
+									<i class="fa-solid fa-basket-shopping"></i>
+								</span>Basket
+							</a>
+							<a class="dropdown-item" href="{{ path('app_mycommands') }}">
+								<span class="fa-li pe-2">
+									<i class="fa-solid fa-bag-shopping"></i>
+								</span>My command(s)
+							</a>
+						</li>
+					</ul>
+				</div>
 			</div>
+
 			<!-- Left links -->
-			<div class="w-100 form-search">
+			<div class="w-75 form-search">
 				<div class="input-group">
 					<form class="d-flex align-items-center w-100" method="POST" action="{{ app.request.uri }}">
 						<input name="category" type="hidden" value="{{ search_category }}">
@@ -63,7 +97,8 @@
 				</li>
 				{% if app.user %}
 					<li class="nav-item me-2" style="width: 85px;">
-						<a class="nav-link d-flex align-items-center" href="{{ path('app_profile') }}"><i class="fa-solid fa-user text-success me-2"></i>Profile</a>
+						<a class="nav-link d-flex align-items-center" href="{{ path('app_profile') }}">
+							<i class="fa-solid fa-user text-success me-2"></i>Profile</a>
 					</li>
 					<li class="nav-item" style="width: 75px;">
 						<a class="nav-link d-flex align-items-center bg-secondary rounded-2" href="{{ path('app_logout') }}">Log out</a>
