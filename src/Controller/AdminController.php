@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends AbstractController
 {
-
+ 
     private $em;
 
     public function __construct(EntityManagerInterface $em)
@@ -44,6 +44,7 @@ class AdminController extends AbstractController
                 // $newCategory->setCategorie($newCategory->getCategorie());
                 $this->em->persist($newCategory);
                 // dump($newCategory);
+                //TODO : this work check a maison lmao
             }
             // die();
             $this->em->flush();
