@@ -40,13 +40,12 @@ class AdminController extends AbstractController
 
             $newCollectionCategory = $formCategories->getData()->getCategories();
 
-
             foreach ($newCollectionCategory as $newCategory) {
                 // $newCategory->setCategorie($newCategory->getCategorie());
                 $this->em->persist($newCategory);
-                dump($newCategory);
+                // dump($newCategory);
             }
-            die();
+            // die();
             $this->em->flush();
         }
 

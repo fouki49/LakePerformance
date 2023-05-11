@@ -16,7 +16,7 @@ class Categorie
     #[ORM\Column(name: 'idCategorie')]
     private ?int $idCategorie = null;
 
-    #[ORM\OneToMany(targetEntity: Produit::class, mappedBy: "idCategorie", fetch: "LAZY")]
+    #[ORM\OneToMany(targetEntity: Produit::class, mappedBy: "idCategorie", fetch: "LAZY", cascade: ["persist"])]
     private $produits;
 
     #[ORM\Column(length: 25)]

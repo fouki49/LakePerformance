@@ -15,7 +15,7 @@ class CategoryType extends AbstractType
         $builder
             ->add('categorie', TextType::class, [
                 'label' => false,
-                'mapped' => false
+                // 'mapped' => false
                 ])
         ;
     }
