@@ -22,12 +22,6 @@ class Categorie
     #[ORM\Column(length: 25)]
     private ?string $categorie = null;
 
-    // public function __construct($categorie)
-    // {
-    //     $this->categorie = new ArrayCollection($categorie);
-    // }
-
-
     public function getIdCategorie(): ?int
     {
         return $this->idCategorie;

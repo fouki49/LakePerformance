@@ -70,7 +70,11 @@ class Commande
         $this->dateLivraison = null;
         $this->fraisLivraison = Constantes::FRAIS_LIVRAISON;
     }
-
+    
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
 
     public function getIdCommande(): ?int
     {

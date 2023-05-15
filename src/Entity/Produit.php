@@ -30,7 +30,7 @@ class Produit
     private ?string $imagePath = null;
 
 
-    #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: "produits", cascade: ["persist"], fetch:"EAGER")]
+    #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: "produits", cascade: ["persist"], fetch: "EAGER")]
     #[ORM\JoinColumn(name: 'idCategorie', referencedColumnName: 'idCategorie')]
     private $idCategorie;
 
@@ -39,18 +39,47 @@ class Produit
         return $this->idProduit;
     }
 
+    public function setIdProduit(Int $idProduit): self
+    {
+        $this->idProduit = $idProduit;
+
+        return $this;
+    }
+
     public function getNom(): ?string
     {
         return $this->nom;
     }
 
-    public function vendre($quantiteAchat){
+    public function setNom(String $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function vendre($quantiteAchat)
+    {
         return $this->quantiteEnStock -= $quantiteAchat;
     }
 
     public function getPrix(): ?float
     {
         return $this->prix;
+    }
+
+    public function setPrix(Float $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function setQuantiteEnStock(Int $quantiteEnStock): self
+    {
+        $this->quantiteEnStock = $quantiteEnStock;
+
+        return $this;
     }
 
     public function getQuantiteEnStock(): ?int
@@ -63,13 +92,34 @@ class Produit
         return $this->description;
     }
 
+    public function setDescription(String $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
     public function getIdCategorie(): ?Categorie
     {
         return $this->idCategorie;
     }
 
+    public function setIdCategorie(?Categorie $idCategorie): self
+    {
+        $this->idCategorie = $idCategorie;
+
+        return $this;
+    }
+
     public function getImagePath(): ?string
     {
         return $this->imagePath;
+    }
+
+    public function setImagePath(String $imagePath): self
+    {
+        $this->imagePath = $imagePath;
+
+        return $this;
     }
 }

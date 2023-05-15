@@ -1,5 +1,34 @@
 {% extends 'core/base.html.twig' %}
+{% form_theme formNewProduit 'bootstrap_5_layout.html.twig' %}
 
 {% block content %}
-	Admin New Product 
+    <h1 class="mt-5 mb-5">Add a New Product</h1>
+    <div class="row">
+		{{ form_start(formNewProduit , {'attr': {'class': 'needs-validation-register', 'novalidate': 'novalidate' }}) }}
+			<div class="row">
+				<div class="col-6">
+					{{ form_row(formNewProduit.idCategorie) }}
+				</div>
+				<div class="col-6">
+					{{ form_row(formNewProduit.nom) }}
+				</div>
+				<div class="col-6">
+					{{ form_row(formNewProduit.prix) }}
+				</div>
+				<div class="col-6">
+					{{ form_row(formNewProduit.quantiteEnStock) }}
+				</div>
+				<div class="">
+					{{ form_row(formNewProduit.description) }}
+				</div>
+				<div class="">
+					{{ form_row(formNewProduit.imagePath) }}
+				</div>
+				<div class="d-flex justify-content-center mt-2">
+                    {{ form_row(formNewProduit.btnSave) }}
+                </div>
+			</div>
+		</div>
+		{{ form_end(formNewProduit) }}
+    </div>
 {% endblock %}

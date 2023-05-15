@@ -11,9 +11,7 @@
 
 				{% for category in formCategories.categories %}
 					<li style="list-style-type:none;" class="mt-2">
-						{# {{dump(category.categorie)}} #}
 						{{ form_row( category.categorie ) }}
-
 					</li>
 				{% endfor %}
 			</ul>
