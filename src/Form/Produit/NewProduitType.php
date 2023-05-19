@@ -39,6 +39,7 @@ class NewProduitType extends AbstractType
             ])
             ->add('imagePath', FileType::class, [
                 'label' => 'Product image',
+                'data_class' => null,
                 'required' => false,
                 'constraints' => [
                     new File([

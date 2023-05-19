@@ -1,11 +1,57 @@
-{# {% extends 'core/base.html.twig' %}
+{% extends 'core/base.html.twig' %}
 
 {% block content %}
-	<div class="col-12 rounded-3 shadow p-3">
-		<h1 class="fst-italic fw-bold">Orders</h1><hr>
-		
+	<div class="row">
+		<div class="">
+			<div class="rounded-3 shadow p-3 bg-body" style="margin-bottom: 240px;">
+				<h3 class="col-6 fst-italic fw-bold">Products</h3>
+				<hr>
+				{% for flash in app.flashes('mycommands') %}
+					<div class="alert {{ flash.color }}">{{ flash.content }}</div>
+				{% endfor %}
+					<table class="table table-borderedm mt-5">
+						<thead>
+							<tr class="bg-secondary fs-5 fw-bold text-white text-center">
+								<th scope="col">
+									Product ID
+								</th>
+								<th scope="col">
+									Product name
+								</th>
+								<th scope="col">
+									Prices
+								</th>
+								<th scope="col">
+									Details
+								</th>
+							</tr>
+						</thead>
+						<tbody class="text-center align-middle">
+
+							{% for produit in produits %}
+								<tr>
+									<td class="" style="">
+										<label class="fw-bold fs-5">{{produit.idProduit}}</label>
+									</td>
+									<td class="" style="">
+										<label class="fw-bold fs-5">{{produit.nom}}</label>
+									</td>
+									<td class="">
+										<label class="fw-bold fs-5" style="">{{ produit.prix|number_format(2, '.', ',') }}</label>
+									</td>
+									<td class="">
+										<a class="" style="text-decoration: none" href="{{ path('app_admin_modify_product', {idProduct: produit.idProduit}) }}">
+											<span style="font-size: 1.2em; color: Mediumslateblue;">
+												<i class="fa-solid fa-eye"></i>
+											</span>
+										</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+			</div>
+		</div>
+	</div>
 {% endblock %}
 
-{% block javascripts %}
-	<script defer src="{{ asset('scripts/admin.categories.js') }}"></script>
-{% endblock %} #}

@@ -71,28 +71,26 @@ class AdminController extends AbstractController
         $formNewProduit->handleRequest($request);
 
         if ($formNewProduit->isSubmitted() && $formNewProduit->isValid()) {
-            
+
             $productImage = $formNewProduit->get('imagePath')->getData();
 
-            if($productImage) {
+            if ($productImage) {
                 $originalFilename = pathinfo($productImage->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename . "-" . uniqid() . ".". $productImage->guessExtension(); 
+                $newFilename = $safeFilename . "-" . uniqid() . "." . $productImage->guessExtension();
 
                 try {
                     $productImage->move(
                         $this->getParameter('product_picture'),
-                        $newFilename);
+                        $newFilename
+                    );
 
-                        $produit->setImagePath($newFilename);
+                    $produit->setImagePath($newFilename);
 
                     $this->em->persist($produit);
                     $this->em->flush();
-
-                } catch(FileException $e) {
-                    //TODO: Erreur
-                } catch(ORMException $e) {
-                    //TODO: Erreur
+                } catch (FileException $e) {
+                } catch (ORMException $e) {
                 }
             }
         }
@@ -102,14 +100,57 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/modify/product/{idProduct}', name: 'app_admin_modify_product')]
+    public function indexModifyProduct($idProduct, Request $request, SluggerInterface $slugger): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $produit = $this->em->getRepository(Produit::class)->find($idProduct);
+
+        $formNewProduit = $this->createForm(NewProduitType::class, $produit);
+        $formNewProduit->handleRequest($request);
+
+        if ($formNewProduit->isSubmitted() && $formNewProduit->isValid()) {
+
+            $productImage = $formNewProduit->get('imagePath')->getData();
+
+            if ($productImage) {
+                $originalFilename = pathinfo($productImage->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . "-" . uniqid() . "." . $productImage->guessExtension();
+
+                try {
+                    $productImage->move(
+                        $this->getParameter('product_picture'),
+                        $newFilename
+                    );
+
+                    $produit->setImagePath($newFilename);
+
+                    $this->em->persist($produit);
+                    $this->em->flush();
+                } catch (FileException $e) {
+                } catch (ORMException $e) {
+                }
+            }
+        }
+        return $this->render('admin/adminNewProduct.html.twig', [
+            'search_category' => $request->query->get('category'),
+            'formNewProduit' => $formNewProduit
+        ]);
+    }
+
+
     #[Route('/admin/products', name: 'app_admin_products')]
     public function indexProducts(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
+        $lstProduits = $this->em->getRepository(Produit::class)->findAll();
 
         return $this->render('admin/adminProducts.html.twig', [
             'search_category' => $request->query->get('category'),
+            'produits' => $lstProduits
         ]);
     }
 
