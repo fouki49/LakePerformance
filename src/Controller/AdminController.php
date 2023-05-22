@@ -28,6 +28,7 @@ class AdminController extends AbstractController
         $this->em = $em;
     }
 
+
     #[Route('/admin/categories', name: 'app_admin_categories')]
     public function indexCategory(Request $request): Response
     {
@@ -65,6 +66,8 @@ class AdminController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
+        $isNewProduct = true;
+
         $produit = new Produit();
 
         $formNewProduit = $this->createForm(NewProduitType::class, $produit);
@@ -92,11 +95,16 @@ class AdminController extends AbstractController
                 } catch (FileException $e) {
                 } catch (ORMException $e) {
                 }
+            } else {
+                $produit->setImagePath('imageNonDispo.png');
+                $this->em->persist($produit);
+                $this->em->flush();
             }
         }
         return $this->render('admin/adminNewProduct.html.twig', [
             'search_category' => $request->query->get('category'),
-            'formNewProduit' => $formNewProduit
+            'formNewProduit' => $formNewProduit,
+            'isNewProduct' => $isNewProduct
         ]);
     }
 
@@ -105,13 +113,17 @@ class AdminController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
+        $isNewProduct = false;
+
         $produit = $this->em->getRepository(Produit::class)->find($idProduct);
+        $getImagePath = $produit->getImagePath();
 
         $formNewProduit = $this->createForm(NewProduitType::class, $produit);
         $formNewProduit->handleRequest($request);
 
-        if ($formNewProduit->isSubmitted() && $formNewProduit->isValid()) {
 
+        if ($formNewProduit->isSubmitted() && $formNewProduit->isValid()) {
+            dd('test');
             $productImage = $formNewProduit->get('imagePath')->getData();
 
             if ($productImage) {
@@ -132,11 +144,16 @@ class AdminController extends AbstractController
                 } catch (FileException $e) {
                 } catch (ORMException $e) {
                 }
+            } else {
+                $produit->setImagePath($getImagePath);
+                $this->em->persist($produit);
+                $this->em->flush();
             }
         }
         return $this->render('admin/adminNewProduct.html.twig', [
             'search_category' => $request->query->get('category'),
-            'formNewProduit' => $formNewProduit
+            'formNewProduit' => $formNewProduit,
+            'isNewProduct' => $isNewProduct
         ]);
     }
 

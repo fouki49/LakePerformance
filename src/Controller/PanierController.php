@@ -136,7 +136,6 @@ class PanierController extends AbstractController
     {
 
         $session = $request->getSession();
-        //TODO: eventuellement mettre le nom de l'utilisateur connecter
         $session->set('name', 'Benjamin');
 
         $this->achatList = $session->get('achatlist', new Panier());

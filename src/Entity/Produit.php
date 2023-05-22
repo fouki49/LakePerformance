@@ -26,7 +26,7 @@ class Produit
     #[ORM\Column(length: 1000)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 100, name: 'imagePath')]
+    #[ORM\Column(nullable: true, length: 100, name: 'imagePath')]
     private ?string $imagePath = null;
 
 

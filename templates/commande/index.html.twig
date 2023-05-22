@@ -11,7 +11,16 @@
 					</h3>
 				</div>
 				<hr>
-
+				{% if is_granted("ROLE_ADMIN") %}
+					<div class="mb-3 ">
+						<select class="form-select w-25" name="etat" id="etat">
+							<option value="In preparation">In preparation</option>
+							<option value="Sent">Sent</option>
+							<option value="In transit">In transit</option>
+							<option value="Delivered">Delivered</option>
+						</select>
+					</div>
+				{% endif %}
 
 				{% for flash in app.flashes('achat') %}
 					<div class="alert {{ flash.color }}">{{ flash.content }}</div>
@@ -150,11 +159,17 @@
 						{% endfor %}
 					</tbody>
 				</table>
-				{# <div class="text-center">
-					<a class="btn btn-success mt-2 mb-4 w-25 fw-bold" href="{{ path('app_mycommands')}}">Back
-						<i class="fa-sharp fa-solid ms-2 fa-arrow-rotate-left"></i>
-					</a>
-				</div> #}
+				{% if is_granted("ROLE_ADMIN") %}
+					<div class="text-center">
+						<a class="btnSaveOrder btn btn-success mt-2 mb-4 w-25 fw-bold" >Save
+							<i class="ms-2 fa-solid fa-floppy-disk"></i>
+						</a>
+					</div>
+				{% endif %}
 			</div>
 		</div>
+	{% endblock %}
+
+	{% block javascripts %}
+		<script defer src="{{ asset('scripts/order.js')}}"></script>
 	{% endblock %}
