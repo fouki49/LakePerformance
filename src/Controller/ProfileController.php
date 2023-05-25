@@ -18,7 +18,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class ProfileController extends AbstractController
 {
-    private $oldPass;
 
     #[Route('/profile', name: 'app_profile')]
     public function index(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, UserInterface $user, Security $security): Response
@@ -78,7 +77,7 @@ class ProfileController extends AbstractController
         $notification = null;
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error != null && $error->getMessageKey() === 'Invalid credentials.') {
-            $message = "Mauvaise combinaison d'identifiant et de mot de passe.";
+            $message = "Wrong username and password combination.";
             $notification = new Notification('error', $message, NotificationColor::WARNING);
         }
 

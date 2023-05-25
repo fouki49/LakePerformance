@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Core\Notification;
 use App\Core\NotificationColor;
 use App\Entity\Commande;
+use App\Form\ChoixEtatFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +34,7 @@ class CommandeController extends AbstractController
 
         return $this->render('commande/index.html.twig', [
             'search_category' => $request->query->get('category'),
-            'commandes' => $commande
+            'commandes' => $commande,
         ]);
     }
 

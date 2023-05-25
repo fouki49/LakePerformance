@@ -7,6 +7,11 @@
 	{% else %}
 		<h1 class="fst-italic mt-5 mb-5">Modify a Product</h1>
 	{% endif %}
+
+	{% for flash in app.flashes('notifProduit') %}
+		<div class="alert {{ flash.color }}">{{ flash.content }}</div>
+	{% endfor %}
+
 	<div class="row">
 		{{ form_start(formNewProduit , {'attr': {'class': 'needs-validation-register', 'novalidate': 'novalidate' }}) }}
 		<div class="row">

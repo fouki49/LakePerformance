@@ -4,6 +4,9 @@
 {% block content %}
 	<div class="col-12 rounded-3 shadow p-3">
 		<h1 class="fst-italic fw-bold">Categories</h1><hr>
+		{% for flash in app.flashes('notifCategorie') %}
+			<div class="alert {{ flash.color }}">{{ flash.content }}</div>
+		{% endfor %}
 		{{ form_start(formCategories) }}
 
 		<div class="row">

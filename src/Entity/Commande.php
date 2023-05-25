@@ -21,7 +21,7 @@ class Commande
     #[ORM\Column(type: Types::DATETIME_MUTABLE, name: 'dateCommande')]
     private ?\DateTimeInterface $dateCommande = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, name: 'dateLivraison', nullable:true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, name: 'dateLivraison', nullable: true)]
     private ?\DateTimeInterface $dateLivraison = null;
 
     #[ORM\Column(name: 'tauxTPS')]
@@ -62,15 +62,15 @@ class Commande
         $this->dateCommande = new DateTime();
         $this->dateCommande->getTimezone();
         $this->achats = new ArrayCollection();
-        foreach($panier->getAchats() as $achats) {
+        foreach ($panier->getAchats() as $achats) {
             $this->achats->add($achats);
             $achats->setCommande($this);
         }
-        $this->etat = "En Préparation";
+        $this->etat = "In preparation";
         $this->dateLivraison = null;
         $this->fraisLivraison = Constantes::FRAIS_LIVRAISON;
     }
-    
+
     public function getClient(): ?Client
     {
         return $this->client;
@@ -81,7 +81,8 @@ class Commande
         return $this->idCommande;
     }
 
-    public function getDateFormat() {
+    public function getDateFormat()
+    {
         return $this->dateCommande->format('Y-m-d h:i:s');
     }
 
@@ -181,7 +182,7 @@ class Commande
     public function getSommeAchats()
     {
         $this->sommeAchat = 0;
-        foreach($this->achats as $achat){
+        foreach ($this->achats as $achat) {
             $this->sommeAchat = $this->sommeAchat + $achat->getPrixAchat();
         }
         return $this->sommeAchat;
@@ -191,7 +192,7 @@ class Commande
     {
         $this->taxesSommeAchat = 0;
         $this->taxesSommeAchat = ($this->sommeAchat * Constantes::TPS) + ($this->sommeAchat * Constantes::TVQ);
-        
+
         return $this->taxesSommeAchat;
     }
 

@@ -16,7 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Doctrine\ORM\Exception\ORMException;
-
+use App\Core\Notification;
+use App\Core\NotificationColor;
+use App\Form\EtatFormType;
 
 class AdminController extends AbstractController
 {
@@ -51,6 +53,12 @@ class AdminController extends AbstractController
             foreach ($newCollectionCategory as $newCategory) {
                 $this->em->persist($newCategory);
             }
+
+            $this->addFlash(
+                'notifCategorie',
+                new Notification('success', 'The categories haved been updated', NotificationColor::SUCCESS)
+            );
+
             $this->em->flush();
         }
 
@@ -89,9 +97,9 @@ class AdminController extends AbstractController
                     );
 
                     $produit->setImagePath($newFilename);
-
                     $this->em->persist($produit);
                     $this->em->flush();
+                    return $this->redirectToRoute('app_home');
                 } catch (FileException $e) {
                 } catch (ORMException $e) {
                 }
@@ -99,6 +107,7 @@ class AdminController extends AbstractController
                 $produit->setImagePath('imageNonDispo.png');
                 $this->em->persist($produit);
                 $this->em->flush();
+                return $this->redirectToRoute('app_home');
             }
         }
         return $this->render('admin/adminNewProduct.html.twig', [
@@ -121,9 +130,7 @@ class AdminController extends AbstractController
         $formNewProduit = $this->createForm(NewProduitType::class, $produit);
         $formNewProduit->handleRequest($request);
 
-
         if ($formNewProduit->isSubmitted() && $formNewProduit->isValid()) {
-            dd('test');
             $productImage = $formNewProduit->get('imagePath')->getData();
 
             if ($productImage) {
@@ -140,14 +147,19 @@ class AdminController extends AbstractController
                     $produit->setImagePath($newFilename);
 
                     $this->em->persist($produit);
+
                     $this->em->flush();
+                    return $this->redirectToRoute('app_admin_products');
                 } catch (FileException $e) {
                 } catch (ORMException $e) {
                 }
             } else {
                 $produit->setImagePath($getImagePath);
                 $this->em->persist($produit);
+
                 $this->em->flush();
+               
+                return $this->redirectToRoute('app_admin_products');
             }
         }
         return $this->render('admin/adminNewProduct.html.twig', [
@@ -182,9 +194,43 @@ class AdminController extends AbstractController
 
         $commandes = $this->em->getRepository(Commande::class)->findAll();
 
+        $commandes = array_reverse($commandes);
+
         return $this->render('admin/adminOrders.html.twig', [
             'search_category' => $request->query->get('category'),
             'commandes' => $commandes
+        ]);
+    }
+
+
+    #[Route('/admin/orders/{idCommande}', name: 'app_admin_commande')]
+    public function index($idCommande, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $commande = $this->em->getRepository(Commande::class)->find($idCommande);
+
+        $formEtat = $this->createForm(EtatFormType::class, $commande);
+        $formEtat->handleRequest($request);
+
+        if ($formEtat->isSubmitted()) {
+            $etat = $formEtat->get('etat')->getData();
+
+            $commande->setEtat($etat);
+            $this->em->persist($commande);
+
+            $this->em->flush();
+            return $this->redirectToRoute('app_admin_orders');
+        }
+
+        if ($commande == null) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('admin/adminOrder.html.twig', [
+            'search_category' => $request->query->get('category'),
+            'commandes' => $commande,
+            'formEtat' => $formEtat
         ]);
     }
 }

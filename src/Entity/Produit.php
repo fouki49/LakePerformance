@@ -116,7 +116,7 @@ class Produit
         return $this->imagePath;
     }
 
-    public function setImagePath(String $imagePath): self
+    public function setImagePath(?string $imagePath): self
     {
         $this->imagePath = $imagePath;
 
