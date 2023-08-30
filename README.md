@@ -12,6 +12,7 @@ https://4d6.1868282.techinfo-cstj.ca
 <h3>Page d'acceuil</h3>
 
 ![image](https://github.com/fouki49/LakePerformance/assets/67130095/36450c21-ff07-4d83-a21d-db17ede6a774)
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/57c4bced-99af-48ea-93dc-dfe861d2ceb5)
 
 <h3>Page Contact</h3>
 
@@ -33,8 +34,45 @@ https://4d6.1868282.techinfo-cstj.ca
 <h5>Permet aussi de changer les informations du compte ou changer le mot de passe</h5>
 
 ![image](https://github.com/fouki49/LakePerformance/assets/67130095/dfe6a3d5-6de6-4494-a1b9-8d03a9bdac1b)
-
 ![image](https://github.com/fouki49/LakePerformance/assets/67130095/0f1d5693-58f0-47a8-b19c-ddd48bb6fa26)
+
+<h3>Page Panier</h3>
+
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/5f4e883e-f6cd-4646-9b94-60b71186e4b0)
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/0d43fafd-f1ce-43cf-98f0-ae1ca7a5859b)
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/2a1e4bb8-4a16-4a9d-bc09-9edde387bd6b)
+
+<h3>Page d'achat</h3>
+
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/cc3ef358-a6ba-4580-8c35-371ef754b1dc)
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/8b142812-ed86-4721-a1a7-09a9421d7b96)
+
+<h3>Page commande</h3>
+
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/d7e9f9dc-aab3-49d1-a5db-96b41b174a57)
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/3782625d-f11d-49aa-ba82-cd16c142bb59)
+
+<h1>Partie Admin</h1>
+<br>
+<h3>Page admin categorie</h3>
+
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/62094945-78f1-4c0c-b461-e5b15338d12d)
+
+<p>possibilité d'ajouter ou de modifier un catégorie</p>
+
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/bac48608-87e0-4b59-9fec-f251ff98da42)
+
+<h3>Page admin ajout d'un produit</h3>
+
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/c6236dcb-0bdd-4b92-9e3c-68fec5b9dd8d)
+
+
+
+
+
+
+
+
 
 
 
