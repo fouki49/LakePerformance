@@ -65,6 +65,22 @@ https://4d6.1868282.techinfo-cstj.ca
 <h3>Page admin ajout d'un produit</h3>
 
 ![image](https://github.com/fouki49/LakePerformance/assets/67130095/c6236dcb-0bdd-4b92-9e3c-68fec5b9dd8d)
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/2ad625b1-c82d-4213-b66a-952f5ad026fc)
+
+<h3>Page admin produits</h3>
+
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/22bceeb8-f9b7-459e-9ba0-5047e3c6a2d1)
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/e35a697b-fd43-4395-890c-5291d3801d93)
+
+<h3>Page admin commandes</h3>
+
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/e5a3bfa2-1a33-4af5-8e6c-380fb439524d)
+![image](https://github.com/fouki49/LakePerformance/assets/67130095/e8df3a43-d2cc-461c-b993-0f2d05f89e7c)
+
+
+
+
+
 
 
 
